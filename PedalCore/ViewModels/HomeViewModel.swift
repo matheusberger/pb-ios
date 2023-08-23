@@ -8,10 +8,11 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
-    @Published var pedals: [String] = []
+    @Published var pedals: [Pedal] = []
 
-    func addPedal(name: String) {
-        pedals.append(name)
+    func addPedal(name: String, brand: String, knobs: [String: Int]) {
+        let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
+        pedals.append(newPedal)
         print(pedals)
     }
 }

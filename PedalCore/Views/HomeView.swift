@@ -15,7 +15,7 @@ public struct HomeView: View {
     }
     public var body: some View {
         Button {
-            viewModel.addPedal(name: "Test")
+            viewModel.addPedal(name: "Test", brand: "Cool Brand", knobs: [:])
         } label: {
             Text("Create pedal")
         }
