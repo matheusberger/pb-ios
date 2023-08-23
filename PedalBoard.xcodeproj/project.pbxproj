@@ -8,17 +8,66 @@
 
 /* Begin PBXBuildFile section */
 		56156D4D2A9581C7000DF906 /* PedalBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */; };
-		56156D4F2A9581C7000DF906 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56156D4E2A9581C7000DF906 /* ContentView.swift */; };
 		56156D512A9581CB000DF906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D502A9581CB000DF906 /* Assets.xcassets */; };
 		56156D542A9581CB000DF906 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D532A9581CB000DF906 /* Preview Assets.xcassets */; };
+		56827F2C2A95869D0043277A /* PedalCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = 56827F2B2A95869D0043277A /* PedalCore.docc */; };
+		56827F322A95869D0043277A /* PedalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56827F282A95869D0043277A /* PedalCore.framework */; };
+		56827F392A95869D0043277A /* PedalCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56827F382A95869D0043277A /* PedalCoreTests.swift */; };
+		56827F3A2A95869D0043277A /* PedalCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 56827F2A2A95869D0043277A /* PedalCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		56827F3D2A95869D0043277A /* PedalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56827F282A95869D0043277A /* PedalCore.framework */; };
+		56827F3E2A95869D0043277A /* PedalCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56827F282A95869D0043277A /* PedalCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		56827F472A9588350043277A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56827F462A9588350043277A /* HomeView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		56827F332A95869D0043277A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56156D412A9581C7000DF906 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56827F272A95869D0043277A;
+			remoteInfo = PedalCore;
+		};
+		56827F352A95869D0043277A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56156D412A9581C7000DF906 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56156D482A9581C7000DF906;
+			remoteInfo = PedalBoard;
+		};
+		56827F3B2A95869D0043277A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56156D412A9581C7000DF906 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56827F272A95869D0043277A;
+			remoteInfo = PedalCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		56827F1C2A9586390043277A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				56827F3E2A95869D0043277A /* PedalCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		56156D492A9581C7000DF906 /* PedalBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedalBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalBoardApp.swift; sourceTree = "<group>"; };
-		56156D4E2A9581C7000DF906 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		56156D502A9581CB000DF906 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56156D532A9581CB000DF906 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		56827F282A95869D0043277A /* PedalCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PedalCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		56827F2A2A95869D0043277A /* PedalCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PedalCore.h; sourceTree = "<group>"; };
+		56827F2B2A95869D0043277A /* PedalCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = PedalCore.docc; sourceTree = "<group>"; };
+		56827F312A95869D0043277A /* PedalCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PedalCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		56827F382A95869D0043277A /* PedalCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalCoreTests.swift; sourceTree = "<group>"; };
+		56827F462A9588350043277A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +75,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56827F3D2A95869D0043277A /* PedalCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56827F252A95869D0043277A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56827F2E2A95869D0043277A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56827F322A95869D0043277A /* PedalCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				56156D4B2A9581C7000DF906 /* PedalBoard */,
+				56827F292A95869D0043277A /* PedalCore */,
+				56827F372A95869D0043277A /* PedalCoreTests */,
 				56156D4A2A9581C7000DF906 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,6 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				56156D492A9581C7000DF906 /* PedalBoard.app */,
+				56827F282A95869D0043277A /* PedalCore.framework */,
+				56827F312A95869D0043277A /* PedalCoreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -52,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */,
-				56156D4E2A9581C7000DF906 /* ContentView.swift */,
 				56156D502A9581CB000DF906 /* Assets.xcassets */,
 				56156D522A9581CB000DF906 /* Preview Content */,
 			);
@@ -67,7 +135,36 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		56827F292A95869D0043277A /* PedalCore */ = {
+			isa = PBXGroup;
+			children = (
+				56827F2A2A95869D0043277A /* PedalCore.h */,
+				56827F2B2A95869D0043277A /* PedalCore.docc */,
+				56827F462A9588350043277A /* HomeView.swift */,
+			);
+			path = PedalCore;
+			sourceTree = "<group>";
+		};
+		56827F372A95869D0043277A /* PedalCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				56827F382A95869D0043277A /* PedalCoreTests.swift */,
+			);
+			path = PedalCoreTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		56827F232A95869D0043277A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56827F3A2A95869D0043277A /* PedalCore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		56156D482A9581C7000DF906 /* PedalBoard */ = {
@@ -77,15 +174,54 @@
 				56156D452A9581C7000DF906 /* Sources */,
 				56156D462A9581C7000DF906 /* Frameworks */,
 				56156D472A9581C7000DF906 /* Resources */,
+				56827F1C2A9586390043277A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				56827F3C2A95869D0043277A /* PBXTargetDependency */,
 			);
 			name = PedalBoard;
 			productName = PedalBoard;
 			productReference = 56156D492A9581C7000DF906 /* PedalBoard.app */;
 			productType = "com.apple.product-type.application";
+		};
+		56827F272A95869D0043277A /* PedalCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56827F3F2A95869D0043277A /* Build configuration list for PBXNativeTarget "PedalCore" */;
+			buildPhases = (
+				56827F232A95869D0043277A /* Headers */,
+				56827F242A95869D0043277A /* Sources */,
+				56827F252A95869D0043277A /* Frameworks */,
+				56827F262A95869D0043277A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PedalCore;
+			productName = PedalCore;
+			productReference = 56827F282A95869D0043277A /* PedalCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		56827F302A95869D0043277A /* PedalCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 56827F422A95869D0043277A /* Build configuration list for PBXNativeTarget "PedalCoreTests" */;
+			buildPhases = (
+				56827F2D2A95869D0043277A /* Sources */,
+				56827F2E2A95869D0043277A /* Frameworks */,
+				56827F2F2A95869D0043277A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				56827F342A95869D0043277A /* PBXTargetDependency */,
+				56827F362A95869D0043277A /* PBXTargetDependency */,
+			);
+			name = PedalCoreTests;
+			productName = PedalCoreTests;
+			productReference = 56827F312A95869D0043277A /* PedalCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -99,6 +235,13 @@
 				TargetAttributes = {
 					56156D482A9581C7000DF906 = {
 						CreatedOnToolsVersion = 13.2.1;
+					};
+					56827F272A95869D0043277A = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					56827F302A95869D0043277A = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 56156D482A9581C7000DF906;
 					};
 				};
 			};
@@ -116,6 +259,8 @@
 			projectRoot = "";
 			targets = (
 				56156D482A9581C7000DF906 /* PedalBoard */,
+				56827F272A95869D0043277A /* PedalCore */,
+				56827F302A95869D0043277A /* PedalCoreTests */,
 			);
 		};
 /* End PBXProject section */
@@ -130,6 +275,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		56827F262A95869D0043277A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56827F2F2A95869D0043277A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -137,12 +296,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56156D4F2A9581C7000DF906 /* ContentView.swift in Sources */,
 				56156D4D2A9581C7000DF906 /* PedalBoardApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		56827F242A95869D0043277A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56827F472A9588350043277A /* HomeView.swift in Sources */,
+				56827F2C2A95869D0043277A /* PedalCore.docc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56827F2D2A95869D0043277A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56827F392A95869D0043277A /* PedalCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		56827F342A95869D0043277A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56827F272A95869D0043277A /* PedalCore */;
+			targetProxy = 56827F332A95869D0043277A /* PBXContainerItemProxy */;
+		};
+		56827F362A95869D0043277A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56156D482A9581C7000DF906 /* PedalBoard */;
+			targetProxy = 56827F352A95869D0043277A /* PBXContainerItemProxy */;
+		};
+		56827F3C2A95869D0043277A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56827F272A95869D0043277A /* PedalCore */;
+			targetProxy = 56827F3B2A95869D0043277A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		56156D552A9581CB000DF906 /* Debug */ = {
@@ -264,6 +457,7 @@
 		56156D582A9581CB000DF906 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -292,6 +486,7 @@
 		56156D592A9581CB000DF906 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -317,6 +512,98 @@
 			};
 			name = Release;
 		};
+		56827F402A95869D0043277A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pb.PedalCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		56827F412A95869D0043277A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pb.PedalCore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		56827F432A95869D0043277A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pb.PedalCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PedalBoard.app/PedalBoard";
+			};
+			name = Debug;
+		};
+		56827F442A95869D0043277A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pb.PedalCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PedalBoard.app/PedalBoard";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -334,6 +621,24 @@
 			buildConfigurations = (
 				56156D582A9581CB000DF906 /* Debug */,
 				56156D592A9581CB000DF906 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56827F3F2A95869D0043277A /* Build configuration list for PBXNativeTarget "PedalCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56827F402A95869D0043277A /* Debug */,
+				56827F412A95869D0043277A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		56827F422A95869D0043277A /* Build configuration list for PBXNativeTarget "PedalCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56827F432A95869D0043277A /* Debug */,
+				56827F442A95869D0043277A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
