@@ -8,11 +8,18 @@
 import SwiftUI
 
 public struct HomeView: View {
+    @ObservedObject var viewModel: HomeViewModel
+    
     public init() {
-        
+        viewModel = HomeViewModel()
     }
     public var body: some View {
-        Text("List of pedals")
+        Button {
+            viewModel.addPedal(name: "Test")
+        } label: {
+            Text("Create pedal")
+        }
+
     }
 }
 
