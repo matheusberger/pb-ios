@@ -11,26 +11,42 @@ public struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
     @State var pedalName: String = ""
     @State var pedalBrand: String = ""
-    @State var knobName: String = ""
+    @State var knobNames: [String] = [""]
     
     public init() {
         viewModel = HomeViewModel()
     }
     
     public var body: some View {
-        VStack {
+        List {
             TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here"))
             TextField("Pedal brand:", text: $pedalBrand, prompt: Text("Name the pedal brand here"))
-            TextField("Knob name:", text: $knobName, prompt: Text("Name the knob here"))
+            
+            VStack {
+                ForEach(Array(knobNames.enumerated()), id: \.offset) { index, element in
+                    TextField("Knob name:", text: $knobNames[index], prompt: Text("Name the knob here"))
+                }
+                Button {
+                    knobNames.append("")
+                } label: {
+                    Text("Add knob")
+                }
+                .buttonStyle(.borderedProminent)
+            }
             
             Button {
-                viewModel.addPedal(name: pedalName, brand: pedalBrand, knobs: [knobName:0])
+                viewModel.addPedal(name: pedalName, brand: pedalBrand, knobNames: knobNames)
                 pedalName = ""
                 pedalBrand = ""
-                knobName = ""
+                knobNames = [""]
             } label: {
-                Text("Create pedal")
+                HStack {
+                    Spacer()
+                    Text("Create pedal")
+                    Spacer()
+                }
             }
+            .buttonStyle(.borderedProminent)
         }
     }
 }
