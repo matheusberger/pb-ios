@@ -17,6 +17,8 @@
 		56827F3D2A95869D0043277A /* PedalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56827F282A95869D0043277A /* PedalCore.framework */; };
 		56827F3E2A95869D0043277A /* PedalCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 56827F282A95869D0043277A /* PedalCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		56827F472A9588350043277A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56827F462A9588350043277A /* HomeView.swift */; };
+		56827F4B2A9597FA0043277A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56827F4A2A9597FA0043277A /* HomeViewModel.swift */; };
+		56827F4E2A959DBB0043277A /* Pedal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56827F4D2A959DBB0043277A /* Pedal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		56827F312A95869D0043277A /* PedalCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PedalCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56827F382A95869D0043277A /* PedalCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalCoreTests.swift; sourceTree = "<group>"; };
 		56827F462A9588350043277A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		56827F4A2A9597FA0043277A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		56827F4D2A959DBB0043277A /* Pedal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pedal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,9 +142,11 @@
 		56827F292A95869D0043277A /* PedalCore */ = {
 			isa = PBXGroup;
 			children = (
+				56827F4C2A959D8C0043277A /* Models */,
+				56827F492A95977D0043277A /* ViewModels */,
+				56827F482A95976D0043277A /* Views */,
 				56827F2A2A95869D0043277A /* PedalCore.h */,
 				56827F2B2A95869D0043277A /* PedalCore.docc */,
-				56827F462A9588350043277A /* HomeView.swift */,
 			);
 			path = PedalCore;
 			sourceTree = "<group>";
@@ -151,6 +157,30 @@
 				56827F382A95869D0043277A /* PedalCoreTests.swift */,
 			);
 			path = PedalCoreTests;
+			sourceTree = "<group>";
+		};
+		56827F482A95976D0043277A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56827F462A9588350043277A /* HomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		56827F492A95977D0043277A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				56827F4A2A9597FA0043277A /* HomeViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		56827F4C2A959D8C0043277A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				56827F4D2A959DBB0043277A /* Pedal.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,7 +334,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56827F4E2A959DBB0043277A /* Pedal.swift in Sources */,
 				56827F472A9588350043277A /* HomeView.swift in Sources */,
+				56827F4B2A9597FA0043277A /* HomeViewModel.swift in Sources */,
 				56827F2C2A95869D0043277A /* PedalCore.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
