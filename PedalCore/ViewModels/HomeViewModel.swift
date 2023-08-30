@@ -16,6 +16,5 @@ class HomeViewModel: ObservableObject {
         })
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
         pedals.append(newPedal)
-        print(pedals)
     }
 }
