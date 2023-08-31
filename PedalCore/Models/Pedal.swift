@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Pedal {
+struct Pedal: Hashable {
     var name: String
     var brand: String
     var knobs: [String: Int]
