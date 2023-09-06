@@ -19,35 +19,67 @@ public struct HomeView: View {
     
     public var body: some View {
         List {
-            TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here"))
-            TextField("Pedal brand:", text: $pedalBrand, prompt: Text("Name the pedal brand here"))
-            
-            VStack {
-                ForEach(Array(knobNames.enumerated()), id: \.offset) { index, element in
-                    TextField("Knob name:", text: $knobNames[index], prompt: Text("Name the knob here"))
-                }
-                Button {
-                    knobNames.append("")
-                } label: {
-                    Text("Add knob")
-                }
-                .buttonStyle(.borderedProminent)
+            Section {
+                createPedalView
+            } header: {
+                Text("create your pedal below:")
             }
             
-            Button {
-                viewModel.addPedal(name: pedalName, brand: pedalBrand, knobNames: knobNames)
-                pedalName = ""
-                pedalBrand = ""
-                knobNames = [""]
-            } label: {
-                HStack {
-                    Spacer()
-                    Text("Create pedal")
-                    Spacer()
+            Section {
+                listPedalView
+            } header: {
+                Text("pedal list:")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var listPedalView: some View {
+        ForEach(viewModel.pedals, id: \.self) { pedal in
+            HStack {
+                Text(pedal.name)
+                Spacer()
+                Text(pedal.brand)
+                Spacer()
+                VStack {
+                    ForEach(Array(pedal.knobs.keys), id: \.self) { name in
+                        Text(name)
+                    }
                 }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var createPedalView: some View {
+        TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here"))
+        TextField("Pedal brand:", text: $pedalBrand, prompt: Text("Name the pedal brand here"))
+        
+        VStack {
+            ForEach(Array(knobNames.enumerated()), id: \.offset) { index, element in
+                TextField("Knob name:", text: $knobNames[index], prompt: Text("Name the knob here"))
+            }
+            Button {
+                knobNames.append("")
+            } label: {
+                Text("Add knob")
             }
             .buttonStyle(.borderedProminent)
         }
+        
+        Button {
+            viewModel.addPedal(name: pedalName, brand: pedalBrand, knobNames: knobNames)
+            pedalName = ""
+            pedalBrand = ""
+            knobNames = [""]
+        } label: {
+            HStack {
+                Spacer()
+                Text("Create pedal")
+                Spacer()
+            }
+        }
+        .buttonStyle(.borderedProminent)
     }
 }
 
