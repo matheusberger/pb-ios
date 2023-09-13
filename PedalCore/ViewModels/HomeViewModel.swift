@@ -9,12 +9,15 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     @Published var pedals: [Pedal] = []
-
-    func addPedal(name: String, brand: String, knobNames: [String]) {
-        let knobs = Dictionary(uniqueKeysWithValues: knobNames.map { name in
-            (name, 0)
-        })
-        let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
-        pedals.append(newPedal)
+    
+    func getPedalFormViewModel() -> PedalFormViewModel {
+        let name = ""
+        let brand = ""
+        let knobs = [String:Int]()
+        let pedal = Pedal(name: name, brand: brand, knobs: knobs)
+        
+        return PedalFormViewModel(pedal: pedal) { newPedal in
+            self.pedals.append(newPedal)
+        }
     }
 }
