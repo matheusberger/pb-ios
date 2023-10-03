@@ -8,15 +8,27 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
-    @Published var pedals: [Pedal] = []
+    @Published var allPedals: [Pedal] = []
     @Published var isShowingSheet: Bool = false
+    
+    @Published var searchText: String = ""
+    
+    public var filteredPedals: [Pedal] {
+        if searchText.isEmpty {
+            return allPedals
+        } else {
+            return allPedals.filter { pedal in
+                pedal.name.localizedCaseInsensitiveContains(searchText) || pedal.brand.localizedCaseInsensitiveContains(searchText)
+            }
+        }
 
+    }
 
     func addIconPressed() {
         isShowingSheet = true
     }
     
-    
+    // for debugging
     func populatePedals() {
         let famousPedals: [Pedal] = [
             Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [
@@ -67,7 +79,7 @@ class HomeViewModel: ObservableObject {
         ]
 
         
-        pedals = famousPedals
+        allPedals = famousPedals
     }
 }
 
@@ -93,7 +105,7 @@ extension HomeViewModel: AddPedalDelegate {
         }
         
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
-        pedals.append(newPedal)
+        allPedals.append(newPedal)
         
         isShowingSheet = false
         
