@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
-    @State var isShowingSheet: Bool = false
+    
     
     public init() {
         viewModel = HomeViewModel()
@@ -21,7 +21,7 @@ public struct HomeView: View {
                 Text(pedal.name)
             }
             
-            .sheet(isPresented: $isShowingSheet) {
+            .sheet(isPresented: $viewModel.isShowingSheet) {
                 CreatePedalView(delegate: viewModel)
             }
             
@@ -29,7 +29,7 @@ public struct HomeView: View {
             
             .toolbar {
                 Button {
-                    isShowingSheet = true
+                    viewModel.addIconPressed()
                 } label: {
                     Image(systemName: "plus")
                 }

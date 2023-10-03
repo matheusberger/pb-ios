@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3293B72ACB5F0F00A9BC34 /* Knob.swift */; };
 		0C3293B92ACB607100A9BC34 /* CreatePedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */; };
+		0C48B1712ACBB11A00E52627 /* AddPedalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */; };
+		0C48B1742ACBB14400E52627 /* AddPedalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1732ACBB14400E52627 /* AddPedalError.swift */; };
 		56156D4D2A9581C7000DF906 /* PedalBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */; };
 		56156D512A9581CB000DF906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D502A9581CB000DF906 /* Assets.xcassets */; };
 		56156D542A9581CB000DF906 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D532A9581CB000DF906 /* Preview Assets.xcassets */; };
@@ -64,6 +66,8 @@
 /* Begin PBXFileReference section */
 		0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePedalView.swift; sourceTree = "<group>"; };
 		0C3293B72ACB5F0F00A9BC34 /* Knob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
+		0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPedalDelegate.swift; sourceTree = "<group>"; };
+		0C48B1732ACBB14400E52627 /* AddPedalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPedalError.swift; sourceTree = "<group>"; };
 		56156D492A9581C7000DF906 /* PedalBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedalBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalBoardApp.swift; sourceTree = "<group>"; };
 		56156D502A9581CB000DF906 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -105,6 +109,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C48B16F2ACBB10A00E52627 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0C48B1722ACBB13200E52627 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				0C48B1732ACBB14400E52627 /* AddPedalError.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		56156D402A9581C7000DF906 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +166,8 @@
 		56827F292A95869D0043277A /* PedalCore */ = {
 			isa = PBXGroup;
 			children = (
+				0C48B1722ACBB13200E52627 /* Enums */,
+				0C48B16F2ACBB10A00E52627 /* Protocols */,
 				56827F4C2A959D8C0043277A /* Models */,
 				56827F492A95977D0043277A /* ViewModels */,
 				56827F482A95976D0043277A /* Views */,
@@ -342,10 +364,12 @@
 			files = (
 				56827F4E2A959DBB0043277A /* Pedal.swift in Sources */,
 				0C3293B92ACB607100A9BC34 /* CreatePedalView.swift in Sources */,
+				0C48B1712ACBB11A00E52627 /* AddPedalDelegate.swift in Sources */,
 				56827F472A9588350043277A /* HomeView.swift in Sources */,
 				0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */,
 				56827F4B2A9597FA0043277A /* HomeViewModel.swift in Sources */,
 				56827F2C2A95869D0043277A /* PedalCore.docc in Sources */,
+				0C48B1742ACBB14400E52627 /* AddPedalError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
