@@ -34,7 +34,7 @@ extension HomeViewModel: AddPedalDelegate {
         
         var knobs: [Knob] {
             knobNames.map { name in
-                Knob(name: name)
+                Knob(parameter: name)
             }
         }
         

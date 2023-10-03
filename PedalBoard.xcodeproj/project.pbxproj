@@ -12,6 +12,7 @@
 		0C48B1712ACBB11A00E52627 /* AddPedalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */; };
 		0C48B1742ACBB14400E52627 /* AddPedalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1732ACBB14400E52627 /* AddPedalError.swift */; };
 		0C48B1762ACBB27500E52627 /* PedalRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1752ACBB27500E52627 /* PedalRow.swift */; };
+		0C48B1782ACBB5FF00E52627 /* KnobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1772ACBB5FF00E52627 /* KnobView.swift */; };
 		56156D4D2A9581C7000DF906 /* PedalBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */; };
 		56156D512A9581CB000DF906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D502A9581CB000DF906 /* Assets.xcassets */; };
 		56156D542A9581CB000DF906 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D532A9581CB000DF906 /* Preview Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPedalDelegate.swift; sourceTree = "<group>"; };
 		0C48B1732ACBB14400E52627 /* AddPedalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPedalError.swift; sourceTree = "<group>"; };
 		0C48B1752ACBB27500E52627 /* PedalRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalRow.swift; sourceTree = "<group>"; };
+		0C48B1772ACBB5FF00E52627 /* KnobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnobView.swift; sourceTree = "<group>"; };
 		56156D492A9581C7000DF906 /* PedalBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedalBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalBoardApp.swift; sourceTree = "<group>"; };
 		56156D502A9581CB000DF906 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				56827F462A9588350043277A /* HomeView.swift */,
 				0C48B1752ACBB27500E52627 /* PedalRow.swift */,
+				0C48B1772ACBB5FF00E52627 /* KnobView.swift */,
 				0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */,
 			);
 			path = Views;
@@ -371,6 +374,7 @@
 				56827F472A9588350043277A /* HomeView.swift in Sources */,
 				0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */,
 				56827F4B2A9597FA0043277A /* HomeViewModel.swift in Sources */,
+				0C48B1782ACBB5FF00E52627 /* KnobView.swift in Sources */,
 				0C48B1762ACBB27500E52627 /* PedalRow.swift in Sources */,
 				56827F2C2A95869D0043277A /* PedalCore.docc in Sources */,
 				0C48B1742ACBB14400E52627 /* AddPedalError.swift in Sources */,
