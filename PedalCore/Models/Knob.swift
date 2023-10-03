@@ -12,7 +12,7 @@ struct Knob {
     var id: UUID = UUID()
     
     /// Knob label
-    var name: String
+    var parameter: String
     /// Intensity of Knob. Range 0 to 1
     var level: Float = 0.5
 }

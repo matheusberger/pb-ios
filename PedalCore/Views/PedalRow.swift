@@ -10,6 +10,7 @@ import SwiftUI
 struct PedalRow: View {
     var pedal: Pedal
     
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text(pedal.name)
@@ -19,6 +20,16 @@ struct PedalRow: View {
             Text(pedal.brand)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+            
+            ScrollView(.horizontal) {
+                HStack(spacing: 30) {
+                    ForEach(pedal.knobs, id: \.parameter) { knob in
+                        KnobView(knob: knob)
+                    }
+                }
+                .padding(.horizontal, 10)
+                
+            }
         }
     }
 }
@@ -27,9 +38,9 @@ struct PedalRow_Previews: PreviewProvider {
     static var previews: some View {
         PedalRow(pedal: Pedal(name: "Big Muff Pi",
                               brand: "Eletro Hamonix",
-                              knobs: [    Knob(name: "Volume"),
-                                          Knob(name: "Tone"),
-                                          Knob(name: "Gain")
+                              knobs: [    Knob(parameter: "Volume", level: 0.25),
+                                          Knob(parameter: "Tone", level: 0.5),
+                                          Knob(parameter: "Gain", level: 0.9)
                                      ]
                              )
         )
