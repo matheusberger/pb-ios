@@ -28,6 +28,14 @@ public struct HomeView: View {
             .navigationTitle("Pedal List")
             
             .toolbar {
+                
+                // testing view
+                Button {
+                    viewModel.populatePedals()
+                } label: {
+                    Image(systemName: "eyes")
+                }
+                
                 Button {
                     viewModel.addIconPressed()
                 } label: {
