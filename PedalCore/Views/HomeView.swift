@@ -9,78 +9,34 @@ import SwiftUI
 
 public struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
-    @State var pedalName: String = ""
-    @State var pedalBrand: String = ""
-    @State var knobNames: [String] = [""]
+    @State var isShowingSheet: Bool = false
     
     public init() {
         viewModel = HomeViewModel()
     }
     
     public var body: some View {
-        List {
-            Section {
-                createPedalView
-            } header: {
-                Text("create your pedal below:")
+        NavigationView {
+            List(viewModel.pedals, id: \.id) { pedal in
+                Text(pedal.name)
             }
             
-            Section {
-                listPedalView
-            } header: {
-                Text("pedal list:")
+            .sheet(isPresented: $isShowingSheet) {
+                CreatePedalView(delegate: viewModel)
             }
-        }
-    }
-    
-    @ViewBuilder
-    private var listPedalView: some View {
-        ForEach(viewModel.pedals, id: \.self) { pedal in
-            HStack {
-                Text(pedal.name)
-                Spacer()
-                Text(pedal.brand)
-                Spacer()
-                VStack {
-                    ForEach(Array(pedal.knobs.keys), id: \.self) { name in
-                        Text(name)
-                    }
+            
+            .navigationTitle("Pedal List")
+            
+            .toolbar {
+                Button {
+                    isShowingSheet = true
+                } label: {
+                    Image(systemName: "plus")
                 }
             }
         }
     }
     
-    @ViewBuilder
-    private var createPedalView: some View {
-        TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here"))
-        TextField("Pedal brand:", text: $pedalBrand, prompt: Text("Name the pedal brand here"))
-        
-        VStack {
-            ForEach(Array(knobNames.enumerated()), id: \.offset) { index, element in
-                TextField("Knob name:", text: $knobNames[index], prompt: Text("Name the knob here"))
-            }
-            Button {
-                knobNames.append("")
-            } label: {
-                Text("Add knob")
-            }
-            .buttonStyle(.borderedProminent)
-        }
-        
-        Button {
-            viewModel.addPedal(name: pedalName, brand: pedalBrand, knobNames: knobNames)
-            pedalName = ""
-            pedalBrand = ""
-            knobNames = [""]
-        } label: {
-            HStack {
-                Spacer()
-                Text("Create pedal")
-                Spacer()
-            }
-        }
-        .buttonStyle(.borderedProminent)
-    }
 }
 
 struct HomeView_Previews: PreviewProvider {

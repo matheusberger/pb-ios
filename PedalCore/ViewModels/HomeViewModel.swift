@@ -11,10 +11,21 @@ class HomeViewModel: ObservableObject {
     @Published var pedals: [Pedal] = []
 
     func addPedal(name: String, brand: String, knobNames: [String]) {
-        let knobs = Dictionary(uniqueKeysWithValues: knobNames.map { name in
-            (name, 0)
-        })
+        var knobs: [Knob] {
+            knobNames.map { name in
+                Knob(name: name)
+            }
+        }
+        
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
         pedals.append(newPedal)
     }
+}
+
+extension HomeViewModel: AddPedalDelegate {
+    func addPedalPressed(name: String, brand: String, knobNames: [String]) {
+        
+    }
+    
+    
 }
