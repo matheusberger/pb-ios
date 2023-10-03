@@ -18,7 +18,7 @@ public struct HomeView: View {
     public var body: some View {
         NavigationView {
             List(viewModel.pedals, id: \.id) { pedal in
-                Text(pedal.name)
+                PedalRow(pedal: pedal)
             }
             
             .sheet(isPresented: $viewModel.isShowingSheet) {
@@ -38,6 +38,7 @@ public struct HomeView: View {
     }
     
 }
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

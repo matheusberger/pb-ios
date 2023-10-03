@@ -40,8 +40,8 @@ extension HomeViewModel: AddPedalDelegate {
         
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
         pedals.append(newPedal)
-        isShowingSheet = false
         
+        isShowingSheet = false
         
     }
     
