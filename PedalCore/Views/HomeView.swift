@@ -17,8 +17,9 @@ public struct HomeView: View {
     
     public var body: some View {
         NavigationView {
-            List(viewModel.pedals, id: \.id) { pedal in
+            List(viewModel.filteredPedals, id: \.id) { pedal in
                 PedalRow(pedal: pedal)
+                    .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
             }
             
             .sheet(isPresented: $viewModel.isShowingSheet) {
