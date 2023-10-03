@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct Pedal: Hashable {
+struct Pedal: Identifiable {
+    var id: UUID = UUID()
     var name: String
     var brand: String
-    var knobs: [String: Int]
+    var knobs: [Knob]
+    
 }
