@@ -17,11 +17,16 @@ public struct HomeView: View {
     
     public var body: some View {
         NavigationView {
-            List(viewModel.filteredPedals, id: \.id) { pedal in
-                PedalRow(pedal: pedal)
-                    .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
-            }
             
+            Group {
+                switch viewModel.state {
+                case .empty:
+                    emptyView
+                case .content:
+                    contentView
+                }
+            }
+           
             .sheet(isPresented: $viewModel.isShowingSheet) {
                 CreatePedalView(delegate: viewModel)
             }
@@ -44,6 +49,28 @@ public struct HomeView: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    private var emptyView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text("None pedals registered yet")
+                .font(.headline)
+            
+            Text("You may add new pedals by tapping in the superior button")
+                .font(.subheadline)
+        }
+        .foregroundStyle(.secondary)
+        .font(.headline)
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
+        List(viewModel.filteredPedals, id: \.id) { pedal in
+            PedalRow(pedal: pedal)
+                .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
+        }
+        
     }
     
 }

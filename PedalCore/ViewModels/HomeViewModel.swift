@@ -8,10 +8,24 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
+    
+    enum State {
+        case empty, content
+    }
+
+    
     @Published var allPedals: [Pedal] = []
     @Published var isShowingSheet: Bool = false
     
     @Published var searchText: String = ""
+    
+    var state: State {
+        if allPedals.isEmpty {
+            return .empty
+        } else {
+            return .content
+        }
+    }
     
     public var filteredPedals: [Pedal] {
         if searchText.isEmpty {
@@ -110,8 +124,5 @@ extension HomeViewModel: AddPedalDelegate {
         isShowingSheet = false
         
     }
-    
-    
-    
     
 }

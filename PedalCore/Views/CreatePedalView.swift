@@ -22,7 +22,7 @@ struct CreatePedalView: View {
         
         Form {
             Section("Name") {
-                TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here"))
+                TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here") )
             }
           
             Section("Brand") {
