@@ -20,7 +20,7 @@ struct CreatePedalView: View {
     
     var body: some View {
         
-        Form {
+        List {
             Section("Name") {
                 TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here") )
             }
@@ -69,12 +69,14 @@ struct CreatePedalView: View {
               
             } label: {
                 HStack {
-                    Spacer()
+                    
                     Text("Create pedal")
-                    Spacer()
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+
                 }
             }
-            .buttonStyle(.borderedProminent)
+          
         }
         
         .alert("Failed to save new pedal", isPresented: $isPresentingAlert) {

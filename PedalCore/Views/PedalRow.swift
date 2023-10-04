@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PedalRow: View {
-    var pedal: Pedal
     
+    var pedal: Pedal
     
     var body: some View {
         VStack(alignment: .leading) {
