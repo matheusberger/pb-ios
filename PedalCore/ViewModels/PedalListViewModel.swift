@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  PedalListViewModel.swift
 //  PedalCore
 //
 //  Created by Migge on 22/08/23.
@@ -7,12 +7,11 @@
 
 import Foundation
 
-class HomeViewModel: ObservableObject {
+class PedalListViewModel: ObservableObject {
     
     enum State {
         case empty, content
     }
-
     
     @Published var allPedals: [Pedal] = []
     @Published var isShowingSheet: Bool = false
@@ -35,9 +34,9 @@ class HomeViewModel: ObservableObject {
                 pedal.name.localizedCaseInsensitiveContains(searchText) || pedal.brand.localizedCaseInsensitiveContains(searchText)
             }
         }
-
+        
     }
-
+    
     func addIconPressed() {
         isShowingSheet = true
     }
@@ -91,13 +90,13 @@ class HomeViewModel: ObservableObject {
                 Knob(parameter: "Intensity", level: 0.6)
             ])
         ]
-
+        
         
         allPedals = famousPedals
     }
 }
 
-extension HomeViewModel: AddPedalDelegate {
+extension PedalListViewModel: AddPedalDelegate {
     func addPedalPressed(name: String, brand: String, knobNames: [String]) throws {
         if name.isEmpty {
             throw AddPedalError.missingName

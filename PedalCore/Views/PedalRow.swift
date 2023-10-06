@@ -24,7 +24,7 @@ struct PedalRow: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 30) {
                     ForEach(pedal.knobs, id: \.parameter) { knob in
-                        KnobView(knob: knob)
+                        KnobView(viewModel: KnobViewModel(knob: knob))
                     }
                 }
                 .padding(.horizontal, 10)
