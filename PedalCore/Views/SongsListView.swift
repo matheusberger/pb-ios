@@ -7,7 +7,14 @@
 
 import SwiftUI
 
-struct SongsListView: View {
+struct SongsListView: View, AddSongDelegate {
+
+    func addSong(name: String, artist: String, pedals: [Pedal]) {
+        let newSong = Song(name: name, band: artist, pedals: pedals)
+        self.songs.append(newSong)
+        isShowingSheet = false
+    }
+    
     
     @State var songs: [Song] = [
         Song(name: "Paranoid Android",
@@ -46,44 +53,61 @@ struct SongsListView: View {
             ),
     ]
     
+    @State var isShowingSheet: Bool = false
+    
     var body: some View {
         NavigationView {
-            List(songs) { song in
-                VStack(alignment: .leading) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(song.name)
-                                .font(.headline)
-                                .foregroundStyle(.primary)
-                            
-                            Text(song.band)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                        
-                        Spacer()
-                    }
-                  
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background {
-                        Color.accentColor
-                    }
-                    .cornerRadius(10)
-                    
-                    ForEach(song.pedals) { pedal in
-                        
-                        PedalRow(pedal: pedal)
-                            .padding(.vertical)
-                    }
-                    
-                }
-                
-            }
+           listView
             .navigationTitle("My Songs")
+            .sheet(isPresented: $isShowingSheet) {
+                CreateSongView(availablePedals: Pedal.getFamousPedals(), delegate: self)
+            }
+            .toolbar {
+                Button {
+                    isShowingSheet.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
         }
         
        
+    }
+    
+    @ViewBuilder
+    private var listView: some View {
+        List(songs) { song in
+            VStack(alignment: .leading) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(song.name)
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                        
+                        Text(song.band)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    Spacer()
+                }
+              
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background {
+                    Color.accentColor
+                }
+                .cornerRadius(10)
+                
+                ForEach(song.pedals) { pedal in
+                    
+                    PedalRow(pedal: pedal)
+                        .padding(.vertical)
+                }
+                
+            }
+            
+        }
     }
 }
 

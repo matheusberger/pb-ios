@@ -20,6 +20,7 @@
 		0C67866E2ACF040300CE7FE0 /* KnobViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67866D2ACF040300CE7FE0 /* KnobViewModel.swift */; };
 		0C6786702ACF295800CE7FE0 /* PedalDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C67866F2ACF295800CE7FE0 /* PedalDetailView.swift */; };
 		0C6786722ACF764200CE7FE0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6786712ACF764200CE7FE0 /* HomeView.swift */; };
+		0C6786742ACFAE6A00CE7FE0 /* SelectPedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6786732ACFAE6A00CE7FE0 /* SelectPedalView.swift */; };
 		56156D4D2A9581C7000DF906 /* PedalBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */; };
 		56156D512A9581CB000DF906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D502A9581CB000DF906 /* Assets.xcassets */; };
 		56156D542A9581CB000DF906 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D532A9581CB000DF906 /* Preview Assets.xcassets */; };
@@ -86,6 +87,7 @@
 		0C67866D2ACF040300CE7FE0 /* KnobViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnobViewModel.swift; sourceTree = "<group>"; };
 		0C67866F2ACF295800CE7FE0 /* PedalDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalDetailView.swift; sourceTree = "<group>"; };
 		0C6786712ACF764200CE7FE0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0C6786732ACFAE6A00CE7FE0 /* SelectPedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPedalView.swift; sourceTree = "<group>"; };
 		56156D492A9581C7000DF906 /* PedalBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedalBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalBoardApp.swift; sourceTree = "<group>"; };
 		56156D502A9581CB000DF906 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				0C67866F2ACF295800CE7FE0 /* PedalDetailView.swift */,
 				0C48B17D2ACD089C00E52627 /* SongsListView.swift */,
 				0C48B17F2ACDFFB600E52627 /* CreateSongView.swift */,
+				0C6786732ACFAE6A00CE7FE0 /* SelectPedalView.swift */,
 				0C48B1752ACBB27500E52627 /* PedalRow.swift */,
 				0C48B1772ACBB5FF00E52627 /* KnobView.swift */,
 				0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */,
@@ -398,6 +401,7 @@
 				0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */,
 				0C48B17C2ACD07E300E52627 /* Song.swift in Sources */,
 				0C48B1802ACDFFB600E52627 /* CreateSongView.swift in Sources */,
+				0C6786742ACFAE6A00CE7FE0 /* SelectPedalView.swift in Sources */,
 				56827F4B2A9597FA0043277A /* PedalListViewModel.swift in Sources */,
 				0C67866C2ACF03E100CE7FE0 /* PedaDetailViewModel.swift in Sources */,
 				0C48B17E2ACD089C00E52627 /* SongsListView.swift in Sources */,
