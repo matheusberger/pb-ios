@@ -9,18 +9,7 @@ import SwiftUI
 
 struct PedalDetailView: View {
     
-    //    @ObservedObject var viewModel: PedalDetailViewModel
-    //
-    //    init(pedal: Pedal = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [
-    //        Knob(parameter: "Drive"),
-    //        Knob(parameter: "Tone"),
-    //        Knob(parameter: "Level")
-    //    ])) {
-    //        self.viewModel = PedalDetailViewModel(pedal: pedal)
-    //    }
-    
-    var pedal: Pedal
-    
+    @Binding var pedal: Pedal
     
     var body: some View {
         
@@ -36,8 +25,8 @@ struct PedalDetailView: View {
             
             Section {
                 LazyVGrid(columns: [GridItem(),GridItem()], content: {
-                    ForEach(pedal.knobs, id: \.parameter) { knob in
-                        KnobView(viewModel: KnobViewModel(knob: knob))
+                    ForEach(pedal.knobs.indices, id: \.self) { index in
+                        KnobView(knob: $pedal.knobs[index])
                             .padding()
                     }
                 })
@@ -55,9 +44,9 @@ struct PedalDetailView: View {
 }
 
 #Preview {
-    PedalDetailView(pedal: Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [
+    PedalDetailView(pedal: .constant(Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [
         Knob(parameter: "Drive"),
         Knob(parameter: "Tone"),
         Knob(parameter: "Level")
-    ]))
+    ])))
 }
