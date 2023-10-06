@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-protocol AddSongDelegate {
-    func addSong(name: String, artist: String, pedals: [Pedal])
-    
-}
+
 
 struct CreateSongView: View {
     
