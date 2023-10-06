@@ -18,21 +18,24 @@ struct SelectPedalView: View {
         Form {
             Section {
                 List(pedals) { pedal in
-                    /*@START_MENU_TOKEN@*/Text(pedal.name)/*@END_MENU_TOKEN@*/
-                        .onTapGesture {
-                            didSelect(pedal)
-                            dismiss()
-                        }
-                        .navigationTitle("Select a pedal")
+                    Button {
+                           didSelect(pedal)
+                           dismiss()
+                    } label: {
+                           Text(pedal.name)
+                               
+                       }
+                       .foregroundStyle(.primary)
+                    
                 }
             } header: {
                 Text("Your PedalBoard")
             } footer: {
                 Text("You can add new pedals on pedal List view")
             }
-            
+            .navigationTitle("Select a pedal")
         }
-
+        
     }
 }
 
