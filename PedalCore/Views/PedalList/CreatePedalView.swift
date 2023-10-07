@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreatePedalView: View {
-
+    
     @State var pedalName: String = ""
     @State var brandName: String = ""
     @State var knobNames: [String] = []
@@ -24,59 +24,46 @@ struct CreatePedalView: View {
             Section("Name") {
                 TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here") )
             }
-          
+            
             Section("Brand") {
                 TextField("Pedal brand:", text: $brandName, prompt: Text("Name the pedal brand here"))
             }
-          
             
-            Section("Knobs") {
-                VStack {
+            Section {
+                VStack(alignment: .leading) {
                     ForEach(Array(knobNames.enumerated()), id: \.offset) { index, element in
                         TextField("Knob name:", text: $knobNames[index], prompt: Text("Name the knob here"))
                     }
-                    HStack {
-                         Spacer()
-                        Button {
-                            knobNames.append("")
-                        } label: {
-                            Text("Add knob")
-                        }
-                        .buttonStyle(.borderedProminent)
-                        Spacer()
+                    
+                    
+                    Button {
+                        knobNames.append("")
+                    } label: {
+                        Text("Add knob")
                     }
-                   
+                    
+                    
+                    
+                }
+            } header: {
+                Text("Knobs")
+            } footer: {
+                Text("You pedal shoud have a least one knob, right?")
+            }
+
+            
+            Section("Save") {
+                Button {
+                    createPedalPressed()
+                    
+                } label: {
+                    Text("Create pedal")
+                        .font(.headline)
+                    
                 }
             }
             
-            Button {
-                do {
-                    try delegate?.addPedalPressed(name: pedalName, brand: brandName, knobNames: knobNames)
-                    
-                } catch {
-                    if let pedalError = error as? AddPedalError {
-                        isPresentingAlert = true
-                        switch pedalError {
-                        case .missingName:
-                           alertMessage = "Please, provide the pedal name"
-                        case .missingBrand:
-                            alertMessage = "Please, provide a brand of the pedal"
-                        case .missingKnobs:
-                            alertMessage = "Please, provide a knob name for your pedal"
-                        }
-                    }
-                }
-              
-            } label: {
-                HStack {
-                    
-                    Text("Create pedal")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-
-                }
-            }
-          
+            
         }
         
         .alert("Failed to save new pedal", isPresented: $isPresentingAlert) {
@@ -84,7 +71,26 @@ struct CreatePedalView: View {
         } message: {
             Text(alertMessage)
         }
-
+        
+    }
+    
+    private func createPedalPressed() {
+        do {
+            try delegate?.addPedalPressed(name: pedalName, brand: brandName, knobNames: knobNames)
+            
+        } catch {
+            if let pedalError = error as? AddPedalError {
+                isPresentingAlert = true
+                switch pedalError {
+                case .missingName:
+                    alertMessage = "Please, provide the pedal name"
+                case .missingBrand:
+                    alertMessage = "Please, provide a brand of the pedal"
+                case .missingKnobs:
+                    alertMessage = "Please, provide a knob name for your pedal"
+                }
+            }
+        }
     }
     
     
@@ -94,6 +100,6 @@ struct CreatePedalView: View {
 
 struct CreatePedalView_Previews: PreviewProvider {
     static var previews: some View {
-      CreatePedalView()
+        CreatePedalView()
     }
 }

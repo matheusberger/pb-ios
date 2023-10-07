@@ -11,3 +11,4 @@ import Foundation
 enum AddPedalError: Error {
     case missingName, missingBrand, missingKnobs
 }
+

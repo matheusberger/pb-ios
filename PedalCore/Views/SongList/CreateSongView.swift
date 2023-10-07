@@ -21,16 +21,25 @@ struct CreateSongView: View {
     
     @State private var selectedPedalIndex = 0
     
+    @State var isPresentingAlert: Bool = false
+    @State var alertMessage: String = ""
+    
+    
     var body: some View {
         NavigationView {
             Form {
-                Section("Song Info") {
+                
+                Section {
                     TextField("Song name", text: $songName, prompt: Text("Name of the song"))
                     TextField("Band name", text: $bandName, prompt: Text("ArtistName"))
-                    
+                } header: {
+                    Text("Song info")
+                } footer: {
+                    Text("You song must have a name and a artist")
                 }
+
                 
-                Section("Pedalboard") {
+                Section {
                     NavigationLink {
                         SelectPedalView(pedals: availablePedals) { selectedPedal in
                             pedalList.append(selectedPedal)
@@ -43,22 +52,28 @@ struct CreateSongView: View {
                     
                     knobsView
                     
+                } header: {
+                    Text("Pedalboard")
+                } footer: {
+                    Text("You can adjust the knob level by dragginh")
                 }
+
+                
                 
                 Section("Save") {
                     Button("Add Song") {
-                        delegate?.addSong(name: songName, artist: bandName, pedals: pedalList)
-                        
+                        addSongPressed()
                     }
+                    
+                    
                 }
-                
-                
-                
             }
-            .navigationTitle("Add new song")
+
+            
         }
-        
+        .navigationTitle("Add new song")
     }
+    
     
     @ViewBuilder
     var knobsView: some View {
@@ -78,6 +93,7 @@ struct CreateSongView: View {
         
     }
     
+    
     struct KnobListView: View {
         @Binding var knobs: [Knob]
         
@@ -88,9 +104,29 @@ struct CreateSongView: View {
                         .padding()
                 }
             }
-
+            
         }
         
+    }
+    
+    
+    private func addSongPressed() {
+        do {
+            try  delegate?.addSong(name: songName, artist: bandName, pedals: pedalList)
+        } catch {
+            if let songError = error as? AddSongError {
+                isPresentingAlert = true
+                switch songError {
+                case .missingName:
+                    alertMessage = "Please, provide a name for the song"
+                    
+                case .missingArtist:
+                    alertMessage = "Please, provide the artist name"
+                }
+
+                
+            }
+        }
     }
 }
 

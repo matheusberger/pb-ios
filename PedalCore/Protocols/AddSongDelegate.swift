@@ -8,6 +8,6 @@
 import Foundation
 
 protocol AddSongDelegate {
-    func addSong(name: String, artist: String, pedals: [Pedal])
+    func addSong(name: String, artist: String, pedals: [Pedal]) throws
     
 }
