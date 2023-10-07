@@ -10,12 +10,15 @@ import SwiftUI
 
 struct KnobView: View {
     
-    @State var dragOffset: CGSize = .zero
+    @State var isGestureEnabled: Bool
     
     @Binding var knob: Knob
     
-    private let sensitivity: Float = 0.00005
+    @State var dragOffset: CGSize = .zero
+    
+    let sensitivity: Float = 0.00005
 
+    
     private func maxTrin(for level: Float) -> CGFloat {
         return CGFloat(0.75 * level)
     }
@@ -67,12 +70,15 @@ struct KnobView: View {
             }
             
         }
-        .gesture(DragGesture().onChanged { value in
-            self.dragAction(value: value.translation)
-            
-        }.onEnded { _ in
-            self.dragEnded()
-        })
+        .gesture(
+            // Use um gesto condicional com base na variável de estado
+            isGestureEnabled ?
+            DragGesture().onChanged { value in
+                self.dragAction(value: value.translation)
+            }.onEnded { _ in
+                self.dragEnded()
+            } : nil
+        )
     }
 }
 
@@ -80,6 +86,6 @@ struct KnobView: View {
 struct KnobView_Previews: PreviewProvider {
     static var knob = Knob(parameter: "Drive", level: 0.5)
     static var previews: some View {
-        KnobView(knob: .constant(knob))
+        KnobView(isGestureEnabled: true, knob: .constant(knob), dragOffset: .zero)
     }
 }

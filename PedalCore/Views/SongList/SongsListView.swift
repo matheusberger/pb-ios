@@ -9,12 +9,21 @@ import SwiftUI
 
 struct SongsListView: View {
     
-    @ObservedObject var viewModel: SonglistViewModel = SonglistViewModel()
+    @ObservedObject var viewModel: SongListViewModel = SongListViewModel()
     
     
     var body: some View {
         NavigationView {
-           listView
+            
+            Group {
+                switch viewModel.state {
+                case .empty:
+                    emptyView
+                case .content:
+                    listView
+                }
+            }
+            
             .navigationTitle("My Songs")
             .sheet(isPresented: $viewModel.isShowingSheet) {
                 CreateSongView(availablePedals: Pedal.getFamousPedals(), delegate: viewModel)
@@ -24,6 +33,7 @@ struct SongsListView: View {
                 // testing view
                 Button {
                     viewModel.populateSongs()
+                    
                 } label: {
                     Image(systemName: "eyes")
                 }
@@ -36,12 +46,20 @@ struct SongsListView: View {
             }
         }
         
-       
+        
+    }
+    
+    @ViewBuilder
+    private var emptyView: some View {
+        Text("You haven't add any songs yet")
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+        
     }
     
     @ViewBuilder
     private var listView: some View {
-        List(viewModel.allSongs) { song in
+        List(viewModel.songs) { song in
             VStack(alignment: .leading) {
                 HStack {
                     VStack(alignment: .leading) {
@@ -56,7 +74,7 @@ struct SongsListView: View {
                     
                     Spacer()
                 }
-              
+                
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background {
@@ -71,6 +89,7 @@ struct SongsListView: View {
                 }
                 
             }
+            .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
             
         }
     }

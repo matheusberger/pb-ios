@@ -100,7 +100,7 @@ struct CreateSongView: View {
         var body: some View {
             LazyVGrid(columns: [GridItem(),GridItem()]) {
                 ForEach(knobs.indices, id: \.self) { index in
-                    KnobView(knob: $knobs[index])
+                    KnobView(isGestureEnabled: true, knob: $knobs[index])
                         .padding()
                 }
             }
