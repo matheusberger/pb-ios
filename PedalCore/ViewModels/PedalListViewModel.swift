@@ -13,10 +13,19 @@ class PedalListViewModel: ObservableObject {
         case empty, content
     }
     
-    @Published var allPedals: [Pedal] = []
+    var user: UserApple?
+    
+    @Published var allPedals: [Pedal]
     @Published var isShowingSheet: Bool = false
     
     @Published var searchText: String = ""
+    
+    
+    init(user: UserApple? = nil, allPedals: [Pedal] = []) {
+        self.user = user
+        self.allPedals = allPedals
+
+    }
     
     var state: State {
         if allPedals.isEmpty {

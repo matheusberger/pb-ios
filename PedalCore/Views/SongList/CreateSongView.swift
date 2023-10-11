@@ -50,7 +50,7 @@ struct CreateSongView: View {
                             .foregroundStyle(Color.accentColor)
                     }
                     
-                    knobsView
+                    pedalView
                     
                 } header: {
                     Text("Pedalboard")
@@ -74,14 +74,21 @@ struct CreateSongView: View {
         .navigationTitle("Add new song")
     }
     
+//    @ViewBuilder
+//    var pedalView2: some View {
+//        ForEach(pedalList, id: \.id) { pedal in
+//            print(type(of: pedal))
+//        }
+//    }
     
     @ViewBuilder
-    var knobsView: some View {
+    var pedalView: some View {
         ForEach(pedalList.indices, id: \.self) { pedalIndex in
             VStack(alignment: .leading) {
                 Text(pedalList[pedalIndex].name)
                     .font(.headline)
                     .foregroundStyle(.primary)
+//                    .tapg
                 Text(pedalList[pedalIndex].brand)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)

@@ -7,13 +7,23 @@
 
 import SwiftUI
 
+struct Profile1View: View {
+    var body: some View {
+        Image(systemName: "star")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 40, height: 40)
+            .clipShape(Circle())
+    }
+}
+
 public struct PedalListView: View {
     
     @ObservedObject var viewModel: PedalListViewModel
     
     
-    public init() {
-        viewModel = PedalListViewModel()
+    init(viewModel: PedalListViewModel = PedalListViewModel()) {
+        self.viewModel = viewModel
     }
     
     public var body: some View {
@@ -33,6 +43,12 @@ public struct PedalListView: View {
             }
             
             .navigationTitle("Pedal List")
+            .overlay(
+                 Profile1View()
+                     .padding(.trailing, -20)
+                     .offset(x: 0, y: -50)
+             , alignment: .topTrailing)
+            
             
             .toolbar {
                 
@@ -54,15 +70,19 @@ public struct PedalListView: View {
 
     @ViewBuilder
     private var emptyView: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("None pedals registered yet")
-                .font(.headline)
-            
-            Text("You may add new pedals by tapping in the superior button")
-                .font(.subheadline)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("None pedals registered yet")
+                    .font(.headline)
+                
+                Text("You may add new pedals by tapping in the superior button")
+                    .font(.subheadline)
+            }
+            .foregroundStyle(.secondary)
+            .font(.headline)
+            .padding(.top, 200)
         }
-        .foregroundStyle(.secondary)
-        .font(.headline)
+       
     }
     
     @ViewBuilder
