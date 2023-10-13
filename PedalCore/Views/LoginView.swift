@@ -8,88 +8,52 @@
 import SwiftUI
 import AuthenticationServices
 
-class LoginViewModel: ObservableObject {
-    
-    var user: UserApple = UserApple(id: "123456", firstName: "John")
-    
-    func handSingInWithApple(_ result: Result<ASAuthorization, Error>) {
-        switch result {
-        case .success(let auth):
-            switch auth.credential {
-            case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                if let newUser = UserApple(credential: appleIDCredential) {
-                    saveUserInfo(userApple: newUser)
-                    user = newUser
-                } else {
-                    
-                    user = loadUser(credential: appleIDCredential) ?? UserApple(id: "123456", firstName: "John")
-                    
-                }
-                
-        
-            default:
-                print(auth.credential)
-            }
-            
-        case .failure(let error):
-            print(error)
-        }
-        
-    }
-    
-    
-    func configureRequest(request: ASAuthorizationAppleIDRequest) {
-        request.requestedScopes = [.email, .fullName]
-    }
-    
-    
-    
-    private func saveUserInfo(userApple: UserApple) {
-        do {
-            let userData = try JSONEncoder().encode(userApple)
-            UserDefaults.standard.setValue(userData, forKey: userApple.userId)
-            
-            print("saved apple user: \(userApple)")
-            
-        } catch {
-            print("failed to save user Info: \(error)")
-        }
-        
-    }
-    
-    private func loadUser(credential: ASAuthorizationAppleIDCredential) -> UserApple? {
-        guard
-            let appleUserData = UserDefaults.standard.data(forKey: credential.user),
-            let appleUser = try? JSONDecoder().decode(UserApple.self, from: appleUserData)
-                
-        else {
-            print("deu ruim loadar")
-            return nil
-        }
-        
-        print("Bem vindo de volta \(appleUser)")
-        return appleUser
-    }
-}
-
-
 struct LoginView: View {
-    var viewModel: LoginViewModel = LoginViewModel()
+    
+    
+    var viewModel: HomeViewModel
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
-        VStack {
-            SignInWithAppleButton { request in
-                request.requestedScopes = [.fullName, .email]
-            } onCompletion: { result in
-                viewModel.handSingInWithApple(result)
-            }
- 
+        ZStack {
+            LinearGradient(colors: [.purple, .black], startPoint: .topLeading, endPoint: .bottomTrailing)
+                .ignoresSafeArea()
             
+            VStack(spacing: 200) {
+                VStack(spacing: 50) {
+                    Image(systemName: "text.word.spacing")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 150)
+                        .foregroundColor(.white)
+                    
+                    Text("Wellcome to Pedalboard")
+                        .foregroundStyle(.white)
+                        .font(.largeTitle.weight(.bold))
+                    
+        
+                }
+              
+                SignInWithAppleButton { request in
+                    request.requestedScopes = [.fullName, .email]
+                } onCompletion: { result in
+                    viewModel.handSingInWithApple(result)
+                }
+                .signInWithAppleButtonStyle(.white)
+                .frame(height: 50)
+     
+                
+            }
+            .padding(.horizontal, 50)
         }
+     
 
     }
 }
 
 #Preview {
-    LoginView()
+    LoginView(viewModel: HomeViewModel())
 }

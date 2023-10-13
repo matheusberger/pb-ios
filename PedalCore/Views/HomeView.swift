@@ -8,13 +8,6 @@
 import SwiftUI
 import AuthenticationServices
 
-class HomeViewModel: ObservableObject {
-    
-    
-    var user: UserApple = UserApple(id: "123456", firstName: "John")
-    
-  
-}
 
 struct ProfileView: View {
     
@@ -39,20 +32,30 @@ public struct HomeView: View  {
     }
     
     public var body: some View {
-        
-        
-        TabView {
-            PedalListView(viewModel: PedalListViewModel(user: viewModel.user))
-                .tabItem {
-                    Label("PedalBoard", systemImage: "text.word.spacing")
+        Group {
+            switch viewModel.state {
+            case .login:
+                LoginView(viewModel: viewModel)
+                
+            case .app:
+                TabView {
+                    PedalListView(viewModel: PedalListViewModel(user: viewModel.user))
+                        .tabItem {
+                            Label("PedalBoard", systemImage: "text.word.spacing")
+                        }
+                    
+                    SongsListView()
+                        .tabItem {
+                            Label("Songs", systemImage: "music.note.list")
+                        }
+                    
                 }
-            
-            SongsListView()
-                .tabItem {
-                    Label("Songs", systemImage: "music.note.list")
-                }
-            
+            }
         }
+        .onAppear {
+            viewModel.viewDidApper()
+        }
+       
         
 
     }
