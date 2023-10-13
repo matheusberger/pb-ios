@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C2DA4A72AD0D42A00A3BFAA /* SongListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2DA4A62AD0D42A00A3BFAA /* SongListViewModel.swift */; };
+		0C2DF6042AD9D93E00D0BD32 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2DF6032AD9D93E00D0BD32 /* AuthManager.swift */; };
 		0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3293B72ACB5F0F00A9BC34 /* Knob.swift */; };
 		0C3293B92ACB607100A9BC34 /* CreatePedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */; };
 		0C48B1712ACBB11A00E52627 /* AddPedalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */; };
@@ -78,6 +79,7 @@
 
 /* Begin PBXFileReference section */
 		0C2DA4A62AD0D42A00A3BFAA /* SongListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListViewModel.swift; sourceTree = "<group>"; };
+		0C2DF6032AD9D93E00D0BD32 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePedalView.swift; sourceTree = "<group>"; };
 		0C3293B72ACB5F0F00A9BC34 /* Knob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPedalDelegate.swift; sourceTree = "<group>"; };
@@ -157,6 +159,14 @@
 			path = SongList;
 			sourceTree = "<group>";
 		};
+		0C2DF6022AD9D8F800D0BD32 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0C2DF6032AD9D93E00D0BD32 /* AuthManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		0C48B16F2ACBB10A00E52627 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +228,7 @@
 		56827F292A95869D0043277A /* PedalCore */ = {
 			isa = PBXGroup;
 			children = (
+				0C2DF6022AD9D8F800D0BD32 /* Managers */,
 				0C48B1722ACBB13200E52627 /* Enums */,
 				0C48B16F2ACBB10A00E52627 /* Protocols */,
 				56827F4C2A959D8C0043277A /* Models */,
@@ -440,6 +451,7 @@
 				0C6173C22AD9C34F003A1290 /* HomeViewModel.swift in Sources */,
 				0CA8AA102AD6DF990046698E /* LoginView.swift in Sources */,
 				0C6786782ACFBB2B00CE7FE0 /* AddSongDelegate.swift in Sources */,
+				0C2DF6042AD9D93E00D0BD32 /* AuthManager.swift in Sources */,
 				0C48B1742ACBB14400E52627 /* AddPedalError.swift in Sources */,
 				0CA8AA122AD6E0690046698E /* UserApple.swift in Sources */,
 			);

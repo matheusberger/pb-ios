@@ -40,7 +40,7 @@ struct LoginView: View {
                 SignInWithAppleButton { request in
                     request.requestedScopes = [.fullName, .email]
                 } onCompletion: { result in
-                    viewModel.handSingInWithApple(result)
+                    viewModel.handleAppleIDSingIn(result)
                 }
                 .signInWithAppleButtonStyle(.white)
                 .frame(height: 50)
