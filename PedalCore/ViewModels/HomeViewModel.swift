@@ -15,11 +15,28 @@ class HomeViewModel: ObservableObject {
         case login, app
     }
     
-    var authManager: AuthManager = AuthManager()
+    var authManager: AuthManager
     
-    @Published var user: UserApple = UserApple(id: "123456", firstName: "John")
     
-    @Published var state: State = .login
+    @Published var user: UserApple
+    
+    @Published var state: State
+    
+    init(authManager: AuthManager = AuthManager.shared,
+         user: UserApple = UserApple.dummyUser(),
+         state: State = .login) {
+        self.authManager = authManager
+        self.user = user
+        self.state = state
+        
+        self.authManager.delegate = self
+    }
+    
+    
+    var pedalListViewModel: PedalListViewModel {
+        let viewModel = PedalListViewModel(user: user)
+        return viewModel
+    }
     
     func viewDidApper() {
         if let persistedUser: UserApple = authManager.loadPersistedUser() {
@@ -42,8 +59,14 @@ class HomeViewModel: ObservableObject {
         self.state = .login
     }
    
-   
-  
+
 }
 
+extension HomeViewModel: LogoutAuthDelegate {
+    func userLogout() {
+        self.state = .login
+    }
+    
+    
+}
 

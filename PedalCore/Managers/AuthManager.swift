@@ -9,10 +9,23 @@ import Foundation
 import AuthenticationServices
 
 
+
+
 class AuthManager {
     
+    static var shared: AuthManager = AuthManager()
     
-    func handSingInWithApple(_ result: Result<ASAuthorization, Error>, handler: @escaping (UserApple) -> Void) {
+    var delegate: LogoutAuthDelegate?
+    
+    
+    public func logoutCurrentUser() {
+        
+        UserDefaults.standard.removeObject(forKey: Constants.appleUserKey)
+        delegate?.userLogout()
+    }
+    
+    
+    public func handSingInWithApple(_ result: Result<ASAuthorization, Error>, handler: @escaping (UserApple) -> Void) {
         switch result {
             
         case .success(let auth):
@@ -32,6 +45,8 @@ class AuthManager {
 
                     }
                 }
+                
+              
  
             default:
                 print(auth.credential)
@@ -70,7 +85,7 @@ class AuthManager {
     }
     
     
-    func loadPersistedUser() -> UserApple? {
+    public func loadPersistedUser() -> UserApple? {
         guard
             let appleUserData = UserDefaults.standard.data(forKey: Constants.appleUserKey),
             let appleUser = try? JSONDecoder().decode(UserApple.self, from: appleUserData)
@@ -80,7 +95,7 @@ class AuthManager {
             return nil
         }
         
-      
+       
         return appleUser
     }
     

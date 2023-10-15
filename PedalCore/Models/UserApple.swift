@@ -10,9 +10,9 @@ import AuthenticationServices
 
 struct UserApple: Codable {
     var userId: String
-    var firstName: String?
-    var lastName: String?
-    var email: String?
+    var firstName: String
+    var lastName: String
+    var email: String
     
     init?(credential: ASAuthorizationAppleIDCredential) {
         guard
@@ -27,9 +27,18 @@ struct UserApple: Codable {
         self.email = email
     }
     
-    init(id: String, firstName: String) {
+    init(id: String, firstName: String, lastName: String, email: String) {
         self.userId = id
         self.firstName = firstName
+        self.lastName = lastName
+        self.email = email
     }
     
+}
+
+
+extension UserApple {
+    static func dummyUser() -> UserApple {
+        return UserApple(id: "020482612", firstName: "Jimmy", lastName: "Neutron", email: "jimmyneutron@gmail.com")
+    }
 }

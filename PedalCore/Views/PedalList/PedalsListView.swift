@@ -7,22 +7,13 @@
 
 import SwiftUI
 
-struct Profile1View: View {
-    var body: some View {
-        Image(systemName: "star")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 40, height: 40)
-            .clipShape(Circle())
-    }
-}
 
 public struct PedalListView: View {
     
     @ObservedObject var viewModel: PedalListViewModel
     
     
-    init(viewModel: PedalListViewModel = PedalListViewModel()) {
+    init(viewModel: PedalListViewModel) {
         self.viewModel = viewModel
     }
     
@@ -37,37 +28,53 @@ public struct PedalListView: View {
                     contentView
                 }
             }
-           
-            .sheet(isPresented: $viewModel.isShowingSheet) {
+            
+            .sheet(isPresented: $viewModel.isShowingAddPedalSheet) {
                 CreatePedalView(delegate: viewModel)
             }
             
+            .sheet(isPresented: $viewModel.isShowingProfileSheet) {
+                ProfileView(user: viewModel.user)
+            }
+            
             .navigationTitle("Pedal List")
-            .overlay(
-                 Profile1View()
-                     .padding(.trailing, -20)
-                     .offset(x: 0, y: -50)
-             , alignment: .topTrailing)
-            
-            
             .toolbar {
                 
-                // testing view
-                Button {
-                    viewModel.populatePedals()
-                } label: {
-                    Image(systemName: "eyes")
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        viewModel.userIconPressed()
+                        
+                    } label: {
+                        userIcon
+                            
+                    }
+                }
+            
+                // testing button
+                ToolbarItem(placement: .automatic) {
+                    Button {
+                        viewModel.populatePedals()
+                    } label: {
+                        Image(systemName: "eyes")
+                    }
+                }
+         
+                ToolbarItem(placement: .automatic) {
+                    Button {
+                        viewModel.addIconPressed()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
                 
-                Button {
-                    viewModel.addIconPressed()
-                } label: {
-                    Image(systemName: "plus")
-                }
+              
             }
+
+        
+            
         }
     }
-
+    
     @ViewBuilder
     private var emptyView: some View {
         ScrollView {
@@ -82,44 +89,54 @@ public struct PedalListView: View {
             .font(.headline)
             .padding(.top, 200)
         }
-       
+        
     }
     
     @ViewBuilder
     private var contentView: some View {
         List(viewModel.filteredPedals, id: \.id) { pedal in
             VStack(alignment: .leading) {
-                    Text(pedal.name)
+                Text(pedal.name)
                     .font(.subheadline)
-                        .foregroundStyle(.primary)
-                    
-                    Text(pedal.brand)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                    .foregroundStyle(.primary)
                 
-             
+                Text(pedal.brand)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                
+                
                 
                 HStack {
                     ForEach(pedal.knobs, id: \.id) { knob in
                         Text(knob.parameter)
                             .font(.callout)
                             .foregroundStyle(.secondary)
-                         
+                        
                     }
-           
+                    
                 }
             }
             .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
-               
+            
         }
         
+    }
+    
+    @ViewBuilder
+    var userIcon: some View {
+        Image(systemName: "person.circle.fill")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 40, height: 40)
     }
     
 }
 
 
 struct PedalListView_Previews: PreviewProvider {
+
+    
     static var previews: some View {
-        PedalListView()
+        PedalListView(viewModel: PedalListViewModel())
     }
 }

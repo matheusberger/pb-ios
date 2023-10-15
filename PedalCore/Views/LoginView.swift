@@ -10,7 +10,6 @@ import AuthenticationServices
 
 struct LoginView: View {
     
-    
     var viewModel: HomeViewModel
     
     init(viewModel: HomeViewModel) {

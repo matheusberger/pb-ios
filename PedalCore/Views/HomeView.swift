@@ -9,20 +9,6 @@ import SwiftUI
 import AuthenticationServices
 
 
-struct ProfileView: View {
-    
-    var user: UserApple
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("Wellcom to Pedalboard!")
-            Text(user.userId)
-            Text(user.firstName ?? "Unknown name")
-            
-        }
-    }
-}
-
 public struct HomeView: View  {
     
     @StateObject var viewModel: HomeViewModel = HomeViewModel()
@@ -39,10 +25,11 @@ public struct HomeView: View  {
                 
             case .app:
                 TabView {
-                    PedalListView(viewModel: PedalListViewModel(user: viewModel.user))
-                        .tabItem {
-                            Label("PedalBoard", systemImage: "text.word.spacing")
-                        }
+                    PedalListView(viewModel: viewModel.pedalListViewModel
+                    )
+                    .tabItem {
+                        Label("PedalBoard", systemImage: "text.word.spacing")
+                    }
                     
                     SongsListView()
                         .tabItem {
@@ -55,9 +42,9 @@ public struct HomeView: View  {
         .onAppear {
             viewModel.viewDidApper()
         }
-       
         
-
+        
+        
     }
     
     

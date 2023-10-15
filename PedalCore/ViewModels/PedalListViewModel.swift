@@ -13,15 +13,17 @@ class PedalListViewModel: ObservableObject {
         case empty, content
     }
     
-    var user: UserApple?
+    var user: UserApple
     
     @Published var allPedals: [Pedal]
-    @Published var isShowingSheet: Bool = false
+    
+    @Published var isShowingAddPedalSheet: Bool = false
+    @Published var isShowingProfileSheet: Bool = false
     
     @Published var searchText: String = ""
     
     
-    init(user: UserApple? = nil, allPedals: [Pedal] = []) {
+    init(user: UserApple = UserApple.dummyUser(), allPedals: [Pedal] = []) {
         self.user = user
         self.allPedals = allPedals
 
@@ -47,13 +49,20 @@ class PedalListViewModel: ObservableObject {
     }
     
     func addIconPressed() {
-        isShowingSheet = true
+        isShowingAddPedalSheet = true
     }
     
     // for debugging
     func populatePedals() {
         allPedals = Pedal.getFamousPedals()
     }
+    
+    func userIconPressed() {
+        isShowingProfileSheet = true
+        
+    }
+    
+    
 }
 
 extension PedalListViewModel: AddPedalDelegate {
@@ -80,7 +89,7 @@ extension PedalListViewModel: AddPedalDelegate {
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
         allPedals.append(newPedal)
         
-        isShowingSheet = false
+        isShowingAddPedalSheet = false
         
     }
     
