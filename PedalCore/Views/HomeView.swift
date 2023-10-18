@@ -28,7 +28,7 @@ public struct HomeView: View {
             }
            
             .sheet(isPresented: $viewModel.isShowingSheet) {
-                CreatePedalView(delegate: viewModel)
+                CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
             }
             
             .navigationTitle("Pedal List")

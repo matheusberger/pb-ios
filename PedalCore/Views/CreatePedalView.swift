@@ -9,36 +9,33 @@ import SwiftUI
 
 struct CreatePedalView: View {
 
-    @State var pedalName: String = ""
-    @State var brandName: String = ""
-    @State var knobNames: [String] = []
+    @ObservedObject var viewModel: CreatePedalViewModel
     
-    @State var isPresentingAlert: Bool = false
-    @State var alertMessage: String = ""
-    
-    var delegate: AddPedalDelegate?
+    init(viewModel: CreatePedalViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         
         Form {
             Section("Name") {
-                TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here") )
+                TextField("Pedal name:", text: $viewModel.pedalName, prompt: Text("Name your pedal here") )
             }
           
             Section("Brand") {
-                TextField("Pedal brand:", text: $brandName, prompt: Text("Name the pedal brand here"))
+                TextField("Pedal brand:", text: $viewModel.brandName, prompt: Text("Name the pedal brand here"))
             }
           
             
             Section("Knobs") {
                 VStack {
-                    ForEach(Array(knobNames.enumerated()), id: \.offset) { index, element in
-                        TextField("Knob name:", text: $knobNames[index], prompt: Text("Name the knob here"))
+                    ForEach(Array(viewModel.knobNames.enumerated()), id: \.offset) { index, element in
+                        TextField("Knob name:", text: $viewModel.knobNames[index], prompt: Text("Name the knob here"))
                     }
                     HStack {
                          Spacer()
                         Button {
-                            knobNames.append("")
+                            viewModel.addKnobPressed()
                         } label: {
                             Text("Add knob")
                         }
@@ -50,23 +47,8 @@ struct CreatePedalView: View {
             }
             
             Button {
-                do {
-                    try delegate?.addPedalPressed(name: pedalName, brand: brandName, knobNames: knobNames)
-                    
-                } catch {
-                    if let pedalError = error as? AddPedalError {
-                        isPresentingAlert = true
-                        switch pedalError {
-                        case .missingName:
-                           alertMessage = "Please, provide the pedal name"
-                        case .missingBrand:
-                            alertMessage = "Please, provide a brand of the pedal"
-                        case .missingKnobs:
-                            alertMessage = "Please, provide a knob name for your pedal"
-                        }
-                    }
-                }
-              
+                viewModel.addPedalPressed()
+                
             } label: {
                 HStack {
                     Spacer()
@@ -77,14 +59,13 @@ struct CreatePedalView: View {
             .buttonStyle(.borderedProminent)
         }
         
-        .alert("Failed to save new pedal", isPresented: $isPresentingAlert) {
+        .alert("Failed to save new pedal", isPresented: $viewModel.isPresentingAlert) {
             
         } message: {
-            Text(alertMessage)
+            Text(viewModel.alertMessage)
         }
 
     }
-    
     
 }
 
@@ -92,6 +73,6 @@ struct CreatePedalView: View {
 
 struct CreatePedalView_Previews: PreviewProvider {
     static var previews: some View {
-      CreatePedalView()
+        CreatePedalView(viewModel: CreatePedalViewModel())
     }
 }
