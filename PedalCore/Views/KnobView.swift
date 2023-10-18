@@ -17,7 +17,7 @@ struct KnobView: View {
     
     var body: some View {
            VStack {
-               Text(knob.parameter)
+               Text(knob.name)
                    .font(.subheadline)
                
                ZStack {
@@ -48,6 +48,6 @@ struct KnobView: View {
 
 struct KnobView_Previews: PreviewProvider {
     static var previews: some View {
-        KnobView(knob: Knob(parameter: "Drive", level: 0.5))
+        KnobView(knob: Knob(name: "Drive", level: 0.5))
     }
 }

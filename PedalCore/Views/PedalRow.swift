@@ -23,7 +23,7 @@ struct PedalRow: View {
             
             ScrollView(.horizontal) {
                 HStack(spacing: 30) {
-                    ForEach(pedal.knobs, id: \.parameter) { knob in
+                    ForEach(pedal.knobs, id: \.name) { knob in
                         KnobView(knob: knob)
                     }
                 }
@@ -38,9 +38,9 @@ struct PedalRow_Previews: PreviewProvider {
     static var previews: some View {
         PedalRow(pedal: Pedal(name: "Big Muff Pi",
                               brand: "Eletro Hamonix",
-                              knobs: [    Knob(parameter: "Volume", level: 0.25),
-                                          Knob(parameter: "Tone", level: 0.5),
-                                          Knob(parameter: "Gain", level: 0.9)
+                              knobs: [    Knob(name: "Volume", level: 0.25),
+                                          Knob(name: "Tone", level: 0.5),
+                                          Knob(name: "Gain", level: 0.9)
                                      ]
                              )
         )
