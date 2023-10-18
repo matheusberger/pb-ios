@@ -1,19 +1,9 @@
 //
-//  Pedal.swift
+//  Pedal+Populate.swift
 //  PedalCore
 //
-//  Created by Migge on 22/08/23.
+//  Created by Lucas Migge on 18/10/23.
 //
-
-import Foundation
-
-struct Pedal: Identifiable {
-    var id: UUID = UUID()
-    var name: String
-    var brand: String
-    var knobs: [Knob]
-    
-}
 
 
 extension Pedal {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C28FF312AE05B3A00994E12 /* Pedal+Populate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C28FF302AE05B3A00994E12 /* Pedal+Populate.swift */; };
 		0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3293B72ACB5F0F00A9BC34 /* Knob.swift */; };
 		0C3293B92ACB607100A9BC34 /* CreatePedalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */; };
 		0C48B1712ACBB11A00E52627 /* AddPedalDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0C28FF302AE05B3A00994E12 /* Pedal+Populate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pedal+Populate.swift"; sourceTree = "<group>"; };
 		0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePedalView.swift; sourceTree = "<group>"; };
 		0C3293B72ACB5F0F00A9BC34 /* Knob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		0C48B1702ACBB11A00E52627 /* AddPedalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPedalDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C28FF2F2AE05B1F00994E12 /* Pedal */ = {
+			isa = PBXGroup;
+			children = (
+				56827F4D2A959DBB0043277A /* Pedal.swift */,
+				0C28FF302AE05B3A00994E12 /* Pedal+Populate.swift */,
+			);
+			path = Pedal;
+			sourceTree = "<group>";
+		};
 		0C48B16F2ACBB10A00E52627 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,7 +222,7 @@
 		56827F4C2A959D8C0043277A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				56827F4D2A959DBB0043277A /* Pedal.swift */,
+				0C28FF2F2AE05B1F00994E12 /* Pedal */,
 				0C3293B72ACB5F0F00A9BC34 /* Knob.swift */,
 			);
 			path = Models;
@@ -374,6 +385,7 @@
 				56827F472A9588350043277A /* HomeView.swift in Sources */,
 				0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */,
 				56827F4B2A9597FA0043277A /* HomeViewModel.swift in Sources */,
+				0C28FF312AE05B3A00994E12 /* Pedal+Populate.swift in Sources */,
 				0C48B1782ACBB5FF00E52627 /* KnobView.swift in Sources */,
 				0C48B1762ACBB27500E52627 /* PedalRow.swift in Sources */,
 				56827F2C2A95869D0043277A /* PedalCore.docc in Sources */,
