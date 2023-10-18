@@ -35,18 +35,23 @@ public struct HomeView: View {
             
             .toolbar {
                 
-                // testing view
-                Button {
-                    viewModel.populatePedals()
-                } label: {
-                    Image(systemName: "eyes")
+                ToolbarItem(placement: .topBarLeading) {
+                    // testing view
+                    Button {
+                        viewModel.populatePedals()
+                    } label: {
+                        Image(systemName: "eyes")
+                    }
                 }
-                
-                Button {
-                    viewModel.addIconPressed()
-                } label: {
-                    Image(systemName: "plus")
+               
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        viewModel.addIconPressed()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
+            
             }
         }
     }
