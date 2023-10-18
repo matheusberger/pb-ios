@@ -44,7 +44,6 @@ class HomeViewModel: ObservableObject {
     // for debugging
     func populatePedals() {
         allPedals = Pedal.pedalSample()
-        
     }
 }
 
