@@ -34,7 +34,6 @@ class HomeViewModel: ObservableObject {
                 pedal.name.localizedCaseInsensitiveContains(searchText) || pedal.brand.localizedCaseInsensitiveContains(searchText)
             }
         }
-
     }
 
     func addIconPressed() {
