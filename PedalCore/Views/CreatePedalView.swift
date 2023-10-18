@@ -26,7 +26,6 @@ struct CreatePedalView: View {
                 TextField("Pedal brand:", text: $viewModel.brandName, prompt: Text("Name the pedal brand here"))
             }
           
-            
             Section("Knobs") {
                 VStack {
                     ForEach(Array(viewModel.knobNames.enumerated()), id: \.offset) { index, element in
@@ -42,13 +41,12 @@ struct CreatePedalView: View {
                         .buttonStyle(.borderedProminent)
                         Spacer()
                     }
-                   
                 }
             }
             
             Button {
                 viewModel.addPedalPressed()
-                
+
             } label: {
                 HStack {
                     Spacer()
@@ -58,15 +56,11 @@ struct CreatePedalView: View {
             }
             .buttonStyle(.borderedProminent)
         }
-        
         .alert("Failed to save new pedal", isPresented: $viewModel.isPresentingAlert) {
-            
         } message: {
             Text(viewModel.alertMessage)
         }
-
     }
-    
 }
 
 

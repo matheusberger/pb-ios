@@ -8,14 +8,12 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
-    
     enum State {
         case empty, content
     }
     
     @Published var allPedals: [Pedal] = []
     @Published var isShowingSheet: Bool = false
-    
     @Published var searchText: String = ""
     
     var state: State {
@@ -59,19 +57,16 @@ extension HomeViewModel: AddPedalDelegate {
         if knobNames.isEmpty {
             throw AddPedalError.missingKnobs
         }
-        
-        
+    
         var knobs: [Knob] {
             knobNames.map { name in
                 Knob(name: name)
             }
         }
-        
+
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
         allPedals.append(newPedal)
         
         isShowingSheet = false
-        
     }
-    
 }

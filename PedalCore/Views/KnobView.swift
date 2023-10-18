@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct KnobView: View {
-    
     var knob: Knob
     
     private func maxTrin(for level: Float) -> CGFloat {
@@ -28,7 +27,6 @@ struct KnobView: View {
                        .rotationEffect(.degrees(135))
                        .frame(width: 100, height: 100)
                        .opacity(0.15)
-                   
                    
                    Circle()
                        .trim(from: 0.0, to: maxTrin(for: knob.level))

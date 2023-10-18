@@ -10,7 +10,6 @@ import SwiftUI
 public struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
     
-    
     public init() {
         viewModel = HomeViewModel()
     }
@@ -26,15 +25,11 @@ public struct HomeView: View {
                     contentView
                 }
             }
-           
             .sheet(isPresented: $viewModel.isShowingSheet) {
                 CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
             }
-            
             .navigationTitle("Pedal List")
-            
             .toolbar {
-                
                 ToolbarItem(placement: .topBarLeading) {
                     // testing view
                     Button {
@@ -43,7 +38,6 @@ public struct HomeView: View {
                         Image(systemName: "eyes")
                     }
                 }
-               
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         viewModel.addIconPressed()
@@ -51,7 +45,6 @@ public struct HomeView: View {
                         Image(systemName: "plus")
                     }
                 }
-            
             }
         }
     }
@@ -75,9 +68,7 @@ public struct HomeView: View {
             PedalRow(pedal: pedal)
                 .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
         }
-        
     }
-    
 }
 
 
