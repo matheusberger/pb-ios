@@ -9,79 +9,68 @@ import SwiftUI
 
 public struct HomeView: View {
     @ObservedObject var viewModel: HomeViewModel
-    @State var pedalName: String = ""
-    @State var pedalBrand: String = ""
-    @State var knobNames: [String] = [""]
     
     public init() {
         viewModel = HomeViewModel()
     }
     
     public var body: some View {
-        List {
-            Section {
-                createPedalView
-            } header: {
-                Text("create your pedal below:")
-            }
+        NavigationView {
             
-            Section {
-                listPedalView
-            } header: {
-                Text("pedal list:")
+            Group {
+                switch viewModel.state {
+                case .empty:
+                    emptyView
+                case .content:
+                    contentView
+                }
             }
-        }
-    }
-    
-    @ViewBuilder
-    private var listPedalView: some View {
-        ForEach(viewModel.pedals, id: \.self) { pedal in
-            HStack {
-                Text(pedal.name)
-                Spacer()
-                Text(pedal.brand)
-                Spacer()
-                VStack {
-                    ForEach(Array(pedal.knobs.keys), id: \.self) { name in
-                        Text(name)
+            .sheet(isPresented: $viewModel.isShowingSheet) {
+                CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
+            }
+            .navigationTitle("Pedal List")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    // testing view
+                    Button {
+                        viewModel.populatePedals()
+                    } label: {
+                        Image(systemName: "eyes")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        viewModel.addIconPressed()
+                    } label: {
+                        Image(systemName: "plus")
                     }
                 }
             }
         }
     }
+
+    @ViewBuilder
+    private var emptyView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text("None pedals registered yet")
+                .font(.headline)
+            
+            Text("You may add new pedals by tapping in the superior button")
+                .font(.subheadline)
+        }
+        .foregroundStyle(.secondary)
+        .font(.headline)
+    }
     
     @ViewBuilder
-    private var createPedalView: some View {
-        TextField("Pedal name:", text: $pedalName, prompt: Text("Name your pedal here"))
-        TextField("Pedal brand:", text: $pedalBrand, prompt: Text("Name the pedal brand here"))
-        
-        VStack {
-            ForEach(Array(knobNames.enumerated()), id: \.offset) { index, element in
-                TextField("Knob name:", text: $knobNames[index], prompt: Text("Name the knob here"))
-            }
-            Button {
-                knobNames.append("")
-            } label: {
-                Text("Add knob")
-            }
-            .buttonStyle(.borderedProminent)
+    private var contentView: some View {
+        List(viewModel.filteredPedals, id: \.id) { pedal in
+            PedalRow(pedal: pedal)
+                .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
         }
-        
-        Button {
-            viewModel.addPedal(name: pedalName, brand: pedalBrand, knobNames: knobNames)
-            pedalName = ""
-            pedalBrand = ""
-            knobNames = [""]
-        } label: {
-            HStack {
-                Spacer()
-                Text("Create pedal")
-                Spacer()
-            }
-        }
-        .buttonStyle(.borderedProminent)
     }
 }
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
