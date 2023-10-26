@@ -15,38 +15,68 @@ public struct HomeView: View {
     }
     
     public var body: some View {
-        List {
-            Section {
-                PedalFormView(viewModel: viewModel.getPedalFormViewModel())
-            } header: {
-                Text("create your pedal below:")
-            }
+
+        NavigationView {
             
-            Section {
-                listPedalView
-            } header: {
-                Text("pedal list:")
+            VStack {
+                Group {
+                    switch viewModel.state {
+                    case .empty:
+                        emptyView
+                    case .content:
+                        contentView
+                    }
+                }
+                .sheet(isPresented: $viewModel.isShowingSheet) {
+                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
+                }
+                .navigationTitle("Pedal List")
+                
+                Spacer()
+                
+                Button {
+                    viewModel.addIconPressed()
+                } label: {
+                    Text("Create new pedal")
+                        .fontWeight(.bold)
+                        .frame(width: 250,height: 30)
+                        
+                }.buttonStyle(.borderedProminent)
+                
+                Button {
+                    viewModel.populatePedals()
+                } label: {
+                    Image(systemName: "eyes")
+                }
+                
             }
+            .padding(.bottom, 20)
+        
         }
+    }
+
+    @ViewBuilder
+    private var emptyView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text("None pedals registered yet")
+                .font(.headline)
+            
+            Text("You may add new pedals by tapping in the superior button")
+                .font(.subheadline)
+        }
+        .foregroundStyle(.secondary)
+        .font(.headline)
     }
     
     @ViewBuilder
-    private var listPedalView: some View {
-        ForEach(viewModel.pedals, id: \.self) { pedal in
-            HStack {
-                Text(pedal.name)
-                Spacer()
-                Text(pedal.brand)
-                Spacer()
-                VStack {
-                    ForEach(Array(pedal.knobs.keys), id: \.self) { name in
-                        Text(name)
-                    }
-                }
-            }
+    private var contentView: some View {
+        List(viewModel.filteredPedals, id: \.id) { pedal in
+            PedalRow(pedal: pedal)
+                .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
         }
     }
 }
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
