@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol AddPedalDelegate {
+protocol CreatePedalDelegate {
     func finishedEditingPedal(_ pedal: Pedal) throws
     
     func addNewPedal(_ pedal: Pedal) throws

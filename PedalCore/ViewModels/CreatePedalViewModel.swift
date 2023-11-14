@@ -22,9 +22,9 @@ class CreatePedalViewModel: ObservableObject {
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    var delegate: AddPedalDelegate?
+    var delegate: CreatePedalDelegate?
     
-    var style: Style {
+    public var style: Style {
         if editePedal != nil {
             return .editPedal
         } else {
@@ -32,7 +32,7 @@ class CreatePedalViewModel: ObservableObject {
         }
     }
     
-    init(delegate: AddPedalDelegate? = nil, editPedal: Pedal? = nil) {
+    init(delegate: CreatePedalDelegate? = nil, editPedal: Pedal? = nil) {
         self.delegate = delegate
         
         if let pedal = editPedal {
@@ -45,17 +45,17 @@ class CreatePedalViewModel: ObservableObject {
         } else {
             self.pedalName = ""
             self.brandName = ""
+            self.knobNames = []
         }
         
     }
     
-    
-    func addKnobPressed() {
+    public func addKnobPressed() {
         knobNames.append("")
     }
     
     
-    func doneButtonPressed() {
+    public func doneButtonPressed() {
         switch style {
         case .editPedal:
             editPedalDone()
@@ -70,7 +70,6 @@ class CreatePedalViewModel: ObservableObject {
     
     func addNewPedal() {
         do {
-            
             let pedal = Pedal(name: self.pedalName, brand: self.brandName, knobs: createKnobs())
             try delegate?.addNewPedal(pedal)
             

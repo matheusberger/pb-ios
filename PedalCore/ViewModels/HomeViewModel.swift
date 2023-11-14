@@ -65,7 +65,7 @@ class HomeViewModel: ObservableObject {
     }
 }
 
-extension HomeViewModel: AddPedalDelegate {
+extension HomeViewModel: CreatePedalDelegate {
     func addNewPedal(_ pedal: Pedal) throws {
         if pedal.name.isEmpty {
             throw AddPedalError.missingName

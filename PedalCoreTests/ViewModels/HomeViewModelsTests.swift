@@ -15,6 +15,7 @@ final class HomeViewModelsTests: XCTestCase {
     override func setUpWithError() throws {
         viewModel = HomeViewModel()
         
+        continueAfterFailure = false
     }
     
     func testRemovePedalDeletsItFromPedalArray() {
