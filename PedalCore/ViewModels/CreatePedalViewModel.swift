@@ -71,7 +71,6 @@ class CreatePedalViewModel: ObservableObject {
             try delegate?.addNewPedal(pedal)
             
         } catch {
-         
             dealWithErrors(error: error)
         }
     }
@@ -86,7 +85,6 @@ class CreatePedalViewModel: ObservableObject {
         } catch {
             dealWithErrors(error: error)
         }
-
     }
     
     private func createKnobs() -> [Knob] {

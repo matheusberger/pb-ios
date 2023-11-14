@@ -106,7 +106,7 @@ extension HomeViewModel: AddPedalDelegate {
     }
     
     
-    func updatePedal(_ updatedPedal: Pedal) {
+    private func updatePedal(_ updatedPedal: Pedal) {
         
         allPedals = allPedals.map { pedal in
             pedal == updatedPedal ? updatedPedal : pedal

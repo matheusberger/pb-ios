@@ -83,7 +83,6 @@ public struct HomeView: View {
                     } label: {
                         Label("Edit", systemImage: "pencil")
                             .tint(.yellow)
-                        
                     }
                     Button(role: .destructive) {
                         viewModel.removePedalPressed(pedal)
@@ -98,12 +97,10 @@ public struct HomeView: View {
                     } label: {
                         Label("Edit", systemImage: "pencil")
                             .tint(.yellow)
-                        
                     }
                     
                     Button(role: .destructive) {
                         viewModel.removePedalPressed(pedal)
-
                     } label: {
                         Label("Delete", systemImage: "trash.fill")
                     }
