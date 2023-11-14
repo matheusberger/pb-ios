@@ -20,14 +20,6 @@ struct PedalRow: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             
-            ScrollView(.horizontal) {
-                HStack(spacing: 30) {
-                    ForEach(pedal.knobs, id: \.name) { knob in
-                        KnobView(knob: knob)
-                    }
-                }
-                .padding(.horizontal, 10)
-            }
         }
     }
 }
