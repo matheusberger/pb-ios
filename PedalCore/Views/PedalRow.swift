@@ -20,6 +20,13 @@ struct PedalRow: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             
+            HStack {
+                ForEach(pedal.knobs, id: \.id) {
+                    Text($0.name)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
     }
 }
