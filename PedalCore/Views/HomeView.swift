@@ -77,12 +77,25 @@ public struct HomeView: View {
     private var contentView: some View {
         List(viewModel.filteredPedals, id: \.signature) { pedal in
             PedalRow(pedal: pedal)
+                .contextMenu(menuItems: {
+                    Button {
+                        viewModel.editPedalPressed(pedal)
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                            .tint(.yellow)
+                        
+                    }
+                    Button(role: .destructive) {
+                        viewModel.removePedalPressed(pedal)
+                    } label: {
+                        Label("Delete", systemImage: "trash.fill")
+                    }
+                })
             
                 .swipeActions(edge: .trailing) {
                     Button {
                         viewModel.editPedalPressed(pedal)
                     } label: {
-                        
                         Label("Edit", systemImage: "pencil")
                             .tint(.yellow)
                         
