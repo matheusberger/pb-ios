@@ -46,22 +46,15 @@ class HomeViewModel: ObservableObject {
         allPedals = Pedal.pedalSample()
     }
     
-    
     func removePedalPressed(_ removedPedal: Pedal) {
-//        guard let pedalIndex = allPedals.firstIndex(of: pedal) else { return }
-//        
-//        allPedals.remove(at: pedalIndex)
-        
         allPedals = allPedals.filter { pedal in
             pedal != removedPedal
         }
     }
     
     func editPedalPressed(_ pedal: Pedal) {
-        
         editPedal = pedal
         isShowingSheet = true
-        
     }
 }
 
@@ -98,7 +91,6 @@ extension HomeViewModel: CreatePedalDelegate {
             throw AddPedalError.missingKnobs
         }
         
-
         updatePedal(pedal)
         
         editPedal = nil
@@ -107,10 +99,8 @@ extension HomeViewModel: CreatePedalDelegate {
     
     
     private func updatePedal(_ updatedPedal: Pedal) {
-        
         allPedals = allPedals.map { pedal in
             pedal == updatedPedal ? updatedPedal : pedal
         }
-        
     }
 }
