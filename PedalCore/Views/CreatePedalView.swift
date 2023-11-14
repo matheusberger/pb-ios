@@ -27,13 +27,13 @@ struct CreatePedalView: View {
             }
             
             Section("Knobs") {
-                VStack {
+                List {
                     ForEach(Array(viewModel.knobNames.enumerated()), id: \.offset) { index, element in
                         TextField("Knob name:", text: $viewModel.knobNames[index], prompt: Text("Name the knob here"))
                     }
-//                    .onDelete(perform: { indexSet in
-//                        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Code@*/ /*@END_MENU_TOKEN@*/
-//                    })
+                    .onDelete(perform: { indexSet in
+                        viewModel.removeKnob(at: indexSet)
+                    })
                     HStack {
                         Spacer()
                         Button {

@@ -64,6 +64,10 @@ class CreatePedalViewModel: ObservableObject {
         }
     }
     
+    public func removeKnob(at offSets: IndexSet) {
+        knobNames.remove(atOffsets: offSets)
+    }
+    
     func addNewPedal() {
         do {
             
