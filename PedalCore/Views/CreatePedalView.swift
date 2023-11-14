@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreatePedalView: View {
-
+    
     @ObservedObject var viewModel: CreatePedalViewModel
     
     init(viewModel: CreatePedalViewModel) {
@@ -21,18 +21,21 @@ struct CreatePedalView: View {
             Section("Name") {
                 TextField("Pedal name:", text: $viewModel.pedalName, prompt: Text("Name your pedal here") )
             }
-          
+            
             Section("Brand") {
                 TextField("Pedal brand:", text: $viewModel.brandName, prompt: Text("Name the pedal brand here"))
             }
-          
+            
             Section("Knobs") {
                 VStack {
                     ForEach(Array(viewModel.knobNames.enumerated()), id: \.offset) { index, element in
                         TextField("Knob name:", text: $viewModel.knobNames[index], prompt: Text("Name the knob here"))
                     }
+//                    .onDelete(perform: { indexSet in
+//                        /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Code@*/ /*@END_MENU_TOKEN@*/
+//                    })
                     HStack {
-                         Spacer()
+                        Spacer()
                         Button {
                             viewModel.addKnobPressed()
                         } label: {
@@ -45,12 +48,12 @@ struct CreatePedalView: View {
             }
             
             Button {
-                viewModel.addPedalPressed()
-
+                viewModel.doneButtonPressed()
+                
             } label: {
                 HStack {
                     Spacer()
-                    Text("Create pedal")
+                    Text(viewModel.style == .createPedal ?  "Create pedal" : "Update pedal")
                     Spacer()
                 }
             }

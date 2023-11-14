@@ -17,6 +17,8 @@ class HomeViewModel: ObservableObject {
     @Published var isShowingSheet: Bool = false
     @Published var searchText: String = ""
     
+    var editPedal: Pedal?
+    
     var state: State {
         if allPedals.isEmpty {
             return .empty
@@ -45,36 +47,70 @@ class HomeViewModel: ObservableObject {
     }
     
     
-    public func removePedal(_ pedal: Pedal) {
-        guard let pedalIndex = allPedals.firstIndex(of: pedal) else { return }
+    func removePedalPressed(_ removedPedal: Pedal) {
+//        guard let pedalIndex = allPedals.firstIndex(of: pedal) else { return }
+//        
+//        allPedals.remove(at: pedalIndex)
         
-        allPedals.remove(at: pedalIndex)
+        allPedals = allPedals.filter { pedal in
+            pedal != removedPedal
+        }
+    }
+    
+    func editPedalPressed(_ pedal: Pedal) {
+        
+        editPedal = pedal
+        isShowingSheet = true
+        
     }
 }
 
 extension HomeViewModel: AddPedalDelegate {
-    func addPedalPressed(name: String, brand: String, knobNames: [String]) throws {
-        if name.isEmpty {
+    func addNewPedal(_ pedal: Pedal) throws {
+        if pedal.name.isEmpty {
             throw AddPedalError.missingName
         }
         
-        if brand.isEmpty {
+        if pedal.brand.isEmpty {
             throw AddPedalError.missingBrand
         }
         
-        if knobNames.isEmpty {
+        if pedal.knobs.isEmpty {
             throw AddPedalError.missingKnobs
         }
-    
-        var knobs: [Knob] {
-            knobNames.map { name in
-                Knob(name: name)
-            }
-        }
-
-        let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
-        allPedals.append(newPedal)
         
+        self.allPedals.append(pedal)
+        
+        editPedal = nil
         isShowingSheet = false
+    }
+    
+    func finishedEditingPedal(_ pedal: Pedal) throws {
+        if pedal.name.isEmpty {
+            throw AddPedalError.missingName
+        }
+        
+        if pedal.brand.isEmpty {
+            throw AddPedalError.missingBrand
+        }
+        
+        if pedal.knobs.isEmpty {
+            throw AddPedalError.missingKnobs
+        }
+        
+
+        updatePedal(pedal)
+        
+        editPedal = nil
+        isShowingSheet = false
+    }
+    
+    
+    func updatePedal(_ updatedPedal: Pedal) {
+        
+        allPedals = allPedals.map { pedal in
+            pedal == updatedPedal ? updatedPedal : pedal
+        }
+        
     }
 }

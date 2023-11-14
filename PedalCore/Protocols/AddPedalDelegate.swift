@@ -8,5 +8,7 @@
 import Foundation
 
 protocol AddPedalDelegate {
-    func addPedalPressed(name: String, brand: String, knobNames: [String]) throws
+    func finishedEditingPedal(_ pedal: Pedal) throws
+    
+    func addNewPedal(_ pedal: Pedal) throws
 }

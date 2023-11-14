@@ -8,8 +8,15 @@
 import Foundation
 
 class CreatePedalViewModel: ObservableObject {
-    @Published var pedalName: String = ""
-    @Published var brandName: String = ""
+    
+    enum Style {
+        case editPedal, createPedal
+    }
+    
+    var editePedal: Pedal?
+    
+    @Published var pedalName: String
+    @Published var brandName: String
     @Published var knobNames: [String] = []
     
     @Published var isPresentingAlert: Bool = false
@@ -17,8 +24,29 @@ class CreatePedalViewModel: ObservableObject {
     
     var delegate: AddPedalDelegate?
     
-    init(delegate: AddPedalDelegate? = nil) {
+    var style: Style {
+        if editePedal != nil {
+            return .editPedal
+        } else {
+            return .createPedal
+        }
+    }
+    
+    init(delegate: AddPedalDelegate? = nil, editPedal: Pedal? = nil) {
         self.delegate = delegate
+        
+        if let pedal = editPedal {
+            self.editePedal = pedal
+            self.pedalName = pedal.name
+            self.brandName = pedal.brand
+            pedal.knobs.forEach { knob in
+                self.knobNames.append(knob.name)
+            }
+        } else {
+            self.pedalName = ""
+            self.brandName = ""
+        }
+        
     }
     
     
@@ -26,21 +54,55 @@ class CreatePedalViewModel: ObservableObject {
         knobNames.append("")
     }
     
-    func addPedalPressed() {
+    
+    func doneButtonPressed() {
+        switch style {
+        case .editPedal:
+            editPedalDone()
+        case .createPedal:
+            addNewPedal()
+        }
+    }
+    
+    func addNewPedal() {
         do {
-            try delegate?.addPedalPressed(name: pedalName, brand: brandName, knobNames: knobNames)
+            
+            let pedal = Pedal(name: self.pedalName, brand: self.brandName, knobs: createKnobs())
+            try delegate?.addNewPedal(pedal)
             
         } catch {
-            if let pedalError = error as? AddPedalError {
-                isPresentingAlert = true
-                switch pedalError {
-                case .missingName:
-                   alertMessage = "Please, provide the pedal name"
-                case .missingBrand:
-                    alertMessage = "Please, provide a brand of the pedal"
-                case .missingKnobs:
-                    alertMessage = "Please, provide a knob name for your pedal"
-                }
+         
+            dealWithErrors(error: error)
+        }
+    }
+    
+    func editPedalDone() {
+        do {
+            guard let oldPedal = editePedal else { return }
+        
+            let pedal = Pedal(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: createKnobs())
+            try delegate?.finishedEditingPedal(pedal)
+            
+        } catch {
+            dealWithErrors(error: error)
+        }
+
+    }
+    
+    private func createKnobs() -> [Knob] {
+        return knobNames.map { Knob(name: $0) }
+    }
+    
+    private func dealWithErrors(error: Error) {
+        if let pedalError = error as? AddPedalError {
+            isPresentingAlert = true
+            switch pedalError {
+            case .missingName:
+               alertMessage = "Please, provide the pedal name"
+            case .missingBrand:
+                alertMessage = "Please, provide a brand of the pedal"
+            case .missingKnobs:
+                alertMessage = "Please, provide a knob name for your pedal"
             }
         }
 
