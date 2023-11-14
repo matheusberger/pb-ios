@@ -72,8 +72,16 @@ public struct HomeView: View {
     private var contentView: some View {
         List(viewModel.filteredPedals, id: \.id) { pedal in
             PedalRow(pedal: pedal)
-                .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
+                .swipeActions(edge: .trailing) {
+                    Button(role: .destructive) {
+                        viewModel.removePedal(pedal)
+                    } label: {
+                        Image(systemName: "trash.fill")
+                    }
+                }
+            
         }
+        .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
     }
 }
 

@@ -43,6 +43,13 @@ class HomeViewModel: ObservableObject {
     func populatePedals() {
         allPedals = Pedal.pedalSample()
     }
+    
+    
+    public func removePedal(_ pedal: Pedal) {
+        guard let pedalIndex = allPedals.firstIndex(of: pedal) else { return }
+        
+        allPedals.remove(at: pedalIndex)
+    }
 }
 
 extension HomeViewModel: AddPedalDelegate {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C0A07C42B03AD890036B04E /* HomeViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0A07C32B03AD890036B04E /* HomeViewModelsTests.swift */; };
 		0C28FF312AE05B3A00994E12 /* Pedal+Populate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C28FF302AE05B3A00994E12 /* Pedal+Populate.swift */; };
 		0C28FF332AE05D8500994E12 /* CreatePedalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C28FF322AE05D8500994E12 /* CreatePedalViewModel.swift */; };
 		0C3293B82ACB5F0F00A9BC34 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3293B72ACB5F0F00A9BC34 /* Knob.swift */; };
@@ -68,6 +69,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0C0A07C32B03AD890036B04E /* HomeViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelsTests.swift; sourceTree = "<group>"; };
 		0C28FF302AE05B3A00994E12 /* Pedal+Populate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pedal+Populate.swift"; sourceTree = "<group>"; };
 		0C28FF322AE05D8500994E12 /* CreatePedalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePedalViewModel.swift; sourceTree = "<group>"; };
 		0C3293B52ACB5E2A00A9BC34 /* CreatePedalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePedalView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C0A07C22B03AD760036B04E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0C0A07C32B03AD890036B04E /* HomeViewModelsTests.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		0C28FF2F2AE05B1F00994E12 /* Pedal */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				56827F382A95869D0043277A /* PedalCoreTests.swift */,
+				0C0A07C22B03AD760036B04E /* ViewModels */,
 			);
 			path = PedalCoreTests;
 			sourceTree = "<group>";
@@ -402,6 +413,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56827F392A95869D0043277A /* PedalCoreTests.swift in Sources */,
+				0C0A07C42B03AD890036B04E /* HomeViewModelsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
