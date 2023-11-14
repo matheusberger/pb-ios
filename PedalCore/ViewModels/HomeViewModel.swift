@@ -8,6 +8,7 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
+
     enum State {
         case empty, content
     }

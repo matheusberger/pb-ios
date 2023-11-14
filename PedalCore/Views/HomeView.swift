@@ -15,37 +15,43 @@ public struct HomeView: View {
     }
     
     public var body: some View {
+
         NavigationView {
             
-            Group {
-                switch viewModel.state {
-                case .empty:
-                    emptyView
-                case .content:
-                    contentView
-                }
-            }
-            .sheet(isPresented: $viewModel.isShowingSheet) {
-                CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
-            }
-            .navigationTitle("Pedal List")
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    // testing view
-                    Button {
-                        viewModel.populatePedals()
-                    } label: {
-                        Image(systemName: "eyes")
+            VStack {
+                Group {
+                    switch viewModel.state {
+                    case .empty:
+                        emptyView
+                    case .content:
+                        contentView
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        viewModel.addIconPressed()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                .sheet(isPresented: $viewModel.isShowingSheet) {
+                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
                 }
+                .navigationTitle("Pedal List")
+                
+                Spacer()
+                
+                Button {
+                    viewModel.addIconPressed()
+                } label: {
+                    Text("Create new pedal")
+                        .fontWeight(.bold)
+                        .frame(width: 250,height: 30)
+                        
+                }.buttonStyle(.borderedProminent)
+                
+                Button {
+                    viewModel.populatePedals()
+                } label: {
+                    Image(systemName: "eyes")
+                }
+                
             }
+            .padding(.bottom, 20)
+        
         }
     }
 
