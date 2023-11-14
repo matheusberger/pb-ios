@@ -58,11 +58,15 @@ public struct HomeView: View {
     @ViewBuilder
     private var emptyView: some View {
         VStack(alignment: .leading, spacing: 20) {
+            Spacer()
+            
             Text("None pedals registered yet")
                 .font(.headline)
             
             Text("You may add new pedals by tapping in the superior button")
                 .font(.subheadline)
+            
+            Spacer()
         }
         .foregroundStyle(.secondary)
         .font(.headline)
