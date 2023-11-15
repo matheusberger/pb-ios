@@ -22,7 +22,7 @@ class CreatePedalViewModel: ObservableObject {
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    var delegate: CreatePedalDelegate?
+    weak var delegate: CreatePedalDelegate?
     
     public var style: Style {
         if editePedal != nil {
@@ -54,6 +54,9 @@ class CreatePedalViewModel: ObservableObject {
         knobNames.append("")
     }
     
+    public func removeKnob(at offSets: IndexSet) {
+        knobNames.remove(atOffsets: offSets)
+    }
     
     public func doneButtonPressed() {
         switch style {
@@ -62,10 +65,6 @@ class CreatePedalViewModel: ObservableObject {
         case .createPedal:
             addNewPedal()
         }
-    }
-    
-    public func removeKnob(at offSets: IndexSet) {
-        knobNames.remove(atOffsets: offSets)
     }
     
     func addNewPedal() {
@@ -97,14 +96,7 @@ class CreatePedalViewModel: ObservableObject {
     private func dealWithErrors(error: Error) {
         if let pedalError = error as? AddPedalError {
             isPresentingAlert = true
-            switch pedalError {
-            case .missingName:
-               alertMessage = "Please, provide the pedal name"
-            case .missingBrand:
-                alertMessage = "Please, provide a brand of the pedal"
-            case .missingKnobs:
-                alertMessage = "Please, provide a knob name for your pedal"
-            }
+            alertMessage = pedalError.description
         }
 
     }

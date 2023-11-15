@@ -60,17 +60,8 @@ class HomeViewModel: ObservableObject {
 
 extension HomeViewModel: CreatePedalDelegate {
     func addNewPedal(_ pedal: Pedal) throws {
-        if pedal.name.isEmpty {
-            throw AddPedalError.missingName
-        }
         
-        if pedal.brand.isEmpty {
-            throw AddPedalError.missingBrand
-        }
-        
-        if pedal.knobs.isEmpty {
-            throw AddPedalError.missingKnobs
-        }
+        try validadePedalInfo(pedal)
         
         self.allPedals.append(pedal)
         
@@ -79,6 +70,16 @@ extension HomeViewModel: CreatePedalDelegate {
     }
     
     func finishedEditingPedal(_ pedal: Pedal) throws {
+       
+        try validadePedalInfo(pedal)
+        
+        updatePedal(pedal)
+        
+        editPedal = nil
+        isShowingSheet = false
+    }
+    
+    private func validadePedalInfo(_ pedal: Pedal) throws {
         if pedal.name.isEmpty {
             throw AddPedalError.missingName
         }
@@ -91,12 +92,12 @@ extension HomeViewModel: CreatePedalDelegate {
             throw AddPedalError.missingKnobs
         }
         
-        updatePedal(pedal)
-        
-        editPedal = nil
-        isShowingSheet = false
+        try pedal.knobs.forEach { knob in
+            if knob.name.isEmpty {
+                throw AddPedalError.missingKnobName
+            }
+        }
     }
-    
     
     private func updatePedal(_ updatedPedal: Pedal) {
         allPedals = allPedals.map { pedal in
