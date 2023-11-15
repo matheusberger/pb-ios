@@ -37,6 +37,10 @@ class SongsViewModel: ObservableObject {
         
     }
     
+    func deleteSong(_ deletedSong: Song) {
+        allSongs = allSongs.filter({ $0 != deletedSong })
+    }
+    
     func populateSongs() {
         let songsDemo = Song.getSample()
         
