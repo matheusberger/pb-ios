@@ -34,13 +34,22 @@ struct CreateSongView: View {
                 } footer: {
                     Text("You song must have a name and a artist")
                 }
-
                 
                 Section {
                     
                     ForEach(pedalList) { pedal in
                             PedalRow(pedal: pedal)
+                            .contextMenu(menuItems: {
+                                Button(role: .destructive) {
+                                   removePedal(pedal)
+                                } label: {
+                                    Label("Delete", systemImage: "trash.fill")
+                                }
+                            })
                     }
+                    .onDelete(perform: { indexSet in
+                        removePedal(at: indexSet)
+                    })
                     
                     NavigationLink {
                         SelectPedalView(pedals: availablePedals) { selectedPedal in
@@ -67,7 +76,13 @@ struct CreateSongView: View {
         .navigationTitle("Add new song")
     }
     
+    private func removePedal(at index: IndexSet) {
+        self.pedalList.remove(atOffsets: index)
+    }
     
+    private func removePedal(_ pedal: Pedal) {
+        self.pedalList = pedalList.filter({ $0.id != pedal.id})
+    }
     
     private func addSongPressed() {
         do {
@@ -82,8 +97,6 @@ struct CreateSongView: View {
                 case .missingArtist:
                     alertMessage = "Please, provide the artist name"
                 }
-
-                
             }
         }
     }
