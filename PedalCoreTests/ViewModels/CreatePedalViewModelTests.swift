@@ -24,7 +24,7 @@ final class CreatePedalViewModelTests: XCTestCase {
     func testPedalInfosStartsEmpty() {
         XCTAssertTrue(viewModel.pedalName.isEmpty)
         XCTAssertTrue(viewModel.brandName.isEmpty)
-        XCTAssertTrue(viewModel.knobNames.isEmpty)
+        XCTAssertTrue(viewModel.knobs.isEmpty)
     }
     
     func testWhenEditingPedalViewModelHasRelatedStyle() {
@@ -42,26 +42,28 @@ final class CreatePedalViewModelTests: XCTestCase {
         
         XCTAssertFalse(viewModel.pedalName.isEmpty)
         XCTAssertFalse(viewModel.brandName.isEmpty)
-        XCTAssertFalse(viewModel.knobNames.isEmpty)
+        XCTAssertFalse(viewModel.knobs.isEmpty)
     }
     
     
     func testAddKnobPressedAppendstoKnobNamesArray() {
-        viewModel.knobNames = []
+        viewModel.knobs = []
         
         viewModel.addKnobPressed()
         
-        XCTAssertFalse(viewModel.knobNames.isEmpty)
+        XCTAssertFalse(viewModel.knobs.isEmpty)
         
     }
     
     func testRemoveKnobRemovesElementFromArray() {
-        viewModel.knobNames = ["Drive", "Tone", "Level"]
+        let knobs: [Knob] = [Knob(name: "Drive"), Knob(name: "Tone"), Knob(name: "Level")]
+        viewModel.knobs = knobs
         
         viewModel.removeKnob(at: IndexSet(integer: 0))
         
-        XCTAssertTrue(viewModel.knobNames.count == 2)
-        XCTAssertFalse(viewModel.knobNames.contains(where: {$0 == "Drive"}))
+        XCTAssertTrue(viewModel.knobs.count == 2)
+        
+        XCTAssertFalse(viewModel.knobs.contains(where: {$0.name == knobs.first!.name}))
         
     }
     
@@ -82,7 +84,7 @@ final class CreatePedalViewModelTests: XCTestCase {
         
         XCTAssertTrue(delegate.didCallFinishedEditingPedal)
     }
-
+    
     func testAddNewPedalPresentsAlertWhenErrorOccurs() {
         viewModel.isPresentingAlert = false
         delegate.addNewPedalShouldThrowError = .missingBrand
@@ -102,5 +104,5 @@ final class CreatePedalViewModelTests: XCTestCase {
         
         XCTAssertTrue(viewModel.isPresentingAlert)
     }
-   
+    
 }

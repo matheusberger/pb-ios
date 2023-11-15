@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreatePedalView: View {
-    
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewModel: CreatePedalViewModel
     
     init(viewModel: CreatePedalViewModel) {
@@ -17,7 +17,7 @@ struct CreatePedalView: View {
     
     var body: some View {
         
-        Form {
+        List {
             Section("Name") {
                 TextField("Pedal name:", text: $viewModel.pedalName, prompt: Text("Name your pedal here") )
             }
@@ -27,37 +27,53 @@ struct CreatePedalView: View {
             }
             
             Section("Knobs") {
-                List {
-                    ForEach(Array(viewModel.knobNames.enumerated()), id: \.offset) { index, element in
-                        TextField("Knob name:", text: $viewModel.knobNames[index], prompt: Text("Name the knob here"))
-                    }
-                    .onDelete(perform: { indexSet in
-                        viewModel.removeKnob(at: indexSet)
-                    })
-                    HStack {
-                        Spacer()
-                        Button {
-                            viewModel.addKnobPressed()
-                        } label: {
-                            Text("Add knob")
+                
+                ForEach(viewModel.knobs, id: \.id) { knob in
+                    if let index = viewModel.knobs.firstIndex(where: {$0.id == knob.id}) {
+                        TextField("Knob name:", text: $viewModel.knobs[index].name, prompt: Text("Name the knob here"))
+                        .submitLabel(.return)
+                        .overlay(alignment: .trailing) {
+                            if viewModel.knobs[index].name.isEmpty {
+                                Button {
+                                    viewModel.removeKnob(at: index)
+                                } label: {
+                                    Image(systemName: "xmark.circle")
+                                        .imageScale(.medium)
+                                        .frame(width: 20, height: 20)
+                                }
+                            }
                         }
-                        .buttonStyle(.borderedProminent)
-                        Spacer()
                     }
+                        
                 }
+                .onDelete(perform: { indexSet in
+                    viewModel.removeKnob(at: indexSet)
+                })
+                
+                Button {
+                    viewModel.addKnobPressed()
+                } label: {
+                    Text("Add knob")
+                }
+                
             }
             
             Button {
                 viewModel.doneButtonPressed()
                 
             } label: {
-                HStack {
-                    Spacer()
-                    Text(viewModel.style == .createPedal ?  "Create pedal" : "Update pedal")
-                    Spacer()
-                }
+                Text(viewModel.style == .createPedal ?  "Create pedal" : "Update pedal")
             }
-            .buttonStyle(.borderedProminent)
+            
+            
+            if viewModel.style == .editPedal {
+                Button(role: .destructive) {
+                    dismiss()
+                } label: {
+                    Text("Cancel")
+                }
+                
+            }
         }
         .alert("Failed to save new pedal", isPresented: $viewModel.isPresentingAlert) {
         } message: {
@@ -70,6 +86,6 @@ struct CreatePedalView: View {
 
 struct CreatePedalView_Previews: PreviewProvider {
     static var previews: some View {
-        CreatePedalView(viewModel: CreatePedalViewModel())
+        CreatePedalView(viewModel: CreatePedalViewModel(editPedal: Pedal.emptyPedal()))
     }
 }

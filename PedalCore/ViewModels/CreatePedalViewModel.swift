@@ -17,7 +17,7 @@ class CreatePedalViewModel: ObservableObject {
     
     @Published var pedalName: String
     @Published var brandName: String
-    @Published var knobNames: [String] = []
+    @Published var knobs: [Knob] = []
     
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
@@ -39,23 +39,27 @@ class CreatePedalViewModel: ObservableObject {
             self.editePedal = pedal
             self.pedalName = pedal.name
             self.brandName = pedal.brand
-            pedal.knobs.forEach { knob in
-                self.knobNames.append(knob.name)
-            }
+            self.knobs = pedal.knobs
         } else {
             self.pedalName = ""
             self.brandName = ""
-            self.knobNames = []
+            self.knobs = []
         }
-        
     }
     
     public func addKnobPressed() {
-        knobNames.append("")
+        knobs.append(Knob(name: ""))
     }
     
     public func removeKnob(at offSets: IndexSet) {
-        knobNames.remove(atOffsets: offSets)
+        guard let index = offSets.first else { return }
+        if index < knobs.count {
+            self.knobs.remove(atOffsets: offSets)
+        }
+    }
+    
+    public func removeKnob(at index: Int) {
+        knobs.remove(at: index)
     }
     
     public func doneButtonPressed() {
@@ -69,7 +73,7 @@ class CreatePedalViewModel: ObservableObject {
     
     func addNewPedal() {
         do {
-            let pedal = Pedal(name: self.pedalName, brand: self.brandName, knobs: createKnobs())
+            let pedal = Pedal(name: self.pedalName, brand: self.brandName, knobs: self.knobs)
             try delegate?.addNewPedal(pedal)
             
         } catch {
@@ -81,16 +85,12 @@ class CreatePedalViewModel: ObservableObject {
         do {
             guard let oldPedal = editePedal else { return }
         
-            let pedal = Pedal(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: createKnobs())
+            let pedal = Pedal(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
             try delegate?.finishedEditingPedal(pedal)
             
         } catch {
             dealWithErrors(error: error)
         }
-    }
-    
-    private func createKnobs() -> [Knob] {
-        return knobNames.map { Knob(name: $0) }
     }
     
     private func dealWithErrors(error: Error) {
