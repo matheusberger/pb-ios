@@ -51,15 +51,12 @@ class CreatePedalViewModel: ObservableObject {
         knobs.append(Knob(name: ""))
     }
     
+    @MainActor
     public func removeKnob(at offSets: IndexSet) {
         guard let index = offSets.first else { return }
         if index < knobs.count {
             self.knobs.remove(atOffsets: offSets)
         }
-    }
-    
-    public func removeKnob(at index: Int) {
-        knobs.remove(at: index)
     }
     
     public func doneButtonPressed() {

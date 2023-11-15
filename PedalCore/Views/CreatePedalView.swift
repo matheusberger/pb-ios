@@ -30,12 +30,15 @@ struct CreatePedalView: View {
                 
                 ForEach(viewModel.knobs, id: \.id) { knob in
                     if let index = viewModel.knobs.firstIndex(where: {$0.id == knob.id}) {
-                        TextField("Knob name:", text: $viewModel.knobs[index].name, prompt: Text("Name the knob here"))
-                        .submitLabel(.return)
-                        .overlay(alignment: .trailing) {
+                        HStack {
+                            TextField("Knob name:", text: $viewModel.knobs[index].name, prompt: Text("Name the knob here"))
+                                .submitLabel(.return)
+                            
                             if viewModel.knobs[index].name.isEmpty {
                                 Button {
-                                    viewModel.removeKnob(at: index)
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    viewModel.removeKnob(at: IndexSet(integer: index))
+                                    
                                 } label: {
                                     Image(systemName: "xmark.circle")
                                         .imageScale(.medium)
@@ -44,7 +47,6 @@ struct CreatePedalView: View {
                             }
                         }
                     }
-                        
                 }
                 .onDelete(perform: { indexSet in
                     viewModel.removeKnob(at: indexSet)
