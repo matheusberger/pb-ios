@@ -1,5 +1,5 @@
 //
-//  SongsView.swift
+//  CreateSongView.swift
 //  PedalCore
 //
 //  Created by Lucas Migge on 15/11/23.
@@ -7,15 +7,14 @@
 
 import SwiftUI
 
-struct SongsView: View {
-    
-    @StateObject var viewModel: SongsViewModel = SongsViewModel()
-    
+struct CreateSongView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
-#Preview {
-    SongsView()
+struct CreateSongView_Previews: PreviewProvider {
+    static var previews: some View {
+        CreateSongView()
+    }
 }
