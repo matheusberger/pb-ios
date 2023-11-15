@@ -45,6 +45,9 @@ class SongsViewModel: ObservableObject {
         }
     }
     
+}
+
+extension SongsViewModel: AddSongDelegate {
     func addSong(name: String, artist: String, pedals: [Pedal]) {
         let newSong = Song(name: name, artist: artist, pedals: pedals)
         self.allSongs.append(newSong)

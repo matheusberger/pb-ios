@@ -26,7 +26,7 @@ struct SongsView: View {
             
             .navigationTitle("My Songs")
             .sheet(isPresented: $viewModel.isShowingSheet) {
-                CreateSongView()
+                CreateSongView(availablePedals: Pedal.pedalSample(), delegate: self.viewModel)
             }
             .toolbar {
                 
@@ -45,8 +45,6 @@ struct SongsView: View {
                 }
             }
         }
-        
-        
     }
     
     @ViewBuilder
@@ -60,52 +58,14 @@ struct SongsView: View {
     @ViewBuilder
     private var listView: some View {
         List(viewModel.songs) { song in
-            VStack(alignment: .leading) {
-                VStack(alignment: .leading) {
-                    Text(song.name)
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                    
-                    Text(song.artist)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    
-                    
-                    ForEach(song.pedals) { pedal in
-                        HStack(alignment: .center) {
-                            ZStack {
-                                Circle()
-                                    .scaledToFit()
-                                    .frame(width: 10)
-                                if song.pedals.last?.id != pedal.id {
-                                    Capsule(style: .circular)
-                                        .frame(width: 1)
-                                        .offset(y: 15)
-                                }
-                               
-                            }
-                           
-                            Text(pedal.name)
-                                .font(.subheadline)
-                                .foregroundStyle(.primary)
-    
-                            Text(pedal.brand)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                            
-                        }
-                    }
-                    
-                }
+            SongRow(song: song)
                 .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
-            }
-            
         }
     }
 }
-    
-    struct SongsView_Previews: PreviewProvider {
-        static var previews: some View {
-            SongsView()
-        }
+
+struct SongsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SongsView()
     }
+}
