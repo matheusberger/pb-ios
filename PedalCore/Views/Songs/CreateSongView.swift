@@ -15,7 +15,6 @@ struct CreateSongView: View {
         self.viewModel = viewModel
     }
     
-    
     var body: some View {
         NavigationView {
             List {
@@ -58,7 +57,7 @@ struct CreateSongView: View {
                     })
                     
                     NavigationLink {
-                        SelectPedalView(allUserPedals: viewModel.availablePedals, selectedPedals: viewModel.pedalList) { selectedPedals in
+                        SelectPedalView(selectedPedals: viewModel.pedalList, allUserPedals: viewModel.availablePedals) { selectedPedals in
                             viewModel.updateSelectedPedals(selectedPedals)
                             
                         }

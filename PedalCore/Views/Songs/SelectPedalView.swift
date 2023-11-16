@@ -88,8 +88,8 @@ struct SelectPedalView: View {
                                 Image(systemName: "arrow.down.square")
                             }
                         }
-                        .background(Color.green)
                     }
+                  
                     .buttonStyle(.plain)
                 }
             } header: {
