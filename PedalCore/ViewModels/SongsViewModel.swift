@@ -13,10 +13,15 @@ class SongsViewModel: ObservableObject {
         case empty, content
     }
     
-    @Published var allSongs: [Song] = Song.getSample()
+    @Published var allSongs: [Song]
     @Published var isShowingSheet: Bool = false
     
     @Published var searchText: String = ""
+    
+    init(allSongs: [Song] = Song.getSample()) {
+        self.allSongs = allSongs
+    }
+    
     
     public var state: State {
         if allSongs.isEmpty {
@@ -37,6 +42,10 @@ class SongsViewModel: ObservableObject {
         
     }
     
+    public func addSongPressed() {
+        isShowingSheet = true
+    }
+    
     func deleteSong(_ deletedSong: Song) {
         allSongs = allSongs.filter({ $0 != deletedSong })
     }
@@ -52,10 +61,21 @@ class SongsViewModel: ObservableObject {
 }
 
 extension SongsViewModel: AddSongDelegate {
-    func addSong(name: String, artist: String, pedals: [Pedal]) {
-        let newSong = Song(name: name, artist: artist, pedals: pedals)
-        self.allSongs.append(newSong)
+    func addSong(_ song: Song) throws {
+        try validateSong(song)
+        
+        self.allSongs.append(song)
         isShowingSheet = false
+    }
+    
+    private func validateSong(_ song: Song) throws {
+        if song.name.isEmpty {
+            throw AddSongError.missingName
+        }
+        
+        if song.artist.isEmpty {
+            throw AddSongError.missingArtist
+        }
     }
     
 }

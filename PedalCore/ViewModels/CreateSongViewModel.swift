@@ -41,7 +41,10 @@ class CreateSongViewModel: ObservableObject {
     
     public func addSongPressed() {
         do {
-            try delegate?.addSong(name: songName, artist: bandName, pedals: pedalList)
+            
+            let song = Song(name: songName, artist: bandName, pedals: pedalList)
+            try delegate?.addSong(song)
+            
         } catch {
             if let songError = error as? AddSongError {
                 isPresentingAlert = true

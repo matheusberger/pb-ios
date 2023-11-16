@@ -39,7 +39,7 @@ struct SongsView: View {
                 }
                 
                 Button {
-                    viewModel.isShowingSheet.toggle()
+                    viewModel.addSongPressed()
                 } label: {
                     Image(systemName: "plus")
                 }
