@@ -17,6 +17,8 @@ class HomeViewModel: ObservableObject {
     @Published var isShowingSheet: Bool = false
     @Published var searchText: String = ""
     
+    var editPedal: Pedal?
+    
     var state: State {
         if allPedals.isEmpty {
             return .empty
@@ -43,31 +45,63 @@ class HomeViewModel: ObservableObject {
     func populatePedals() {
         allPedals = Pedal.pedalSample()
     }
+    
+    func removePedalPressed(_ removedPedal: Pedal) {
+        allPedals = allPedals.filter { pedal in
+            pedal != removedPedal
+        }
+    }
+    
+    func editPedalPressed(_ pedal: Pedal) {
+        editPedal = pedal
+        isShowingSheet = true
+    }
 }
 
-extension HomeViewModel: AddPedalDelegate {
-    func addPedalPressed(name: String, brand: String, knobNames: [String]) throws {
-        if name.isEmpty {
+extension HomeViewModel: CreatePedalDelegate {
+    func addNewPedal(_ pedal: Pedal) throws {
+        
+        try validadePedalInfo(pedal)
+        
+        self.allPedals.append(pedal)
+        
+        editPedal = nil
+        isShowingSheet = false
+    }
+    
+    func finishedEditingPedal(_ pedal: Pedal) throws {
+       
+        try validadePedalInfo(pedal)
+        
+        updatePedal(pedal)
+        
+        editPedal = nil
+        isShowingSheet = false
+    }
+    
+    private func validadePedalInfo(_ pedal: Pedal) throws {
+        if pedal.name.isEmpty {
             throw AddPedalError.missingName
         }
         
-        if brand.isEmpty {
+        if pedal.brand.isEmpty {
             throw AddPedalError.missingBrand
         }
         
-        if knobNames.isEmpty {
+        if pedal.knobs.isEmpty {
             throw AddPedalError.missingKnobs
         }
-    
-        var knobs: [Knob] {
-            knobNames.map { name in
-                Knob(name: name)
+        
+        try pedal.knobs.forEach { knob in
+            if knob.name.isEmpty {
+                throw AddPedalError.missingKnobName
             }
         }
-
-        let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
-        allPedals.append(newPedal)
-        
-        isShowingSheet = false
+    }
+    
+    private func updatePedal(_ updatedPedal: Pedal) {
+        allPedals = allPedals.map { pedal in
+            pedal == updatedPedal ? updatedPedal : pedal
+        }
     }
 }
