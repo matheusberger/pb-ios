@@ -55,13 +55,25 @@ struct SelectPedalView: View {
             } footer: {
                 Text("You can add new pedals on pedal List view")
             }
-            .navigationTitle("Select a pedal")
+            
+
+        }
+        .navigationTitle("Select a pedal")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                
+                Button("Done") {
+                    dismiss()
+                }
+            }
         }
     }
 }
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(allUserPedals: Pedal.pedalSample(), selectedPedals: .constant([]))
+        NavigationView {
+            SelectPedalView(allUserPedals: Pedal.pedalSample(), selectedPedals: .constant([]))
+        }
     }
 }

@@ -26,7 +26,7 @@ struct SongsView: View {
             
             .navigationTitle("My Songs")
             .sheet(isPresented: $viewModel.isShowingSheet) {
-                CreateSongView(availablePedals: Pedal.pedalSample(), delegate: self.viewModel)
+                CreateSongView(viewModel: CreateSongViewModel(delegate: self.viewModel))
             }
             .toolbar {
                 

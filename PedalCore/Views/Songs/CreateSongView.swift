@@ -8,27 +8,20 @@
 import SwiftUI
 
 struct CreateSongView: View {
+
+    @ObservedObject var viewModel: CreateSongViewModel
     
-    var availablePedals: [Pedal]
-    
-    weak var delegate: AddSongDelegate?
-    
-    @State var songName: String = ""
-    @State var bandName: String = ""
-    @State var pedalList: [Pedal] = []
-    
-    @State private var selectedPedalIndex = 0
-    
-    @State var isPresentingAlert: Bool = false
-    @State var alertMessage: String = ""
+    init(viewModel: CreateSongViewModel = CreateSongViewModel()) {
+        self.viewModel = viewModel
+    }
     
     
     var body: some View {
         NavigationView {
-            Form {
+            List {
                 Section {
-                    TextField("Song name", text: $songName, prompt: Text("Name of the song"))
-                    TextField("Band name", text: $bandName, prompt: Text("ArtistName"))
+                    TextField("Song name", text: $viewModel.songName, prompt: Text("Name of the song"))
+                    TextField("Band name", text: $viewModel.bandName, prompt: Text("ArtistName"))
                 } header: {
                     Text("Song info")
                 } footer: {
@@ -37,22 +30,22 @@ struct CreateSongView: View {
                 
                 Section {
                     
-                    ForEach(pedalList) { pedal in
+                    ForEach(viewModel.pedalList) { pedal in
                         PedalRow(pedal: pedal)
                             .contextMenu(menuItems: {
                                 Button(role: .destructive) {
-                                    removePedal(pedal)
+                                    viewModel.removePedal(pedal)
                                 } label: {
                                     Label("Delete", systemImage: "trash.fill")
                                 }
                             })
                     }
                     .onDelete(perform: { indexSet in
-                        removePedal(at: indexSet)
+                        viewModel.removePedal(at: indexSet)
                     })
                     
                     NavigationLink {
-                        SelectPedalView(allUserPedals: availablePedals, selectedPedals: $pedalList)
+                        SelectPedalView(allUserPedals: viewModel.availablePedals, selectedPedals: $viewModel.pedalList)
                         
                         
                     } label: {
@@ -67,7 +60,7 @@ struct CreateSongView: View {
                 
                 Section("Save") {
                     Button("Add Song") {
-                        addSongPressed()
+                        viewModel.addSongPressed()
                     }
                 }
             }
@@ -75,34 +68,11 @@ struct CreateSongView: View {
         .navigationTitle("Add new song")
     }
     
-    private func removePedal(at index: IndexSet) {
-        self.pedalList.remove(atOffsets: index)
-    }
-    
-    private func removePedal(_ pedal: Pedal) {
-        self.pedalList = pedalList.filter({ $0.id != pedal.id})
-    }
-    
-    private func addSongPressed() {
-        do {
-            try  delegate?.addSong(name: songName, artist: bandName, pedals: pedalList)
-        } catch {
-            if let songError = error as? AddSongError {
-                isPresentingAlert = true
-                switch songError {
-                case .missingName:
-                    alertMessage = "Please, provide a name for the song"
-                    
-                case .missingArtist:
-                    alertMessage = "Please, provide the artist name"
-                }
-            }
-        }
-    }
+   
 }
 
 struct CreateSongView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateSongView(availablePedals: Pedal.pedalSample())
+        CreateSongView()
     }
 }
