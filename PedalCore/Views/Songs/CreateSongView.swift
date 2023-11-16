@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateSongView: View {
-
+    
     @ObservedObject var viewModel: CreateSongViewModel
     
     init(viewModel: CreateSongViewModel = CreateSongViewModel()) {
@@ -30,29 +30,43 @@ struct CreateSongView: View {
                 
                 Section {
                     
-                    ForEach(viewModel.pedalList) { pedal in
-                        PedalRow(pedal: pedal)
-                            .contextMenu(menuItems: {
-                                Button(role: .destructive) {
-                                    viewModel.removePedal(pedal)
-                                } label: {
-                                    Label("Delete", systemImage: "trash.fill")
+                    ForEach($viewModel.pedalList) { $pedal in
+                        VStack {
+                            VStack(alignment: .leading) {
+                                Text(pedal.name)
+                                    .font(.headline)
+                                    .foregroundStyle(.primary)
+                                
+                                LazyVGrid(columns: [GridItem(),GridItem()]) {
+                                    ForEach($pedal.knobs) { $knobs in
+                                        KnobView(knob: $knobs)
+                                            .padding()
+                                    }
                                 }
-                            })
+                            }
+                        }
+                        .contextMenu(menuItems: {
+                            Button(role: .destructive) {
+                                viewModel.removePedal(pedal)
+                            } label: {
+                                Label("Delete", systemImage: "trash.fill")
+                            }
+                        })
                     }
                     .onDelete(perform: { indexSet in
                         viewModel.removePedal(at: indexSet)
                     })
                     
                     NavigationLink {
-                        SelectPedalView(allUserPedals: viewModel.availablePedals, selectedPedals: $viewModel.pedalList)
-                        
+                        SelectPedalView(allUserPedals: viewModel.availablePedals, selectedPedals: viewModel.pedalList) { selectedPedals in
+                            viewModel.updateSelectedPedals(selectedPedals)
+                            
+                        }
                         
                     } label: {
                         Text("Attach pedal")
                             .foregroundStyle(Color.accentColor)
                     }
-                    
                     
                 } header: {
                     Text("Pedalboard")
@@ -67,8 +81,6 @@ struct CreateSongView: View {
         }
         .navigationTitle("Add new song")
     }
-    
-   
 }
 
 struct CreateSongView_Previews: PreviewProvider {

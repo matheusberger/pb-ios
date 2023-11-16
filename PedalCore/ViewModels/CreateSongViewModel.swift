@@ -35,6 +35,10 @@ class CreateSongViewModel: ObservableObject {
         self.pedalList = pedalList.filter({ $0.id != pedal.id})
     }
     
+    public func updateSelectedPedals(_ pedals: [Pedal]) {
+        self.pedalList = pedals
+    }
+    
     public func addSongPressed() {
         do {
             try delegate?.addSong(name: songName, artist: bandName, pedals: pedalList)

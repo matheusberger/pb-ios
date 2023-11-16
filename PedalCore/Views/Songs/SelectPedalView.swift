@@ -10,8 +10,14 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    var allUserPedals: [Pedal]
-    @Binding var selectedPedals: [Pedal]
+    // this should be a binding of CreateSongViewModel.pedalList
+    // dismiss bug when first pedal was selected
+    // switched to State and return value to be updated
+    // investigate later with Berguer
+    
+    @State var selectedPedals: [Pedal]
+    var allUserPedals: [Pedal] = Pedal.pedalSample()
+    var onDismiss: ([Pedal]) -> Void
     
     
     func toggleSelection(for pedal: Pedal) {
@@ -34,6 +40,7 @@ struct SelectPedalView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button("Done") {
+                    onDismiss(selectedPedals)
                     dismiss()
                 }
             }
@@ -81,6 +88,7 @@ struct SelectPedalView: View {
                                 Image(systemName: "arrow.down.square")
                             }
                         }
+                        .background(Color.green)
                     }
                     .buttonStyle(.plain)
                 }
@@ -96,7 +104,9 @@ struct SelectPedalView: View {
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SelectPedalView(allUserPedals: Pedal.pedalSample(), selectedPedals: .constant([]))
+            SelectPedalView(selectedPedals: []) { _ in
+                
+            }
         }
     }
 }
