@@ -22,8 +22,42 @@ struct SelectPedalView: View {
            }
        }
     
-    #warning("Create a empty state if user has no pedals")
     var body: some View {
+        Group {
+            if allUserPedals.isEmpty {
+                emptyView
+            } else {
+                pedalContentList
+            }
+        }
+        .navigationTitle("Select a pedal")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Done") {
+                    dismiss()
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var emptyView: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Spacer()
+            
+            Text("None pedals registered yet")
+                .font(.headline)
+
+                .font(.subheadline)
+            
+            Spacer()
+        }
+        .foregroundStyle(.secondary)
+        .font(.headline)
+    }
+    
+    @ViewBuilder
+    private var pedalContentList: some View {
         Form {
             Section {
                 List(allUserPedals) { pedal in
@@ -48,23 +82,12 @@ struct SelectPedalView: View {
                             }
                         }
                     }
-                    .foregroundStyle(.primary)
+                    .buttonStyle(.plain)
                 }
             } header: {
                 Text("Your PedalBoard")
             } footer: {
                 Text("You can add new pedals on pedal List view")
-            }
-            
-
-        }
-        .navigationTitle("Select a pedal")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                
-                Button("Done") {
-                    dismiss()
-                }
             }
         }
     }
