@@ -10,26 +10,42 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    var pedals: [Pedal]
+    var allUserPedals: [Pedal]
+    @Binding var selectedPedals: [Pedal]
     
-    var didSelect: (Pedal) -> Void
     
+    func toggleSelection(for pedal: Pedal) {
+           if selectedPedals.contains(pedal) {
+               selectedPedals.removeAll(where: {$0 == pedal})
+           } else {
+               selectedPedals.append(pedal)
+           }
+       }
+    
+    #warning("Create a empty state if user has no pedals")
     var body: some View {
         Form {
             Section {
-                List(pedals) { pedal in
+                List(allUserPedals) { pedal in
                     Button {
-                        didSelect(pedal)
-                        dismiss()
+                        toggleSelection(for: pedal)
                     } label: {
-                        VStack(alignment: .leading) {
-                            Text(pedal.name)
-                                .font(.headline)
-                                .foregroundStyle(.primary)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(pedal.name)
+                                    .font(.headline)
+                                    .foregroundStyle(.primary)
+                                
+                                Text(pedal.brand)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
                             
-                            Text(pedal.brand)
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
+                            Spacer()
+                            
+                            if selectedPedals.contains(pedal) {
+                                Image(systemName: "arrow.down.square")
+                            }
                         }
                     }
                     .foregroundStyle(.primary)
@@ -41,12 +57,11 @@ struct SelectPedalView: View {
             }
             .navigationTitle("Select a pedal")
         }
-        
     }
 }
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(pedals: Pedal.pedalSample(), didSelect: { pedal in print("\(pedal) selected")})
+        SelectPedalView(allUserPedals: Pedal.pedalSample(), selectedPedals: .constant([]))
     }
 }

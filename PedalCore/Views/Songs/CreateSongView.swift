@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CreateSongView: View {
- 
+    
     var availablePedals: [Pedal]
     
     weak var delegate: AddSongDelegate?
@@ -38,10 +38,10 @@ struct CreateSongView: View {
                 Section {
                     
                     ForEach(pedalList) { pedal in
-                            PedalRow(pedal: pedal)
+                        PedalRow(pedal: pedal)
                             .contextMenu(menuItems: {
                                 Button(role: .destructive) {
-                                   removePedal(pedal)
+                                    removePedal(pedal)
                                 } label: {
                                     Label("Delete", systemImage: "trash.fill")
                                 }
@@ -52,16 +52,15 @@ struct CreateSongView: View {
                     })
                     
                     NavigationLink {
-                        SelectPedalView(pedals: availablePedals) { selectedPedal in
-                            pedalList.append(selectedPedal)
-                        }
+                        SelectPedalView(allUserPedals: availablePedals, selectedPedals: $pedalList)
+                        
                         
                     } label: {
                         Text("Attach pedal")
                             .foregroundStyle(Color.accentColor)
                     }
                     
-            
+                    
                 } header: {
                     Text("Pedalboard")
                 }

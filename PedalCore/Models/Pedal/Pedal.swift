@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct Pedal: Identifiable {
+struct Pedal: Identifiable, Hashable {
     var id: UUID = UUID()
     var name: String
     var brand: String
     var knobs: [Knob]
     
+    static func ==(lhs: Pedal, rhs: Pedal) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
