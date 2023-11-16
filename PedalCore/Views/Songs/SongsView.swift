@@ -58,22 +58,27 @@ struct SongsView: View {
     @ViewBuilder
     private var listView: some View {
         List(viewModel.songs) { song in
-            SongRow(song: song)
-                .contextMenu(menuItems: {
-                    Button(role: .destructive) {
-                        viewModel.deleteSong(song)
-                    } label: {
-                        Label("Delete", systemImage: "trash.fill")
+            NavigationLink {
+                SongDetailView()
+            } label: {
+                SongRow(song: song)
+                    .contextMenu(menuItems: {
+                        Button(role: .destructive) {
+                            viewModel.deleteSong(song)
+                        } label: {
+                            Label("Delete", systemImage: "trash.fill")
+                        }
+                    })
+                
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            viewModel.deleteSong(song)
+                        } label: {
+                            Label("Delete", systemImage: "trash.fill")
+                        }
                     }
-                })
-            
-                .swipeActions(edge: .trailing) {
-                    Button(role: .destructive) {
-                        viewModel.deleteSong(song)
-                    } label: {
-                        Label("Delete", systemImage: "trash.fill")
-                    }
-                }
+            }
+
         }
         .searchable(text: $viewModel.searchText, prompt: "Search a song or artist")
     }
