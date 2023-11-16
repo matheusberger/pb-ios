@@ -47,14 +47,9 @@ class CreateSongViewModel: ObservableObject {
             
         } catch {
             if let songError = error as? AddSongError {
+                alertMessage = songError.alertDescription
                 isPresentingAlert = true
-                switch songError {
-                case .missingName:
-                    alertMessage = "Please, provide a name for the song"
-                    
-                case .missingArtist:
-                    alertMessage = "Please, provide the artist name"
-                }
+
             }
         }
     }
