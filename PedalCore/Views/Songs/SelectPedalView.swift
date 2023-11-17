@@ -10,15 +10,8 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    // this should be a binding of CreateSongViewModel.pedalList
-    // dismiss bug when first pedal was selected
-    // switched to State and return value to be updated
-    // investigate later with Berguer
-    
-    @State var selectedPedals: [Pedal]
-    var allUserPedals: [Pedal] = Pedal.pedalSample()
-    var onDismiss: ([Pedal]) -> Void
-    
+    @Binding var selectedPedals: [Pedal]
+    @State var allUserPedals: [Pedal] = Pedal.pedalSample()
     
     func toggleSelection(for pedal: Pedal) {
            if selectedPedals.contains(pedal) {
@@ -29,22 +22,24 @@ struct SelectPedalView: View {
        }
     
     var body: some View {
-        Group {
-            if allUserPedals.isEmpty {
-                emptyView
-            } else {
-                pedalContentList
+        NavigationView {
+            Group {
+                if allUserPedals.isEmpty {
+                    emptyView
+                } else {
+                    pedalContentList
+                }
             }
-        }
-        .navigationTitle("Select a pedal")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button("Done") {
-                    onDismiss(selectedPedals)
-                    dismiss()
+            .navigationTitle("Select a pedal")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Done") {
+                        dismiss()
+                    }
                 }
             }
         }
+      
     }
     
     @ViewBuilder
@@ -103,10 +98,6 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            SelectPedalView(selectedPedals: []) { _ in
-                
-            }
-        }
+        SelectPedalView(selectedPedals: .constant([]))
     }
 }

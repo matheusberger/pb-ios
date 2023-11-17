@@ -10,6 +10,7 @@ import SwiftUI
 struct CreateSongView: View {
     
     @ObservedObject var viewModel: CreateSongViewModel
+    @State var isPresentingSheet: Bool = false
     
     init(viewModel: CreateSongViewModel = CreateSongViewModel()) {
         self.viewModel = viewModel
@@ -56,12 +57,8 @@ struct CreateSongView: View {
                         viewModel.removePedal(at: indexSet)
                     })
                     
-                    NavigationLink {
-                        SelectPedalView(selectedPedals: viewModel.pedalList, allUserPedals: viewModel.availablePedals) { selectedPedals in
-                            viewModel.updateSelectedPedals(selectedPedals)
-                            
-                        }
-                        
+                    Button {
+                        self.isPresentingSheet = true
                     } label: {
                         Text("Attach pedal")
                             .foregroundStyle(Color.accentColor)
@@ -77,6 +74,9 @@ struct CreateSongView: View {
                     }
                 }
             }
+        }
+        .sheet(isPresented: $isPresentingSheet) {
+            SelectPedalView(selectedPedals: $viewModel.pedalList)
         }
         .navigationTitle("Add new song")
     }
