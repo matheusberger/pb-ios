@@ -94,4 +94,20 @@ final class HomeViewModelsTests: XCTestCase {
         XCTAssertThrowsError(try viewModel.addNewPedal(newPedal))
     }
     
+    func testEditPedalPressedPutsPedalToEditPedalReference() {
+        let pedal = Pedal(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        
+        viewModel.editPedalPressed(pedal)
+        
+        XCTAssertEqual(pedal, viewModel.editPedal)
+    }
+    
+    func testDismissingSheetTurnsEditPedalToNil() {
+        let pedal = Pedal(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        viewModel.editPedal = pedal
+        
+        viewModel.sheetDidDismiss()
+        
+        XCTAssertNil(viewModel.editPedal)
+    }
 }

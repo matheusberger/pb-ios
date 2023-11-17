@@ -56,6 +56,10 @@ class HomeViewModel: ObservableObject {
         editPedal = pedal
         isShowingSheet = true
     }
+    
+    func sheetDidDismiss() {
+        self.editPedal = nil
+    }
 }
 
 extension HomeViewModel: CreatePedalDelegate {
