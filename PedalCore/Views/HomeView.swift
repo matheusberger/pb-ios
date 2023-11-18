@@ -8,14 +8,14 @@
 import SwiftUI
 
 public struct HomeView: View {
-    @ObservedObject var viewModel: HomeViewModel
+    @StateObject var viewModel: HomeViewModel = HomeViewModel()
     
-    public init() {
-        viewModel = HomeViewModel()
+    public init() { 
+        
     }
     
     public var body: some View {
-
+        
         NavigationView {
             
             VStack {
@@ -27,8 +27,15 @@ public struct HomeView: View {
                         contentView
                     }
                 }
-                .sheet(isPresented: $viewModel.isShowingSheet) {
-                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
+                .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
+                    viewModel.sheetDidDismiss()
+                }) {
+                    if let pedal = viewModel.editPedal {
+                        CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
+                    } else {
+                        CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
+                    }
+                    
                 }
                 .navigationTitle("Pedal List")
                 
@@ -40,7 +47,7 @@ public struct HomeView: View {
                     Text("Create new pedal")
                         .fontWeight(.bold)
                         .frame(width: 250,height: 30)
-                        
+                    
                 }.buttonStyle(.borderedProminent)
                 
                 Button {
@@ -51,10 +58,10 @@ public struct HomeView: View {
                 
             }
             .padding(.bottom, 20)
-        
+            
         }
     }
-
+    
     @ViewBuilder
     private var emptyView: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -74,10 +81,41 @@ public struct HomeView: View {
     
     @ViewBuilder
     private var contentView: some View {
-        List(viewModel.filteredPedals, id: \.id) { pedal in
+        List(viewModel.filteredPedals, id: \.signature) { pedal in
             PedalRow(pedal: pedal)
-                .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
+                .contextMenu(menuItems: {
+                    Button {
+                        viewModel.editPedalPressed(pedal)
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                            .tint(.yellow)
+                    }
+                    Button(role: .destructive) {
+                        viewModel.removePedalPressed(pedal)
+                    } label: {
+                        Label("Delete", systemImage: "trash.fill")
+                    }
+                })
+            
+                .swipeActions(edge: .trailing) {
+                    Button {
+                        viewModel.editPedalPressed(pedal)
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                            .tint(.yellow)
+                    }
+                    
+                    Button(role: .destructive) {
+                        viewModel.removePedalPressed(pedal)
+                    } label: {
+                        Label("Delete", systemImage: "trash.fill")
+                    }
+                }
+
+            
         }
+        .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
+        
     }
 }
 
