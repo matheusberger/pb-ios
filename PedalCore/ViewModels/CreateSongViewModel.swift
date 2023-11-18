@@ -26,7 +26,6 @@ class CreateSongViewModel: ObservableObject {
         
     }
     
-
     public func removePedal(at index: IndexSet) {
         self.pedalList.remove(atOffsets: index)
     }
@@ -41,7 +40,6 @@ class CreateSongViewModel: ObservableObject {
     
     public func addSongPressed() {
         do {
-            
             let song = Song(name: songName, artist: bandName, pedals: pedalList)
             try delegate?.addSong(song)
             
@@ -49,8 +47,16 @@ class CreateSongViewModel: ObservableObject {
             if let songError = error as? AddSongError {
                 alertMessage = songError.alertDescription
                 isPresentingAlert = true
-
+                
             }
+        }
+    }
+    
+    public func toggleSelection(for pedal: Pedal) {
+        if pedalList.contains(pedal) {
+            pedalList.removeAll(where: {$0 == pedal})
+        } else {
+            pedalList.append(pedal)
         }
     }
 }

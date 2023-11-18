@@ -59,7 +59,6 @@ final class CreateSongViewModelTests: XCTestCase {
         
     }
     
-    
     func testAddSongPressedCallDelegate() {
         delegate.didCallAddSong = false
         
@@ -78,4 +77,26 @@ final class CreateSongViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.alertMessage, AddSongError.missingArtist.alertDescription)
     }
 
+    func testToggleSelectionAppendsPedalToPedalList() {
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        viewModel.pedalList = []
+        
+        viewModel.toggleSelection(for: pedal1)
+        
+        XCTAssertTrue(viewModel.pedalList.contains(pedal1))
+    }
+    
+    func testToggleSelectionRemovesPedalFromPedalList() {
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
+        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
+        let pedals = [pedal1, pedal2, pedal3]
+        viewModel.pedalList = pedals
+        
+        viewModel.toggleSelection(for: pedal1)
+        
+        XCTAssertFalse(viewModel.pedalList.contains(pedal1))
+        XCTAssertTrue(viewModel.pedalList.contains(pedal2))
+        XCTAssertTrue(viewModel.pedalList.contains(pedal3))
+    }
 }

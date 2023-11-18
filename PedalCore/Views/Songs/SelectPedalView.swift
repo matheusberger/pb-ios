@@ -10,21 +10,12 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    @Binding var selectedPedals: [Pedal]
-    @State var allUserPedals: [Pedal] = Pedal.pedalSample()
-    
-    func toggleSelection(for pedal: Pedal) {
-           if selectedPedals.contains(pedal) {
-               selectedPedals.removeAll(where: {$0 == pedal})
-           } else {
-               selectedPedals.append(pedal)
-           }
-       }
+    @ObservedObject var viewModel: CreateSongViewModel
     
     var body: some View {
         NavigationView {
             Group {
-                if allUserPedals.isEmpty {
+                if viewModel.availablePedals.isEmpty {
                     emptyView
                 } else {
                     pedalContentList
@@ -62,9 +53,9 @@ struct SelectPedalView: View {
     private var pedalContentList: some View {
         Form {
             Section {
-                List(allUserPedals) { pedal in
+                List(viewModel.availablePedals) { pedal in
                     Button {
-                        toggleSelection(for: pedal)
+                        viewModel.toggleSelection(for: pedal)
                     } label: {
                         HStack {
                             VStack(alignment: .leading) {
@@ -79,8 +70,10 @@ struct SelectPedalView: View {
                             
                             Spacer()
                             
-                            if selectedPedals.contains(pedal) {
-                                Image(systemName: "arrow.down.square")
+                            if viewModel.pedalList.contains(pedal) {
+                                if let index = viewModel.pedalList.firstIndex(where: {$0 == pedal}) {
+                                    Image(systemName: "\(index + 1).square")
+                                }
                             }
                         }
                     }
@@ -98,6 +91,6 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(selectedPedals: .constant([]))
+        SelectPedalView(viewModel: CreateSongViewModel())
     }
 }

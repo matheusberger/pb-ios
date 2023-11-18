@@ -76,7 +76,7 @@ struct CreateSongView: View {
             }
         }
         .sheet(isPresented: $isPresentingSheet) {
-            SelectPedalView(selectedPedals: $viewModel.pedalList)
+            SelectPedalView(viewModel: self.viewModel)
         }
         .navigationTitle("Add new song")
     }
