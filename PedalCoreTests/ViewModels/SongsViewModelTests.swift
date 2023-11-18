@@ -21,14 +21,17 @@ final class SongsViewModelTests: XCTestCase {
         viewModel = SongsViewModel(allSongs: [])
         
         XCTAssertTrue(viewModel.state == .empty)
-        
     }
     
     func testViewModelContentStateWhenHasSongs() {
         viewModel = SongsViewModel(allSongs: Song.getSample())
         
         XCTAssertTrue(viewModel.state == .content)
+    }
+    
+    func testViewModelStartsWithEmptySearchText() {
         
+        XCTAssertTrue(viewModel.searchText.isEmpty)
     }
     
     func testDeleteSongRemovesItFromSongsArray() {
@@ -57,6 +60,20 @@ final class SongsViewModelTests: XCTestCase {
         
         XCTAssertFalse(viewModel.songs.contains(song1))
         XCTAssertFalse(viewModel.songs.contains(song2))
+        XCTAssertTrue(viewModel.songs.contains(song3))
+    }
+    
+    func testNoSongsFilterWhenSearchSearachFilterIsEmpty() {
+        let song1 = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
+        let song2 = Song(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
+        let song3 = Song(name: "Reckoner", artist: "Radiohead", pedals: [])
+        let songsArray = [song1, song2, song3]
+        viewModel = SongsViewModel(allSongs: songsArray)
+        
+        viewModel.searchText = ""
+        
+        XCTAssertTrue(viewModel.songs.contains(song1))
+        XCTAssertTrue(viewModel.songs.contains(song2))
         XCTAssertTrue(viewModel.songs.contains(song3))
     }
     
