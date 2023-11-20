@@ -38,6 +38,10 @@ class CreateSongViewModel: ObservableObject {
         self.pedalList = pedals
     }
     
+    public func shouldBeIndicatedWithLight(for pedal: Pedal) -> Bool {
+        return pedalList.contains(pedal)
+    }
+    
     public func addSongPressed() {
         do {
             let song = Song(name: songName, artist: bandName, pedals: pedalList)

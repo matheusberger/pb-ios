@@ -66,9 +66,12 @@ struct SelectPedalView: View {
         Form {
             Section {
                 List {
-                    ForEach(filteredPedals, id: \.self) {                    pedal in
+                    ForEach(filteredPedals, id: \.self) { pedal in
                         Button {
-                            viewModel.toggleSelection(for: pedal)
+                            withAnimation(.smooth) {
+                                viewModel.toggleSelection(for: pedal)
+                            }
+                           
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -83,10 +86,10 @@ struct SelectPedalView: View {
                                 
                                 Spacer()
                                 
-                                if viewModel.pedalList.contains(pedal) {
-                                    
-                                    Image(systemName: "paperclip.circle")
+                                if viewModel.shouldBeIndicatedWithLight(for: pedal) {
+                                    LightSelectorIndicatiorView()
                                 }
+                               
                             }
                             .padding(.vertical, 4)
                         }

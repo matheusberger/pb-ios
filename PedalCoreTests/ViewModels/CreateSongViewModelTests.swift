@@ -99,4 +99,17 @@ final class CreateSongViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.pedalList.contains(pedal2))
         XCTAssertTrue(viewModel.pedalList.contains(pedal3))
     }
+    
+    func testShouldIndicateLightSelectorWhenPedalIsSelected() {
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
+        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
+        let pedals = [pedal1, pedal2]
+        viewModel.pedalList = pedals
+        
+        XCTAssertTrue(viewModel.shouldBeIndicatedWithLight(for: pedal1))
+        XCTAssertTrue(viewModel.shouldBeIndicatedWithLight(for: pedal2))
+        XCTAssertFalse(viewModel.shouldBeIndicatedWithLight(for: pedal3))
+        
+    }
 }
