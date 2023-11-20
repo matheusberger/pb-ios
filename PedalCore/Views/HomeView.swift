@@ -27,7 +27,9 @@ public struct HomeView: View {
                         contentView
                     }
                 }
-                .sheet(isPresented: $viewModel.isShowingSheet) {
+                .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
+                    viewModel.sheetDidDismiss()
+                }) {
                     if let pedal = viewModel.editPedal {
                         CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
                     } else {
