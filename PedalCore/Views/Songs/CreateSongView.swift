@@ -36,12 +36,8 @@ struct CreateSongView: View {
                                     .font(.headline)
                                     .foregroundStyle(.primary)
                                 
-                                LazyVGrid(columns: [GridItem(),GridItem()]) {
-                                    ForEach($pedal.knobs) { $knobs in
-                                        KnobView(knob: $knobs)
-                                            .padding()
-                                    }
-                                }
+                                KnobsGridView(knobs: $pedal.knobs)
+                                
                             }
                         }
                         .contextMenu(menuItems: {

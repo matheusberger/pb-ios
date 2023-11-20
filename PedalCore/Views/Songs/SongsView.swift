@@ -59,7 +59,7 @@ struct SongsView: View {
     private var listView: some View {
         List(viewModel.songs) { song in
             NavigationLink {
-                SongDetailView()
+                SongDetailView(song: song)
             } label: {
                 SongRow(song: song)
                     .contextMenu(menuItems: {
