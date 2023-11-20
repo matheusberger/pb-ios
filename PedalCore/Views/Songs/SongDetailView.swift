@@ -20,6 +20,8 @@ struct SongDetailView: View {
                 
                 Divider()
          
+                
+                
                 ForEach(song.pedals, id: \.id) { pedal in
                     VStack(alignment: .leading) {
                         Text(pedal.name)
@@ -62,6 +64,11 @@ struct SongDetailView: View {
             
             Text(song.artist)
                 .font(.headline)
+                .font(.headline)
+                .foregroundStyle(.primary)
+            
+            Text(song.artist)
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
             
         }
