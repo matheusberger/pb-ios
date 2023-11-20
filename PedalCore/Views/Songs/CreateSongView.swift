@@ -29,7 +29,6 @@ struct CreateSongView: View {
                 }
                 
                 Section {
-                    
                     ForEach($viewModel.pedalList) { $pedal in
                         VStack {
                             VStack(alignment: .leading) {
@@ -79,6 +78,7 @@ struct CreateSongView: View {
             SelectPedalView(viewModel: self.viewModel)
         }
         .navigationTitle("Add new song")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
