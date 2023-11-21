@@ -29,6 +29,7 @@
 		0C48B1742ACBB14400E52627 /* AddPedalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1732ACBB14400E52627 /* AddPedalError.swift */; };
 		0C48B1762ACBB27500E52627 /* PedalRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1752ACBB27500E52627 /* PedalRow.swift */; };
 		0C48B1782ACBB5FF00E52627 /* KnobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48B1772ACBB5FF00E52627 /* KnobView.swift */; };
+		0C5E80652B0CE17D00A40717 /* RepositoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E80642B0CE17D00A40717 /* RepositoryService.swift */; };
 		0C9089FE2B03FD6400458814 /* CreatePedalViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9089FD2B03FD6400458814 /* CreatePedalViewModelTests.swift */; };
 		0C908A012B03FE6600458814 /* CreatePedalDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C908A002B03FE6600458814 /* CreatePedalDelegateMock.swift */; };
 		0CACD5212B063B520084BCB2 /* SongsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CACD5202B063B520084BCB2 /* SongsViewModelTests.swift */; };
@@ -109,6 +110,7 @@
 		0C48B1732ACBB14400E52627 /* AddPedalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPedalError.swift; sourceTree = "<group>"; };
 		0C48B1752ACBB27500E52627 /* PedalRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalRow.swift; sourceTree = "<group>"; };
 		0C48B1772ACBB5FF00E52627 /* KnobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnobView.swift; sourceTree = "<group>"; };
+		0C5E80642B0CE17D00A40717 /* RepositoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryService.swift; sourceTree = "<group>"; };
 		0C9089FD2B03FD6400458814 /* CreatePedalViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePedalViewModelTests.swift; sourceTree = "<group>"; };
 		0C908A002B03FE6600458814 /* CreatePedalDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePedalDelegateMock.swift; sourceTree = "<group>"; };
 		0CACD5202B063B520084BCB2 /* SongsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewModelTests.swift; sourceTree = "<group>"; };
@@ -225,6 +227,14 @@
 			path = Enums;
 			sourceTree = "<group>";
 		};
+		0C5E80632B0CE15700A40717 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0C5E80642B0CE17D00A40717 /* RepositoryService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		0C9089FF2B03FE4A00458814 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +285,7 @@
 		56827F292A95869D0043277A /* PedalCore */ = {
 			isa = PBXGroup;
 			children = (
+				0C5E80632B0CE15700A40717 /* Service */,
 				0C48B1722ACBB13200E52627 /* Enums */,
 				0C48B16F2ACBB10A00E52627 /* Protocols */,
 				56827F4C2A959D8C0043277A /* Models */,
@@ -480,6 +491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56827F4E2A959DBB0043277A /* Pedal.swift in Sources */,
+				0C5E80652B0CE17D00A40717 /* RepositoryService.swift in Sources */,
 				0C12A4232B05494A005D8F3D /* SelectPedalView.swift in Sources */,
 				0C3293B92ACB607100A9BC34 /* CreatePedalView.swift in Sources */,
 				0C48B1712ACBB11A00E52627 /* CreatePedalDelegate.swift in Sources */,

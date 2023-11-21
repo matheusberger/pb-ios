@@ -19,25 +19,37 @@ struct SongDetailView: View {
                 headerView
                 
                 Divider()
-                
-                
+         
                 ForEach(song.pedals, id: \.id) { pedal in
                     VStack(alignment: .leading) {
                         Text(pedal.name)
                             .foregroundStyle(.primary)
                             .font(.headline)
                         
+                        Text(pedal.brand)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                        
                         KnobsGridView(knobs: .constant(pedal.knobs))
                     }
-                    
-                    
+                    .padding(.vertical)
                 }
                 
                 Spacer()
             }
             .padding()
-            
-            
+        }
+        .navigationTitle("Details")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    
+                } label: {
+                    Text("Edit")
+                }
+
+            }
         }
     }
     
@@ -45,11 +57,11 @@ struct SongDetailView: View {
     private var headerView: some View {
         VStack(alignment: .leading) {
             Text(song.name)
-                .font(.headline)
+                .font(.largeTitle)
                 .foregroundStyle(.primary)
             
             Text(song.artist)
-                .font(.subheadline)
+                .font(.headline)
                 .foregroundStyle(.secondary)
             
         }
@@ -58,7 +70,10 @@ struct SongDetailView: View {
 
 struct SongDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        SongDetailView(song: Song.getSample().first!)
+        NavigationView {
+            SongDetailView(song: Song.getSample().first!)
+        }
+        
     }
 }
 
