@@ -68,8 +68,9 @@ struct SelectPedalView: View {
                 List {
                     ForEach(filteredPedals, id: \.self) { pedal in
                         Button {
-                            viewModel.toggleSelection(for: pedal)
-                            
+                            withAnimation {
+                                viewModel.toggleSelection(for: pedal)
+                            }       
                             
                         } label: {
                             HStack {
