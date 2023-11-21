@@ -77,6 +77,10 @@ struct CreateSongView: View {
         .sheet(isPresented: $isPresentingSheet) {
             SelectPedalView(viewModel: self.viewModel)
         }
+        .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
+        } message: {
+            Text(viewModel.alertMessage)
+        }
         .navigationTitle("Add new song")
         .navigationBarTitleDisplayMode(.inline)
     }

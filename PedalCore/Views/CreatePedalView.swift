@@ -77,7 +77,7 @@ struct CreatePedalView: View {
                 
             }
         }
-        .alert("Failed to save new pedal", isPresented: $viewModel.isPresentingAlert) {
+        .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
         } message: {
             Text(viewModel.alertMessage)
         }

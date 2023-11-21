@@ -12,7 +12,8 @@ import PedalCore
 struct PedalBoardApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+//            HomeView()
+            SongsView()
         }
     }
 }

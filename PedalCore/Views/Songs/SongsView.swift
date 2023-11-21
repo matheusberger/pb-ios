@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct SongsView: View {
+public struct SongsView: View {
     
     @StateObject var viewModel: SongsViewModel = SongsViewModel()
     
+    public init() {}
     
-    var body: some View {
+    public var body: some View {
         NavigationView {
             
             Group {
