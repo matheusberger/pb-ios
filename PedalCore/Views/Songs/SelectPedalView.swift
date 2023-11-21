@@ -68,10 +68,9 @@ struct SelectPedalView: View {
                 List {
                     ForEach(filteredPedals, id: \.self) { pedal in
                         Button {
-                            withAnimation(.smooth) {
-                                viewModel.toggleSelection(for: pedal)
-                            }
-                           
+                            viewModel.toggleSelection(for: pedal)
+                            
+                            
                         } label: {
                             HStack {
                                 VStack(alignment: .leading) {
@@ -89,7 +88,7 @@ struct SelectPedalView: View {
                                 if viewModel.shouldBeIndicatedWithLight(for: pedal) {
                                     LightSelectorIndicatiorView()
                                 }
-                               
+                                
                             }
                             .padding(.vertical, 4)
                         }
