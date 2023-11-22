@@ -47,5 +47,6 @@ struct KnobView: View {
 struct KnobView_Previews: PreviewProvider {
     static var previews: some View {
         KnobView(knob: Knob(name: "Drive", level: 0.5))
+            .preferredColorScheme(.dark)
     }
 }
