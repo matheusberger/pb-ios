@@ -89,6 +89,5 @@ struct CreatePedalView: View {
 struct CreatePedalView_Previews: PreviewProvider {
     static var previews: some View {
         CreatePedalView(viewModel: CreatePedalViewModel(editPedal: Pedal.emptyPedal()))
-            .preferredColorScheme(.dark)
     }
 }
