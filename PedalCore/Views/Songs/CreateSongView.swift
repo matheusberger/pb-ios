@@ -73,6 +73,8 @@ struct CreateSongView: View {
                     }
                 }
             }
+            .navigationTitle("Add new song")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $isPresentingSheet) {
             SelectPedalView(viewModel: self.viewModel)
@@ -81,8 +83,7 @@ struct CreateSongView: View {
         } message: {
             Text(viewModel.alertMessage)
         }
-        .navigationTitle("Add new song")
-        .navigationBarTitleDisplayMode(.inline)
+        
     }
 }
 

@@ -34,7 +34,7 @@ struct SelectPedalView: View {
                     pedalContentList
                 }
             }
-            .navigationTitle("Select a pedal")
+            .navigationTitle("Select pedals")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Done") {
