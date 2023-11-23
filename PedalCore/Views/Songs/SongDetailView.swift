@@ -22,70 +22,102 @@ struct SongDetailView: View {
                 
                 Divider()
                 
-                ForEach($song.pedals, id: \.id) { $pedal in
-                    VStack(alignment: .leading) {
-                        Text(pedal.name)
-                            .foregroundStyle(.primary)
-                            .font(.headline)
+                VStack {
+                    ForEach($song.pedals, id: \.id) { $pedal in
+                        VStack(alignment: .leading) {
+                            Text(pedal.name)
+                                .foregroundStyle(.primary)
+                                .font(.headline)
+                            
+                            Text(pedal.brand)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            
+                            KnobsGridView(knobs: $pedal.knobs)
+                                .allowsHitTesting(isEditing)
+                        }
+                        .padding()
+                        .background(
+                            Rectangle()
+                                .cornerRadius(10)
+                                .foregroundStyle(Color.white)
+                                .shadow(color: .accentColor, radius: isEditing ? 5 : 0)
+                        )
+
+                        .padding(.vertical)
                         
-                        Text(pedal.brand)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        
-                        KnobsGridView(knobs: $pedal.knobs)
                     }
-                    .disabled(!isEditing)
-                    .padding(.vertical)
-                }
                 
+                }
+  
                 Spacer()
             }
             .padding()
         }
-        .sheet(isPresented: $isPresentingSheet) {
-            CreateSongView(viewModel: CreateSongViewModel(delegate: self.viewModel
-//                                                          , editSong: $song
-                                                         )
-            )
-        }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    
-                } label: {
-                    Text("Edit")
-                }
-            }
-        }
+
     }
     
     
     private var headerView: some View {
         VStack(alignment: .leading) {
-            Text(song.name)
-                .font(.largeTitle)
-                .foregroundStyle(.primary)
-            
-            Text(song.artist)
-                .font(.headline)
-                .font(.headline)
-                .foregroundStyle(.primary)
-            
             HStack {
+                
+                VStack(alignment: .leading) {
+                    Text(song.name)
+                        .font(.largeTitle)
+                        .foregroundStyle(.primary)
+                    
+                    Text(song.artist)
+                        .font(.headline)
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                }
+                
+               
+                
                 Spacer()
                 
-                Button {
-                    withAnimation {
-                        isEditing.toggle()
+                VStack {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "pencil")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                          
                     }
-                } label: {
-                    Image(systemName: isEditing ? "lock.open.fill" : "lock.fill")
+                    
+                    Button {
+                        isEditing.toggle()
+                    } label: {
+                        Image(systemName: isEditing ? "lock.open.fill" : "lock.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(Color.accentColor)
+                            
+                    }
+                   
                 }
-              
+                
+               
             }
             
+            HStack {
+                
+               
+                
+                Spacer()
+                
+                GeometryReader { geo in
+                      
+                   }
+            }
+           
+           
         }
     }
 }
@@ -95,7 +127,6 @@ struct SongDetailView_Previews: PreviewProvider {
         NavigationView {
             SongDetailView(viewModel: SongsViewModel(), song: .constant(Song.getSample().first!))
         }
-        
     }
 }
 
