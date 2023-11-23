@@ -21,7 +21,7 @@ struct CreateSongView: View {
             List {
                 Section {
                     TextField("Song name", text: $viewModel.songName, prompt: Text("Name of the song"))
-                    TextField("Band name", text: $viewModel.bandName, prompt: Text("ArtistName"))
+                    TextField("Band name", text: $viewModel.bandName, prompt: Text("Artist name"))
                 } header: {
                     Text("Song info")
                 } footer: {
