@@ -8,17 +8,22 @@
 import SwiftUI
 
 public struct HomeView: View {
+    
+    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel: HomeViewModel = HomeViewModel()
     
-    public init() { 
-        
+    public init() {
+        // Large Navigation Title
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
+        // Inline Navigation Title
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
     }
     
     public var body: some View {
         
         NavigationView {
             
-            VStack {
+            VStack (spacing: 7) {
                 Group {
                     switch viewModel.state {
                     case .empty:
@@ -46,16 +51,17 @@ public struct HomeView: View {
                 } label: {
                     Text("Create new pedal")
                         .fontWeight(.bold)
+                        .foregroundColor(colorScheme == .light ? .white : .black)
                         .frame(width: 250,height: 30)
                     
-                }.buttonStyle(.borderedProminent)
+                }
+                .buttonStyle(.borderedProminent)
                 
                 Button {
                     viewModel.populatePedals()
                 } label: {
                     Image(systemName: "eyes")
                 }
-                
             }
             .padding(.bottom, 20)
             
@@ -83,13 +89,14 @@ public struct HomeView: View {
     private var contentView: some View {
         List(viewModel.filteredPedals, id: \.signature) { pedal in
             PedalRow(pedal: pedal)
+            
                 .contextMenu(menuItems: {
                     Button {
                         viewModel.editPedalPressed(pedal)
                     } label: {
                         Label("Edit", systemImage: "pencil")
-                            .tint(.yellow)
                     }
+                    
                     Button(role: .destructive) {
                         viewModel.removePedalPressed(pedal)
                     } label: {
@@ -102,8 +109,9 @@ public struct HomeView: View {
                         viewModel.editPedalPressed(pedal)
                     } label: {
                         Label("Edit", systemImage: "pencil")
-                            .tint(.yellow)
                     }
+                    .tint(Color("ExtraElementsColor"))
+                    
                     
                     Button(role: .destructive) {
                         viewModel.removePedalPressed(pedal)
@@ -111,8 +119,6 @@ public struct HomeView: View {
                         Label("Delete", systemImage: "trash.fill")
                     }
                 }
-
-            
         }
         .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
         
