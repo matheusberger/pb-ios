@@ -20,7 +20,7 @@ struct CreateSongView: View {
         NavigationView {
             List {
                 Section {
-                    TextField("Song name", text: $viewModel.songName, prompt: Text("Name of the song"))
+                    TextField("Song name", text: $viewModel.songName, prompt: Text("Song name"))
                     TextField("Band name", text: $viewModel.bandName, prompt: Text("Artist name"))
                 } header: {
                     Text("Song info")
