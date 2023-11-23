@@ -8,10 +8,15 @@
 import SwiftUI
 
 public struct HomeView: View {
+    
+    @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel: HomeViewModel = HomeViewModel()
     
     public init() {
-        
+        // Large Navigation Title
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
+        // Inline Navigation Title
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
     }
     
     public var body: some View {
@@ -61,13 +66,14 @@ public struct HomeView: View {
     private var contentView: some View {
         List(viewModel.filteredPedals, id: \.signature) { pedal in
             PedalRow(pedal: pedal)
+            
                 .contextMenu(menuItems: {
                     Button {
                         viewModel.editPedalPressed(pedal)
                     } label: {
                         Label("Edit", systemImage: "pencil")
-                            .tint(.yellow)
                     }
+                    
                     Button(role: .destructive) {
                         viewModel.removePedalPressed(pedal)
                     } label: {
@@ -80,8 +86,9 @@ public struct HomeView: View {
                         viewModel.editPedalPressed(pedal)
                     } label: {
                         Label("Edit", systemImage: "pencil")
-                            .tint(.yellow)
                     }
+                    .tint(Color("ExtraElementsColor"))
+                    
                     
                     Button(role: .destructive) {
                         viewModel.removePedalPressed(pedal)
