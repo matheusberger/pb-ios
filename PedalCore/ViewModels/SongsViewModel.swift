@@ -18,7 +18,7 @@ class SongsViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     
-    init(allSongs: [Song] = Song.getSample()) {
+    init(allSongs: [Song] = []) {
         self.allSongs = allSongs
     }
     
@@ -33,9 +33,9 @@ class SongsViewModel: ObservableObject {
     
     public var songs: [Song] {
         if searchText.isEmpty {
-            allSongs
+            return allSongs
         } else {
-            allSongs.filter {
+            return allSongs.filter {
                 $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
             }
         }

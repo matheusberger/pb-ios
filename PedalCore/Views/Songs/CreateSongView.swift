@@ -21,8 +21,8 @@ struct CreateSongView: View {
         NavigationView {
             List {
                 Section {
-                    TextField("Song name", text: $viewModel.songName, prompt: Text("Name of the song"))
-                    TextField("Band name", text: $viewModel.bandName, prompt: Text("ArtistName"))
+                    TextField("Song name", text: $viewModel.songName, prompt: Text("Song name"))
+                    TextField("Band name", text: $viewModel.bandName, prompt: Text("Artist name"))
                 } header: {
                     Text("Song info")
                 } footer: {
@@ -70,12 +70,17 @@ struct CreateSongView: View {
                     }
                 }
             }
+            .navigationTitle("Add new song")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .sheet(isPresented: $isPresentingSheet) {
             SelectPedalView(viewModel: self.viewModel)
         }
-        .navigationTitle("Add new song")
-        .navigationBarTitleDisplayMode(.inline)
+        .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
+        } message: {
+            Text(viewModel.alertMessage)
+        }
+        
     }
 }
 

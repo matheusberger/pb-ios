@@ -34,7 +34,7 @@ struct SelectPedalView: View {
                     pedalContentList
                 }
             }
-            .navigationTitle("Select a pedal")
+            .navigationTitle("Select pedals")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Done") {
@@ -68,29 +68,12 @@ struct SelectPedalView: View {
                 List {
                     ForEach(filteredPedals, id: \.self) { pedal in
                         Button {
-                            withAnimation(.smooth) {
+                            withAnimation {
                                 viewModel.toggleSelection(for: pedal)
                             }
-                           
+                            
                         } label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(pedal.name)
-                                        .font(.headline)
-                                        .foregroundStyle(.primary)
-                                    
-                                    Text(pedal.brand)
-                                        .font(.footnote)
-                                        .foregroundStyle(.secondary)
-                                }
-                                
-                                Spacer()
-                                
-                                if viewModel.shouldBeIndicatedWithLight(for: pedal) {
-                                    LightSelectorIndicatiorView()
-                                }
-                               
-                            }
+                            SelectPedalRow(pedal: pedal, isOn: viewModel.shouldBeIndicatedWithLight(for: pedal))
                             .padding(.vertical, 4)
                         }
                     }
