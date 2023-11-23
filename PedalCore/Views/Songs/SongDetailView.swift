@@ -9,20 +9,20 @@ import SwiftUI
 
 struct SongDetailView: View {
     
-    let song: Song
+    @ObservedObject var viewModel: SongsViewModel
+    @State var isPresentingSheet: Bool = false
+    @State var isEditing: Bool = false
+    @Binding var song: Song
     
     var body: some View {
         ScrollView {
-            
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 10) {
                 
                 headerView
                 
                 Divider()
-         
                 
-                
-                ForEach(song.pedals, id: \.id) { pedal in
+                ForEach($song.pedals, id: \.id) { $pedal in
                     VStack(alignment: .leading) {
                         Text(pedal.name)
                             .foregroundStyle(.primary)
@@ -32,14 +32,21 @@ struct SongDetailView: View {
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                         
-                        KnobsGridView(knobs: .constant(pedal.knobs))
+                        KnobsGridView(knobs: $pedal.knobs)
                     }
+                    .disabled(!isEditing)
                     .padding(.vertical)
                 }
                 
                 Spacer()
             }
             .padding()
+        }
+        .sheet(isPresented: $isPresentingSheet) {
+            CreateSongView(viewModel: CreateSongViewModel(delegate: self.viewModel
+//                                                          , editSong: $song
+                                                         )
+            )
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -50,7 +57,6 @@ struct SongDetailView: View {
                 } label: {
                     Text("Edit")
                 }
-
             }
         }
     }
@@ -67,9 +73,18 @@ struct SongDetailView: View {
                 .font(.headline)
                 .foregroundStyle(.primary)
             
-            Text(song.artist)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+            HStack {
+                Spacer()
+                
+                Button {
+                    withAnimation {
+                        isEditing.toggle()
+                    }
+                } label: {
+                    Image(systemName: isEditing ? "lock.open.fill" : "lock.fill")
+                }
+              
+            }
             
         }
     }
@@ -78,7 +93,7 @@ struct SongDetailView: View {
 struct SongDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SongDetailView(song: Song.getSample().first!)
+            SongDetailView(viewModel: SongsViewModel(), song: .constant(Song.getSample().first!))
         }
         
     }

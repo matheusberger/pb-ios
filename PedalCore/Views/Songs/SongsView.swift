@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct SongsView: View {
+public struct SongsView: View {
     
     @StateObject var viewModel: SongsViewModel = SongsViewModel()
     
+    public init() {}
     
-    var body: some View {
+    public var body: some View {
         NavigationView {
             
             Group {
@@ -57,26 +58,28 @@ struct SongsView: View {
     
     @ViewBuilder
     private var listView: some View {
-        List(viewModel.songs) { song in
-            NavigationLink {
-                SongDetailView(song: song)
-            } label: {
-                SongRow(song: song)
-                    .contextMenu(menuItems: {
-                        Button(role: .destructive) {
-                            viewModel.deleteSong(song)
-                        } label: {
-                            Label("Delete", systemImage: "trash.fill")
+        List {
+            ForEach($viewModel.allSongs, id: \.id) { $song in
+                NavigationLink {
+                    SongDetailView(viewModel: self.viewModel, song: $song)
+                } label: {
+                    SongRow(song: song)
+                        .contextMenu(menuItems: {
+                            Button(role: .destructive) {
+                                viewModel.deleteSong(song)
+                            } label: {
+                                Label("Delete", systemImage: "trash.fill")
+                            }
+                        })
+                    
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                viewModel.deleteSong(song)
+                            } label: {
+                                Label("Delete", systemImage: "trash.fill")
+                            }
                         }
-                    })
-                
-                    .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            viewModel.deleteSong(song)
-                        } label: {
-                            Label("Delete", systemImage: "trash.fill")
-                        }
-                    }
+                }
             }
 
         }

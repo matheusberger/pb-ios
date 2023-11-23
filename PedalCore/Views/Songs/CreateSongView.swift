@@ -11,8 +11,9 @@ struct CreateSongView: View {
     
     @ObservedObject var viewModel: CreateSongViewModel
     @State var isPresentingSheet: Bool = false
+
     
-    init(viewModel: CreateSongViewModel = CreateSongViewModel()) {
+    init(viewModel: CreateSongViewModel) {
         self.viewModel = viewModel
     }
     
@@ -80,6 +81,6 @@ struct CreateSongView: View {
 
 struct CreateSongView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateSongView()
+        CreateSongView(viewModel: CreateSongViewModel())
     }
 }

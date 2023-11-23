@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
 class CreateSongViewModel: ObservableObject {
     
     weak var delegate: AddSongDelegate?
     
-    var availablePedals: [Pedal]
+//    @Binding var editSong: Song?
+    
+    var availablePedals: [Pedal] = Pedal.pedalSample()
     
     @Published public var songName: String = ""
     @Published var bandName: String = ""
@@ -20,10 +23,12 @@ class CreateSongViewModel: ObservableObject {
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    init(delegate: AddSongDelegate? = nil, availablePedals: [Pedal] = Pedal.pedalSample()) {
+    init(delegate: AddSongDelegate? = nil
+//         , editSong: Binding<Song?> = .constant(nil)
+    ) {
         self.delegate = delegate
-        self.availablePedals = availablePedals
-        
+//        self._editSong = editSong
+    
     }
     
     public func removePedal(at index: IndexSet) {
