@@ -20,51 +20,28 @@ public struct HomeView: View {
     }
     
     public var body: some View {
-        
         NavigationView {
+            VStack {
+                switch viewModel.state {
+                case .empty:
+                    emptyView
+                case .content:
+                    contentView
+                }
             
-            VStack (spacing: 7) {
-                Group {
-                    switch viewModel.state {
-                    case .empty:
-                        emptyView
-                    case .content:
-                        contentView
-                    }
-                }
-                .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
-                    viewModel.sheetDidDismiss()
-                }) {
-                    if let pedal = viewModel.editPedal {
-                        CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
-                    } else {
-                        CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
-                    }
-                    
-                }
-                .navigationTitle("Pedal List")
-                
-                Spacer()
-                
-                Button {
-                    viewModel.addIconPressed()
-                } label: {
-                    Text("Create new pedal")
-                        .fontWeight(.bold)
-                        .foregroundColor(colorScheme == .light ? .white : .black)
-                        .frame(width: 250,height: 30)
-                    
-                }
-                .buttonStyle(.borderedProminent)
-                
-                Button {
-                    viewModel.populatePedals()
-                } label: {
-                    Image(systemName: "eyes")
+                footerButtonsView
+            }
+            .navigationTitle("Pedal List")
+            .padding(.bottom, 20)
+            .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
+                viewModel.sheetDidDismiss()
+            }) {
+                if let pedal = viewModel.editPedal {
+                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
+                } else {
+                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
                 }
             }
-            .padding(.bottom, 20)
-            
         }
     }
     
@@ -121,7 +98,25 @@ public struct HomeView: View {
                 }
         }
         .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
-        
+    }
+    
+    private var footerButtonsView: some View {
+        VStack {
+            Button {
+                viewModel.addIconPressed()
+            } label: {
+                Text("Create new pedal")
+                    .fontWeight(.bold)
+                    .frame(width: 250,height: 30)
+                
+            }.buttonStyle(.borderedProminent)
+            
+            Button {
+                viewModel.populatePedals()
+            } label: {
+                Image(systemName: "eyes")
+            }
+        }
     }
 }
 

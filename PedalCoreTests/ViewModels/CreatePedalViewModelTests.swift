@@ -55,6 +55,7 @@ final class CreatePedalViewModelTests: XCTestCase {
         
     }
     
+
     @MainActor
     func testRemoveKnobRemovesElementFromArray() {
         let knobs: [Knob] = [Knob(name: "Drive"), Knob(name: "Tone"), Knob(name: "Level")]

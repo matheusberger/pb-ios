@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Pedal: Identifiable, Equatable {
+struct Pedal: Identifiable, Equatable, Hashable {
     var id: String = UUID().uuidString
     var name: String
     var brand: String
@@ -23,8 +23,14 @@ struct Pedal: Identifiable, Equatable {
         return lhs.id == rhs.id
     }
     
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     static func emptyPedal() -> Pedal {
         return Pedal(name: "", brand: "", knobs: [])
+
     }
 }
 
