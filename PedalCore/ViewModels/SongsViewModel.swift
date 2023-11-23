@@ -18,7 +18,7 @@ class SongsViewModel: ObservableObject {
     
     @Published var searchText: String = ""
     
-    init(allSongs: [Song] = Song.getSample()) {
+    init(allSongs: [Song] = []) {
         self.allSongs = allSongs
     }
     

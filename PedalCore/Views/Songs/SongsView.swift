@@ -15,45 +15,35 @@ public struct SongsView: View {
     
     public var body: some View {
         NavigationView {
-            
-            Group {
+            VStack {
                 switch viewModel.state {
                 case .empty:
                     emptyView
+                    
                 case .content:
                     listView
                 }
+                
+                footerButtonsView
             }
-            
             .navigationTitle("My Songs")
             .sheet(isPresented: $viewModel.isShowingSheet) {
                 CreateSongView(viewModel: CreateSongViewModel(delegate: self.viewModel))
-            }
-            .toolbar {
-                
-                // testing view
-                Button {
-                    viewModel.populateSongs()
-                    
-                } label: {
-                    Image(systemName: "eyes")
-                }
-                
-                Button {
-                    viewModel.addSongPressed()
-                } label: {
-                    Image(systemName: "plus")
-                }
             }
         }
     }
     
     @ViewBuilder
     private var emptyView: some View {
-        Text("You haven't add any songs yet")
-            .font(.subheadline)
-            .foregroundStyle(.secondary)
-        
+        VStack {
+            Spacer()
+            
+            Text("You haven't add any songs yet")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            
+            Spacer()
+        }
     }
     
     @ViewBuilder
@@ -79,9 +69,27 @@ public struct SongsView: View {
                         }
                     }
             }
-
         }
         .searchable(text: $viewModel.searchText, prompt: "Search a song or artist")
+    }
+    
+    private var footerButtonsView: some View {
+        VStack {
+            Button {
+                viewModel.addSongPressed()
+            } label: {
+                Text("Create new Song")
+                    .fontWeight(.bold)
+                    .frame(width: 250,height: 30)
+                
+            }.buttonStyle(.borderedProminent)
+            
+            Button {
+                viewModel.populateSongs()
+            } label: {
+                Image(systemName: "eyes")
+            }
+        }
     }
 }
 

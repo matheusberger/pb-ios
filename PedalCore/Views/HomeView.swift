@@ -27,16 +27,7 @@ public struct HomeView: View {
                         contentView
                     }
                 }
-                .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
-                    viewModel.sheetDidDismiss()
-                }) {
-                    if let pedal = viewModel.editPedal {
-                        CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
-                    } else {
-                        CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
-                    }
-                    
-                }
+                
                 .navigationTitle("Pedal List")
                 
                 Spacer()
@@ -58,6 +49,16 @@ public struct HomeView: View {
                 
             }
             .padding(.bottom, 20)
+            .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
+                viewModel.sheetDidDismiss()
+            }) {
+                if let pedal = viewModel.editPedal {
+                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
+                } else {
+                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
+                }
+                
+            }
             
         }
     }
