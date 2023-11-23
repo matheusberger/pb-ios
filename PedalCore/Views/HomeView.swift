@@ -10,44 +10,23 @@ import SwiftUI
 public struct HomeView: View {
     @StateObject var viewModel: HomeViewModel = HomeViewModel()
     
-    public init() { 
+    public init() {
         
     }
     
     public var body: some View {
-        
         NavigationView {
-            
             VStack {
-                Group {
-                    switch viewModel.state {
-                    case .empty:
-                        emptyView
-                    case .content:
-                        contentView
-                    }
+                switch viewModel.state {
+                case .empty:
+                    emptyView
+                case .content:
+                    contentView
                 }
-                
-                .navigationTitle("Pedal List")
-                
-                Spacer()
-                
-                Button {
-                    viewModel.addIconPressed()
-                } label: {
-                    Text("Create new pedal")
-                        .fontWeight(.bold)
-                        .frame(width: 250,height: 30)
-                    
-                }.buttonStyle(.borderedProminent)
-                
-                Button {
-                    viewModel.populatePedals()
-                } label: {
-                    Image(systemName: "eyes")
-                }
-                
+            
+                footerButtonsView
             }
+            .navigationTitle("Pedal List")
             .padding(.bottom, 20)
             .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
                 viewModel.sheetDidDismiss()
@@ -57,9 +36,7 @@ public struct HomeView: View {
                 } else {
                     CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
                 }
-                
             }
-            
         }
     }
     
@@ -112,11 +89,27 @@ public struct HomeView: View {
                         Label("Delete", systemImage: "trash.fill")
                     }
                 }
-
-            
         }
         .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
-        
+    }
+    
+    private var footerButtonsView: some View {
+        VStack {
+            Button {
+                viewModel.addIconPressed()
+            } label: {
+                Text("Create new pedal")
+                    .fontWeight(.bold)
+                    .frame(width: 250,height: 30)
+                
+            }.buttonStyle(.borderedProminent)
+            
+            Button {
+                viewModel.populatePedals()
+            } label: {
+                Image(systemName: "eyes")
+            }
+        }
     }
 }
 
