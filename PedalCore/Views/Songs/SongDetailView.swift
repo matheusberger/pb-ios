@@ -16,11 +16,7 @@ struct SongDetailView: View {
     
     @Binding var song: Song
     
-    @State var showingAlert: Bool = false
-    
-    @State var editingName: String = ""
-    @State var editingArtist: String = ""
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -38,15 +34,18 @@ struct SongDetailView: View {
         
     }
     
-    private func  editSongPressed() {
-        withAnimation {
+    private var isEditing: Bool {
+        return isEditingKnobs || isEditingMusic
+    }
+    
+    private func editSongPressed() {
             isEditingKnobs = false
             isEditingMusic.toggle()
-        }
+        
     }
     
     private func editKnobsPressed() {
-        isEditingKnobs = false
+        isEditingKnobs.toggle()
     }
     
     @ViewBuilder
@@ -60,8 +59,10 @@ struct SongDetailView: View {
                 Spacer()
                 
                 Button {
-                    editSongPressed()
-                    
+                    withAnimation {
+                        editSongPressed()
+                    }
+                   
                 } label: {
                     Image(systemName: "pencil")
                         .resizable()
@@ -124,7 +125,7 @@ struct SongDetailView: View {
                 
                 Button {
                     withAnimation {
-                        isEditingKnobs.toggle()
+                        editKnobsPressed()
                     }
                     
                 } label: {
@@ -163,7 +164,6 @@ struct SongDetailView: View {
 
                 }
                 
-                
                 ForEach($song.pedals, id: \.id) { $pedal in
                     VStack(alignment: .leading) {
                         Text(pedal.name)
@@ -189,7 +189,8 @@ struct SongDetailView: View {
                 Rectangle()
                     .cornerRadius(10)
                     .foregroundStyle(Color.white)
-                    .shadow(color: .accentColor, radius: isEditingKnobs ? 5 : 0)
+                    .shadow(color: .accentColor, radius: isEditing ? 5 : 0)
+
             )
         }
     }

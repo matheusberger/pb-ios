@@ -10,10 +10,10 @@ import SwiftUI
 struct KnobView: View {
   
     @Binding var knob: Knob
-    
+    @State var knobViewStyle: KnobViewStyle = .reference
     @State var dragOffset: CGSize = .zero
     
-    let sensitivity: Float = 0.00005
+    private let sensitivity: Float = 0.00005
     
     private func maxTrin(for level: Float) -> CGFloat {
         return CGFloat(0.75 * level)
@@ -36,7 +36,7 @@ struct KnobView: View {
     }
     
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: knobViewStyle.stackSpacing) {
             Text(knob.name)
                 .font(.subheadline)
                 .foregroundStyle(.primary)
@@ -44,31 +44,43 @@ struct KnobView: View {
             ZStack {
                 Circle()
                     .trim(from: 0.0, to: maxTrin(for: 1))
-                    .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                    .stroke(style: StrokeStyle(lineWidth: knobViewStyle.strokeWidth, lineCap: .round, lineJoin: .round))
                     .foregroundColor(.accentColor)
                     .rotationEffect(.degrees(135))
-                    .frame(width: 80, height: 80)
+                    .frame(width: knobViewStyle.frameSize,
+                           height: knobViewStyle.frameSize)
                     .opacity(0.15)
                 
                 
                 Circle()
                     .trim(from: 0.0, to: maxTrin(for: knob.level))
-                    .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                    .stroke(style: StrokeStyle(lineWidth: knobViewStyle.strokeWidth, lineCap: .round, lineJoin: .round))
                     .foregroundColor(.accentColor)
                     .rotationEffect(.degrees(135))
-                    .frame(width: 80, height: 80)
+                    .frame(width: knobViewStyle.frameSize,
+                           height: knobViewStyle.frameSize)
                 
                 Circle()
                     .foregroundColor(.accentColor)
-                    .frame(width: 8, height: 8)
+                    .frame(width: knobViewStyle.circleSize,
+                           height: knobViewStyle.circleSize)
                 
                 Text("\(roundedLevel) %")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .offset(y: 40)
+                    .offset(y: knobViewStyle.labelOffSet)
 
             }
             
+        }
+        .onTapGesture {
+            withAnimation {
+                if knobViewStyle == .reference {
+                    self.knobViewStyle = .editing
+                } else {
+                    self.knobViewStyle = .reference
+                }
+            }
         }
         .gesture(
             DragGesture().onChanged { value in

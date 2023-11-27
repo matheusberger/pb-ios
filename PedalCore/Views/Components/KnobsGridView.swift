@@ -15,6 +15,7 @@ struct KnobsGridView: View {
         LazyVGrid(columns: [GridItem(),GridItem()]) {
             ForEach($knobs) { $knobs in
                 KnobView(knob: $knobs)
+                
                     .padding()
             }
         }

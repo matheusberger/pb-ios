@@ -34,6 +34,7 @@
 		0CACD5212B063B520084BCB2 /* SongsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CACD5202B063B520084BCB2 /* SongsViewModelTests.swift */; };
 		0CACD5232B064E140084BCB2 /* CreateSongViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CACD5222B064E140084BCB2 /* CreateSongViewModelTests.swift */; };
 		0CACD5252B064ECB0084BCB2 /* AddsongDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CACD5242B064ECB0084BCB2 /* AddsongDelegateMock.swift */; };
+		0CE482492B14D99E0011E42E /* KnobViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE482482B14D99E0011E42E /* KnobViewStyle.swift */; };
 		56156D4D2A9581C7000DF906 /* PedalBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */; };
 		56156D512A9581CB000DF906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D502A9581CB000DF906 /* Assets.xcassets */; };
 		56156D542A9581CB000DF906 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56156D532A9581CB000DF906 /* Preview Assets.xcassets */; };
@@ -114,6 +115,7 @@
 		0CACD5202B063B520084BCB2 /* SongsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewModelTests.swift; sourceTree = "<group>"; };
 		0CACD5222B064E140084BCB2 /* CreateSongViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSongViewModelTests.swift; sourceTree = "<group>"; };
 		0CACD5242B064ECB0084BCB2 /* AddsongDelegateMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddsongDelegateMock.swift; sourceTree = "<group>"; };
+		0CE482482B14D99E0011E42E /* KnobViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnobViewStyle.swift; sourceTree = "<group>"; };
 		56156D492A9581C7000DF906 /* PedalBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PedalBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56156D4C2A9581C7000DF906 /* PedalBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalBoardApp.swift; sourceTree = "<group>"; };
 		56156D502A9581CB000DF906 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			children = (
 				0C48B1772ACBB5FF00E52627 /* KnobView.swift */,
 				0C22704C2B0BBF4C0046EC29 /* KnobsGridView.swift */,
+				0CE482482B14D99E0011E42E /* KnobViewStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				0C22704D2B0BBF4C0046EC29 /* KnobsGridView.swift in Sources */,
 				0C12A4302B059A19005D8F3D /* CreateSongViewModel.swift in Sources */,
 				0C12A4322B05A101005D8F3D /* SongDetailView.swift in Sources */,
+				0CE482492B14D99E0011E42E /* KnobViewStyle.swift in Sources */,
 				0C28FF312AE05B3A00994E12 /* Pedal+Populate.swift in Sources */,
 				0C12A4252B054ABD005D8F3D /* CreateSongView.swift in Sources */,
 				0C48B1782ACBB5FF00E52627 /* KnobView.swift in Sources */,
