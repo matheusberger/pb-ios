@@ -34,6 +34,7 @@ struct SongRow: View {
                         }
                         
                     }
+                    .foregroundStyle(Color.accentColor)
                     .frame(height: 25)
                     HStack(alignment: .bottom) {
                         Text(pedal.name)

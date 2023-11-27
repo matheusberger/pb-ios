@@ -10,25 +10,38 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject var viewModel: CreateSongViewModel
+    var availablePedals: [Pedal] = Pedal.pedalSample()
+    @Binding var pedalList: [Pedal]
     @State var searchText: String = ""
     
     public var filteredPedals: [Pedal] {
-        let pedals = viewModel.availablePedals
+        let pedals = availablePedals
         if searchText.isEmpty {
             return pedals
         } else {
             return pedals.filter { pedal in
                 pedal.name.localizedCaseInsensitiveContains(searchText) || pedal.brand.localizedCaseInsensitiveContains(searchText) ||
-                viewModel.pedalList.contains(pedal)
+                availablePedals.contains(pedal)
             }
         }
     }
     
+    private func toggleSelection(for pedal: Pedal) {
+        if pedalList.contains(pedal) {
+            pedalList.removeAll(where: {$0 == pedal})
+        } else {
+            pedalList.append(pedal)
+        }
+    }
+    
+    public func shouldBeIndicatedWithLight(for pedal: Pedal) -> Bool {
+        return pedalList.contains(pedal)
+    }
+    
     var body: some View {
-        NavigationView {
+ 
             Group {
-                if viewModel.availablePedals.isEmpty {
+                if availablePedals.isEmpty {
                     emptyView
                 } else {
                     pedalContentList
@@ -42,7 +55,7 @@ struct SelectPedalView: View {
                     }
                 }
             }
-        }
+        
     }
     
     @ViewBuilder
@@ -69,11 +82,11 @@ struct SelectPedalView: View {
                     ForEach(filteredPedals, id: \.self) { pedal in
                         Button {
                             withAnimation {
-                                viewModel.toggleSelection(for: pedal)
+                               toggleSelection(for: pedal)
                             }
                             
                         } label: {
-                            SelectPedalRow(pedal: pedal, isOn: viewModel.shouldBeIndicatedWithLight(for: pedal))
+                            SelectPedalRow(pedal: pedal, isOn: shouldBeIndicatedWithLight(for: pedal))
                             .padding(.vertical, 4)
                         }
                     }
@@ -94,6 +107,6 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(viewModel: CreateSongViewModel())
+        SelectPedalView(pedalList: .constant([]))
     }
 }

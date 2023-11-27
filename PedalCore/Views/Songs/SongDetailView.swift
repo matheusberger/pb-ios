@@ -10,114 +10,187 @@ import SwiftUI
 struct SongDetailView: View {
     
     @ObservedObject var viewModel: SongsViewModel
-    @State var isPresentingSheet: Bool = false
-    @State var isEditing: Bool = false
+    
+    @State var isEditingKnobs: Bool = false
+    @State var isEditingMusic: Bool = true
+    
     @Binding var song: Song
+    
+    @State var showingAlert: Bool = false
+    
+    @State var editingName: String = ""
+    @State var editingArtist: String = ""
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 20) {
                 
                 headerView
                 
-                Divider()
+                pedalListView
                 
-                VStack {
-                    ForEach($song.pedals, id: \.id) { $pedal in
-                        VStack(alignment: .leading) {
-                            Text(pedal.name)
-                                .foregroundStyle(.primary)
-                                .font(.headline)
-                            
-                            Text(pedal.brand)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                            
-                            KnobsGridView(knobs: $pedal.knobs)
-                                .allowsHitTesting(isEditing)
-                        }
-                        .padding()
-                        .background(
-                            Rectangle()
-                                .cornerRadius(10)
-                                .foregroundStyle(Color.white)
-                                .shadow(color: .accentColor, radius: isEditing ? 5 : 0)
-                        )
-
-                        .padding(.vertical)
-                        
-                    }
-                
-                }
-  
                 Spacer()
             }
             .padding()
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
-
+        
     }
     
+    private func  editSongPressed() {
+        withAnimation {
+            isEditingKnobs = false
+            isEditingMusic.toggle()
+        }
+    }
     
+    private func editKnobsPressed() {
+        isEditingKnobs = false
+    }
+    
+    @ViewBuilder
     private var headerView: some View {
         VStack(alignment: .leading) {
             HStack {
-                
-                VStack(alignment: .leading) {
-                    Text(song.name)
-                        .font(.largeTitle)
-                        .foregroundStyle(.primary)
-                    
-                    Text(song.artist)
-                        .font(.headline)
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                }
-                
-               
+                Text("Song Info")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
                 
                 Spacer()
                 
-                VStack {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "pencil")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 15, height: 15)
-                          
-                    }
+                Button {
+                    editSongPressed()
                     
-                    Button {
-                        isEditing.toggle()
-                    } label: {
-                        Image(systemName: isEditing ? "lock.open.fill" : "lock.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .foregroundStyle(Color.accentColor)
-                            
-                    }
-                   
+                } label: {
+                    Image(systemName: "pencil")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15, height: 15)
+                    
                 }
-                
-               
+            }
+            .overlay(alignment: .center) {
+                if isEditingMusic {
+                    Text("Editing Song")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.accentColor)
+                }
             }
             
-            HStack {
+            Divider()
+            
+            
+            VStack {
+                TextField("", text: $song.name, prompt: Text("Song name"))
+                    .font(.title.weight(.medium))
+                    .foregroundStyle(.primary)
+                    .padding(.horizontal, 5)
+                   
+                if isEditingMusic {
+                    Capsule(style: .continuous)
+                        .frame(height: 1)
+                        .padding(.horizontal)
+                        .foregroundStyle(Color.accentColor)
+                    
+                }
                 
-               
+                
+                TextField("", text: $song.artist, prompt: Text("Band name"))
+                    .font(.headline.weight(.regular))
+                    .foregroundStyle(.primary)
+                    .padding(5)
+                
+            }
+            .allowsHitTesting(isEditingMusic)
+            .background(
+                Rectangle()
+                    .cornerRadius(10)
+                    .foregroundStyle(Color.white)
+                    .shadow(color: .accentColor, radius: isEditingMusic ? 5 : 0)
+            )
+        }
+    }
+    
+    private var pedalListView: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Pedals")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
                 
                 Spacer()
                 
-                GeometryReader { geo in
-                      
-                   }
+                Button {
+                    withAnimation {
+                        isEditingKnobs.toggle()
+                    }
+                    
+                } label: {
+                    Image(systemName: isEditingKnobs ? "lock.open.fill" : "lock.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(Color.accentColor)
+                        .disabled(isEditingMusic)
+                }
             }
-           
-           
+            
+            Divider()
+            
+            VStack {
+                if isEditingKnobs {
+                    VStack {
+                        Text("Editing Mode On")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color.accentColor)
+                        
+                        Text("You can adjust the knob level by draggin")
+                            .font(.caption)
+                            .foregroundStyle(Color.accentColor)
+                    }
+                    .padding(.top)
+                }
+                
+                if isEditingMusic {
+                    NavigationLink {
+                        SelectPedalView(pedalList: $song.pedals)
+                    } label: {
+                        Text("Change Pedals")
+                    }
+
+                }
+                
+                
+                ForEach($song.pedals, id: \.id) { $pedal in
+                    VStack(alignment: .leading) {
+                        Text(pedal.name)
+                            .foregroundStyle(.primary)
+                            .font(.headline)
+                        
+                        Text(pedal.brand)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                        
+                        if !isEditingMusic {
+                            KnobsGridView(knobs: $pedal.knobs)
+                                .allowsHitTesting(isEditingKnobs)
+                        }
+                       
+                    }
+                    .frame(maxWidth: .infinity,
+                           alignment: .leading)
+                    .padding()
+                }
+            }
+            .background(
+                Rectangle()
+                    .cornerRadius(10)
+                    .foregroundStyle(Color.white)
+                    .shadow(color: .accentColor, radius: isEditingKnobs ? 5 : 0)
+            )
         }
     }
 }

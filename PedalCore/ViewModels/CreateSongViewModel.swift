@@ -12,8 +12,6 @@ class CreateSongViewModel: ObservableObject {
     
     weak var delegate: AddSongDelegate?
     
-//    @Binding var editSong: Song?
-    
     var availablePedals: [Pedal] = Pedal.pedalSample()
     
     @Published public var songName: String = ""
@@ -23,12 +21,8 @@ class CreateSongViewModel: ObservableObject {
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    init(delegate: AddSongDelegate? = nil
-//         , editSong: Binding<Song?> = .constant(nil)
-    ) {
+    init(delegate: AddSongDelegate? = nil) {
         self.delegate = delegate
-//        self._editSong = editSong
-    
     }
     
     public func removePedal(at index: IndexSet) {
@@ -41,10 +35,6 @@ class CreateSongViewModel: ObservableObject {
     
     public func updateSelectedPedals(_ pedals: [Pedal]) {
         self.pedalList = pedals
-    }
-    
-    public func shouldBeIndicatedWithLight(for pedal: Pedal) -> Bool {
-        return pedalList.contains(pedal)
     }
     
     public func addSongPressed() {
@@ -60,12 +50,5 @@ class CreateSongViewModel: ObservableObject {
             }
         }
     }
-    
-    public func toggleSelection(for pedal: Pedal) {
-        if pedalList.contains(pedal) {
-            pedalList.removeAll(where: {$0 == pedal})
-        } else {
-            pedalList.append(pedal)
-        }
-    }
+
 }
