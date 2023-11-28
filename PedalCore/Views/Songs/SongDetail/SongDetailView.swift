@@ -9,14 +9,17 @@ import SwiftUI
 
 struct SongDetailView: View {
     
-    @ObservedObject var viewModel: SongsViewModel
+    @Environment(\.colorScheme) var colorScheme
     
+    @ObservedObject var viewModel: SongsListViewModel
+    
+    @State var isPresentingSheet: Bool = false
+    @State var hasChanges: Bool = false
     @State var isEditingKnobs: Bool = false
     @State var isEditingMusic: Bool = false
     
-    @Binding var song: Song
+    @State var song: Song
     
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -29,6 +32,24 @@ struct SongDetailView: View {
             }
             .padding()
         }
+        .sheet(isPresented: $isPresentingSheet) {
+            NavigationView {
+                SelectPedalView(pedalList: song.pedals) { pedals in
+                    song.pedals = pedals
+                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if hasChanges {
+                    Button {
+                        viewModel.updateSong(for: song)
+                    } label: {
+                        Text("Save")
+                    }
+                }
+            }
+        }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
         
@@ -39,12 +60,14 @@ struct SongDetailView: View {
     }
     
     private func editSongPressed() {
-            isEditingKnobs = false
-            isEditingMusic.toggle()
+        hasChanges = true
+        isEditingKnobs = false
+        isEditingMusic.toggle()
         
     }
     
     private func editKnobsPressed() {
+        hasChanges = true
         isEditingKnobs.toggle()
     }
     
@@ -62,7 +85,7 @@ struct SongDetailView: View {
                     withAnimation {
                         editSongPressed()
                     }
-                   
+                    
                 } label: {
                     Image(systemName: "pencil")
                         .resizable()
@@ -88,7 +111,7 @@ struct SongDetailView: View {
                     .font(.title.weight(.medium))
                     .foregroundStyle(.primary)
                     .padding(.horizontal, 5)
-                   
+                
                 if isEditingMusic {
                     Capsule(style: .continuous)
                         .frame(height: 1)
@@ -108,7 +131,7 @@ struct SongDetailView: View {
             .background(
                 Rectangle()
                     .cornerRadius(10)
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
                     .shadow(color: .accentColor, radius: isEditingMusic ? 5 : 0)
             )
         }
@@ -156,12 +179,11 @@ struct SongDetailView: View {
                 }
                 
                 if isEditingMusic {
-                    NavigationLink {
-                        SelectPedalView(pedalList: $song.pedals)
+                    Button {
+                        isPresentingSheet.toggle()
                     } label: {
                         Text("Change Pedals")
                     }
-
                 }
                 
                 ForEach($song.pedals, id: \.signature) { $pedal in
@@ -178,7 +200,7 @@ struct SongDetailView: View {
                             KnobsGridView(knobs: $pedal.knobs, knobStyle: isEditingKnobs ? .editing : .reference)
                                 .allowsHitTesting(isEditingKnobs)
                         }
-                       
+                        
                     }
                     .frame(maxWidth: .infinity,
                            alignment: .leading)
@@ -188,7 +210,7 @@ struct SongDetailView: View {
             .background(
                 Rectangle()
                     .cornerRadius(10)
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(colorScheme == .light ?  Color.white : Color.black)
                     .shadow(color: .accentColor, radius: isEditing ? 5 : 0)
             )
         }
@@ -198,7 +220,7 @@ struct SongDetailView: View {
 struct SongDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SongDetailView(viewModel: SongsViewModel(), song: .constant(Song.getSample().first!))
+            SongDetailView(viewModel: SongsListViewModel(), song: Song.getSample().first!)
         }
     }
 }

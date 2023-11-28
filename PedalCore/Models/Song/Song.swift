@@ -16,7 +16,7 @@ struct Song: Identifiable, Equatable {
     var signature: String {
         let pedalNames = pedals.map { $0.name }
         
-        return name + artist + pedalNames.reduce("", +)
+        return name + artist
     }
     
     static func ==(lhs: Song, rhs: Song) -> Bool {

@@ -10,16 +10,17 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    var availablePedals: [Pedal] = Pedal.pedalSample()
-    @Binding var pedalList: [Pedal]
+    @State var availablePedals: [Pedal] = Pedal.pedalSample()
+    @State var pedalList: [Pedal]
+    
+    var onDismiss: ([Pedal]) -> Void
     @State var searchText: String = ""
     
     public var filteredPedals: [Pedal] {
-        let pedals = availablePedals
         if searchText.isEmpty {
-            return pedals
+            return availablePedals
         } else {
-            return pedals.filter { pedal in
+            return availablePedals.filter { pedal in
                 pedal.name.localizedCaseInsensitiveContains(searchText) || pedal.brand.localizedCaseInsensitiveContains(searchText) ||
                 availablePedals.contains(pedal)
             }
@@ -39,13 +40,15 @@ struct SelectPedalView: View {
     }
     
     var body: some View {
- 
             Group {
                 if availablePedals.isEmpty {
                     emptyView
                 } else {
                     pedalContentList
                 }
+            }
+            .onDisappear {
+                onDismiss(pedalList)
             }
             .navigationTitle("Select pedals")
             .toolbar {
@@ -55,7 +58,6 @@ struct SelectPedalView: View {
                     }
                 }
             }
-        
     }
     
     @ViewBuilder
@@ -86,7 +88,8 @@ struct SelectPedalView: View {
                             }
                             
                         } label: {
-                            SelectPedalRow(pedal: pedal, isOn: shouldBeIndicatedWithLight(for: pedal))
+                            SelectPedalRow(pedal: pedal,
+                                           isOn: shouldBeIndicatedWithLight(for: pedal))
                             .padding(.vertical, 4)
                         }
                     }
@@ -107,6 +110,8 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(pedalList: .constant([]))
+        SelectPedalView(pedalList: Pedal.pedalSample()) { _ in
+            
+        }
     }
 }

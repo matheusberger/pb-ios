@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SongsViewModel: ObservableObject {
+class SongsListViewModel: ObservableObject {
     
     enum State {
         case empty, content
@@ -36,7 +36,6 @@ class SongsViewModel: ObservableObject {
         }
     }
     
-
     
     public func addSongPressed() {
         isShowingSheet = true
@@ -64,9 +63,15 @@ class SongsViewModel: ObservableObject {
         }
     }
     
+    func updateSong(for updatedSong: Song) {
+        allSongs = allSongs.map({ song in
+            song == updatedSong ? updatedSong : song
+        })
+    }
+    
 }
 
-extension SongsViewModel: AddSongDelegate {
+extension SongsListViewModel: AddSongDelegate {
     func addSong(_ song: Song) throws {
         try validateSong(song)
         
