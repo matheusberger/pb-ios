@@ -76,5 +76,25 @@ final class CreateSongViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.isPresentingAlert)
         XCTAssertEqual(viewModel.alertMessage, AddSongError.missingArtist.alertDescription)
     }
+    
+    func testAttachPedalPresentsPedalSheet() {
+        viewModel.isPresentingSheet = false
+        
+        viewModel.attachPedalPressed()
+        
+        XCTAssertTrue(viewModel.isPresentingSheet)
+    }
+    
+    func testUpdatePedalListFromSheetSelectedPedals() {
+        viewModel.pedalList = []
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
+        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
+        let selectedPedals = [pedal1, pedal2, pedal3]
+
+        viewModel.updateSelectedPedals(selectedPedals)
+        
+        XCTAssertTrue(viewModel.pedalList.contains(where: {selectedPedals.contains($0)}))
+    }
 
 }

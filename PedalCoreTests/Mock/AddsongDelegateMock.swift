@@ -20,4 +20,8 @@ class AddsongDelegateMock: AddSongDelegate {
             throw error
         }
     }
+    
+    func updateSong(for updatedSong: PedalCore.Song) throws {
+        
+    }
 }

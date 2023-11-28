@@ -18,6 +18,8 @@ class CreateSongViewModel: ObservableObject {
     @Published var bandName: String = ""
     @Published var pedalList: [Pedal] = []
     
+    @Published var isPresentingSheet: Bool = false
+    
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
     
@@ -35,6 +37,12 @@ class CreateSongViewModel: ObservableObject {
     
     public func updateSelectedPedals(_ pedals: [Pedal]) {
         self.pedalList = pedals
+    }
+    
+    #warning("Create test")
+    public func attachPedalPressed() {
+        self.isPresentingSheet = true
+
     }
     
     public func addSongPressed() {
