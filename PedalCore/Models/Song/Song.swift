@@ -13,6 +13,11 @@ struct Song: Identifiable, Equatable {
     var artist: String
     var pedals: [Pedal]
     
+    var signature: String {
+        let pedalNames = pedals.map { $0.name }
+        
+        return name + artist + pedalNames.reduce("", +)
+    }
     
     static func ==(lhs: Song, rhs: Song) -> Bool {
         return lhs.id == rhs.id

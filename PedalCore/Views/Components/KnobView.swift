@@ -10,7 +10,7 @@ import SwiftUI
 struct KnobView: View {
   
     @Binding var knob: Knob
-    @State var knobViewStyle: KnobViewStyle = .reference
+    var knobViewStyle: KnobViewStyle
     @State var dragOffset: CGSize = .zero
     
     private let sensitivity: Float = 0.00005
@@ -38,6 +38,8 @@ struct KnobView: View {
     var body: some View {
         VStack(spacing: knobViewStyle.stackSpacing) {
             Text(knob.name)
+                .dynamicTypeSize(.small)
+                .lineLimit(1)
                 .font(.subheadline)
                 .foregroundStyle(.primary)
                         
@@ -73,15 +75,6 @@ struct KnobView: View {
             }
             
         }
-        .onTapGesture {
-            withAnimation {
-                if knobViewStyle == .reference {
-                    self.knobViewStyle = .editing
-                } else {
-                    self.knobViewStyle = .reference
-                }
-            }
-        }
         .gesture(
             DragGesture().onChanged { value in
                 self.dragAction(value: value.translation)
@@ -95,6 +88,6 @@ struct KnobView: View {
 
 struct KnobView_Previews: PreviewProvider {
     static var previews: some View {
-        KnobView(knob: .constant(Knob(name: "Drive", level: 0.5)))
+        KnobView(knob: .constant(Knob(name: "Drive", level: 0.5)), knobViewStyle: .reference)
     }
 }

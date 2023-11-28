@@ -9,6 +9,9 @@
 extension Pedal {
     static func pedalSample() -> [Pedal] {
         return [
+            Pedal(name: "Shredmaster", brand: "Marshall", knobs: [
+               Knob(name: "Gain"), Knob(name: "Treble"), Knob(name: "Contour"), Knob(name: "Bass"), Knob(name: "Volume")
+            ]),
             Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [
                 Knob(name: "Drive", level: 0.7),
                 Knob(name: "Tone", level: 0.5),

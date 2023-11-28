@@ -49,7 +49,7 @@ public struct SongsView: View {
     @ViewBuilder
     private var listView: some View {
         List {
-            ForEach($viewModel.allSongs, id: \.id) { $song in
+            ForEach($viewModel.songs, id: \.signature) { $song in
                 NavigationLink {
                     SongDetailView(viewModel: self.viewModel, song: $song)
                 } label: {

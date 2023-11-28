@@ -12,7 +12,7 @@ struct SongDetailView: View {
     @ObservedObject var viewModel: SongsViewModel
     
     @State var isEditingKnobs: Bool = false
-    @State var isEditingMusic: Bool = true
+    @State var isEditingMusic: Bool = false
     
     @Binding var song: Song
     
@@ -164,7 +164,7 @@ struct SongDetailView: View {
 
                 }
                 
-                ForEach($song.pedals, id: \.id) { $pedal in
+                ForEach($song.pedals, id: \.signature) { $pedal in
                     VStack(alignment: .leading) {
                         Text(pedal.name)
                             .foregroundStyle(.primary)
@@ -175,7 +175,7 @@ struct SongDetailView: View {
                             .foregroundStyle(.secondary)
                         
                         if !isEditingMusic {
-                            KnobsGridView(knobs: $pedal.knobs)
+                            KnobsGridView(knobs: $pedal.knobs, knobStyle: isEditingKnobs ? .editing : .reference)
                                 .allowsHitTesting(isEditingKnobs)
                         }
                        
@@ -190,7 +190,6 @@ struct SongDetailView: View {
                     .cornerRadius(10)
                     .foregroundStyle(Color.white)
                     .shadow(color: .accentColor, radius: isEditing ? 5 : 0)
-
             )
         }
     }

@@ -13,13 +13,18 @@ class SongsViewModel: ObservableObject {
         case empty, content
     }
     
-    @Published var allSongs: [Song]
     @Published var isShowingSheet: Bool = false
+    @Published var allSongs: [Song]
+    @Published public var songs: [Song]
+    @Published var searchText: String = "" {
+        didSet {
+          filterListedSongs()
+        }
+    }
     
-    @Published var searchText: String = ""
-    
-    init(allSongs: [Song] = []) {
+    init(allSongs: [Song] = Song.getSample()) {
         self.allSongs = allSongs
+        self.songs = allSongs
     }
     
     
@@ -31,16 +36,7 @@ class SongsViewModel: ObservableObject {
         }
     }
     
-    public var songs: [Song] {
-        if searchText.isEmpty {
-            return allSongs
-        } else {
-            return allSongs.filter {
-                $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
-            }
-        }
-        
-    }
+
     
     public func addSongPressed() {
         isShowingSheet = true
@@ -48,6 +44,16 @@ class SongsViewModel: ObservableObject {
     
     func deleteSong(_ deletedSong: Song) {
         allSongs = allSongs.filter({ $0 != deletedSong })
+    }
+    
+    private func filterListedSongs() {
+        if searchText.isEmpty {
+            songs =  allSongs
+        } else {
+            songs = allSongs.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
+            }
+        }
     }
     
     func populateSongs() {
