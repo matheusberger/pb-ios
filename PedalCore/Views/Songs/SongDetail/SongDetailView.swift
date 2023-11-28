@@ -18,7 +18,23 @@ struct SongDetailView: View {
     @State var isEditingKnobs: Bool = false
     @State var isEditingMusic: Bool = false
     
-    @State var song: Song
+    @StateObject var song: Song
+    
+    private var isEditing: Bool {
+        return isEditingKnobs || isEditingMusic
+    }
+    
+    private func editSongPressed() {
+        hasChanges = true
+        isEditingKnobs = false
+        isEditingMusic.toggle()
+        
+    }
+    
+    private func editKnobsPressed() {
+        hasChanges = true
+        isEditingKnobs.toggle()
+    }
     
     var body: some View {
         ScrollView {
@@ -35,6 +51,8 @@ struct SongDetailView: View {
         .sheet(isPresented: $isPresentingSheet) {
             NavigationView {
                 SelectPedalView(pedalList: song.pedals) { pedals in
+                    isEditingKnobs = false
+                    isEditingMusic = false
                     song.pedals = pedals
                 }
             }
@@ -55,21 +73,6 @@ struct SongDetailView: View {
         
     }
     
-    private var isEditing: Bool {
-        return isEditingKnobs || isEditingMusic
-    }
-    
-    private func editSongPressed() {
-        hasChanges = true
-        isEditingKnobs = false
-        isEditingMusic.toggle()
-        
-    }
-    
-    private func editKnobsPressed() {
-        hasChanges = true
-        isEditingKnobs.toggle()
-    }
     
     @ViewBuilder
     private var headerView: some View {
@@ -147,9 +150,12 @@ struct SongDetailView: View {
                 Spacer()
                 
                 Button {
-                    withAnimation {
-                        editKnobsPressed()
+                    if !isEditingMusic {
+                        withAnimation {
+                            editKnobsPressed()
+                        }
                     }
+                    
                     
                 } label: {
                     Image(systemName: isEditingKnobs ? "lock.open.fill" : "lock.fill")
