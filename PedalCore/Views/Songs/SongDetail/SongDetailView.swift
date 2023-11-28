@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SongDetailView: View {
-    
     @Environment(\.colorScheme) var colorScheme
     
     @ObservedObject var viewModel: SongDetailViewModel
@@ -40,6 +39,10 @@ struct SongDetailView: View {
                     }
                 }
             }
+        }
+        .alert("Failed to save Song", isPresented: $viewModel.isPresentingAlert) {
+        } message: {
+            Text(viewModel.alertMessage)
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -80,7 +83,6 @@ struct SongDetailView: View {
             
             Divider()
             
-            
             VStack {
                 TextField("", text: $viewModel.song.name, prompt: Text("Song name"))
                     .font(.title.weight(.medium))
@@ -94,7 +96,6 @@ struct SongDetailView: View {
                         .foregroundStyle(Color.accentColor)
                     
                 }
-                
                 
                 TextField("", text: $viewModel.song.artist, prompt: Text("Band name"))
                     .font(.headline.weight(.regular))
@@ -127,8 +128,6 @@ struct SongDetailView: View {
                             viewModel.editKnobsPressed()
                         }
                     }
-                    
-                    
                 } label: {
                     Image(systemName: viewModel.isEditingKnobs ? "lock.open.fill" : "lock.fill")
                         .resizable()
@@ -183,7 +182,6 @@ struct SongDetailView: View {
                             KnobsGridView(knobs: $pedal.knobs, knobStyle: viewModel.isEditingKnobs ? .editing : .reference)
                                 .allowsHitTesting(viewModel.isEditingKnobs)
                         }
-                        
                     }
                     .frame(maxWidth: .infinity,
                            alignment: .leading)

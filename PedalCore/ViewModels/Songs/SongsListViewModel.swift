@@ -39,7 +39,6 @@ class SongsListViewModel: ObservableObject {
         }
     }
     
-    
     public func addSongPressed() {
         isShowingSheet = true
     }
@@ -55,7 +54,6 @@ class SongsListViewModel: ObservableObject {
             allSongs.append($0)
         }
     }
-    
 }
 
 extension SongsListViewModel: AddSongDelegate {
@@ -64,6 +62,14 @@ extension SongsListViewModel: AddSongDelegate {
         
         self.allSongs.append(song)
         isShowingSheet = false
+    }
+    
+    func updateSong(for updatedSong: Song) throws {
+        try validateSong(updatedSong)
+        
+        allSongs = allSongs.map({ song in
+            song == updatedSong ? updatedSong : song
+        })
     }
     
     private func validateSong(_ song: Song) throws {
@@ -75,12 +81,4 @@ extension SongsListViewModel: AddSongDelegate {
             throw AddSongError.missingArtist
         }
     }
-    
-    func updateSong(for updatedSong: Song) {
-        allSongs = allSongs.map({ song in
-            song == updatedSong ? updatedSong : song
-        })
-        
-    }
-    
 }
