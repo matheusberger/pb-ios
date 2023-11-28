@@ -11,30 +11,7 @@ struct SongDetailView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    @ObservedObject var viewModel: SongsListViewModel
-    
-    @State var isPresentingSheet: Bool = false
-    @State var hasChanges: Bool = false
-    @State var isEditingKnobs: Bool = false
-    @State var isEditingMusic: Bool = false
-    
-    @StateObject var song: Song
-    
-    private var isEditing: Bool {
-        return isEditingKnobs || isEditingMusic
-    }
-    
-    private func editSongPressed() {
-        hasChanges = true
-        isEditingKnobs = false
-        isEditingMusic.toggle()
-        
-    }
-    
-    private func editKnobsPressed() {
-        hasChanges = true
-        isEditingKnobs.toggle()
-    }
+    @ObservedObject var viewModel: SongDetailViewModel
     
     var body: some View {
         ScrollView {
@@ -48,20 +25,16 @@ struct SongDetailView: View {
             }
             .padding()
         }
-        .sheet(isPresented: $isPresentingSheet) {
+        .sheet(isPresented: $viewModel.isPresentingSheet) {
             NavigationView {
-                SelectPedalView(pedalList: song.pedals) { pedals in
-                    isEditingKnobs = false
-                    isEditingMusic = false
-                    song.pedals = pedals
-                }
+                sheetSelectPedalsView
             }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if hasChanges {
+                if viewModel.hasChanges {
                     Button {
-                        viewModel.updateSong(for: song)
+                        viewModel.saveButtonPressed()
                     } label: {
                         Text("Save")
                     }
@@ -86,7 +59,7 @@ struct SongDetailView: View {
                 
                 Button {
                     withAnimation {
-                        editSongPressed()
+                        viewModel.editSongPressed()
                     }
                     
                 } label: {
@@ -98,10 +71,9 @@ struct SongDetailView: View {
                 }
             }
             .overlay(alignment: .center) {
-                if isEditingMusic {
+                if viewModel.isEditingMusic {
                     Text("Editing Song")
                         .font(.subheadline)
-                        .fontWeight(.semibold)
                         .foregroundStyle(Color.accentColor)
                 }
             }
@@ -110,12 +82,12 @@ struct SongDetailView: View {
             
             
             VStack {
-                TextField("", text: $song.name, prompt: Text("Song name"))
+                TextField("", text: $viewModel.song.name, prompt: Text("Song name"))
                     .font(.title.weight(.medium))
                     .foregroundStyle(.primary)
                     .padding(.horizontal, 5)
                 
-                if isEditingMusic {
+                if viewModel.isEditingMusic {
                     Capsule(style: .continuous)
                         .frame(height: 1)
                         .padding(.horizontal)
@@ -124,18 +96,18 @@ struct SongDetailView: View {
                 }
                 
                 
-                TextField("", text: $song.artist, prompt: Text("Band name"))
+                TextField("", text: $viewModel.song.artist, prompt: Text("Band name"))
                     .font(.headline.weight(.regular))
                     .foregroundStyle(.primary)
                     .padding(5)
                 
             }
-            .allowsHitTesting(isEditingMusic)
+            .allowsHitTesting(viewModel.isEditingMusic)
             .background(
                 Rectangle()
                     .cornerRadius(10)
                     .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
-                    .shadow(color: .accentColor, radius: isEditingMusic ? 5 : 0)
+                    .shadow(color: .accentColor, radius: viewModel.isEditingMusic ? 5 : 0)
             )
         }
     }
@@ -150,27 +122,27 @@ struct SongDetailView: View {
                 Spacer()
                 
                 Button {
-                    if !isEditingMusic {
+                    if !viewModel.isEditingMusic {
                         withAnimation {
-                            editKnobsPressed()
+                            viewModel.editKnobsPressed()
                         }
                     }
                     
                     
                 } label: {
-                    Image(systemName: isEditingKnobs ? "lock.open.fill" : "lock.fill")
+                    Image(systemName: viewModel.isEditingKnobs ? "lock.open.fill" : "lock.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
                         .foregroundStyle(Color.accentColor)
-                        .disabled(isEditingMusic)
+                        .disabled(viewModel.isEditingMusic)
                 }
             }
             
             Divider()
             
             VStack {
-                if isEditingKnobs {
+                if viewModel.isEditingKnobs {
                     VStack {
                         Text("Editing Mode On")
                             .font(.subheadline)
@@ -184,15 +156,20 @@ struct SongDetailView: View {
                     .padding(.top)
                 }
                 
-                if isEditingMusic {
+                if viewModel.isEditingMusic {
                     Button {
-                        isPresentingSheet.toggle()
+                        withAnimation {
+                            viewModel.ChangePedalsButtonPressed()
+                        }
+                        
                     } label: {
                         Text("Change Pedals")
+                            .fontWeight(.semibold)
+                            .padding()
                     }
                 }
                 
-                ForEach($song.pedals, id: \.signature) { $pedal in
+                ForEach($viewModel.song.pedals, id: \.signature) { $pedal in
                     VStack(alignment: .leading) {
                         Text(pedal.name)
                             .foregroundStyle(.primary)
@@ -202,9 +179,9 @@ struct SongDetailView: View {
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                         
-                        if !isEditingMusic {
-                            KnobsGridView(knobs: $pedal.knobs, knobStyle: isEditingKnobs ? .editing : .reference)
-                                .allowsHitTesting(isEditingKnobs)
+                        if !viewModel.isEditingMusic {
+                            KnobsGridView(knobs: $pedal.knobs, knobStyle: viewModel.isEditingKnobs ? .editing : .reference)
+                                .allowsHitTesting(viewModel.isEditingKnobs)
                         }
                         
                     }
@@ -217,8 +194,17 @@ struct SongDetailView: View {
                 Rectangle()
                     .cornerRadius(10)
                     .foregroundStyle(colorScheme == .light ?  Color.white : Color.black)
-                    .shadow(color: .accentColor, radius: isEditing ? 5 : 0)
+                    .shadow(color: .accentColor, radius: viewModel.isEditing ? 5 : 0)
             )
+        }
+    }
+    
+    @ViewBuilder
+    private var sheetSelectPedalsView: some View {
+        SelectPedalView(alreadyChosenPedals: viewModel.pedalsUsed) { selectedPedals in
+            withAnimation {
+                viewModel.userDidSelectNewPedals(pedals: selectedPedals)
+            }
         }
     }
 }
@@ -226,7 +212,7 @@ struct SongDetailView: View {
 struct SongDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SongDetailView(viewModel: SongsListViewModel(), song: Song.getSample().first!)
+            SongDetailView(viewModel: SongDetailViewModel(song: Song.getSample().first!))
         }
     }
 }

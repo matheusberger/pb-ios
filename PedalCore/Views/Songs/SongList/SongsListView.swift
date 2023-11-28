@@ -48,29 +48,28 @@ public struct SongsListView: View {
     
     @ViewBuilder
     private var listView: some View {
-        List {
-            ForEach($viewModel.songs, id: \.signature) { $song in
-                NavigationLink {
-                    SongDetailView(viewModel: self.viewModel, song: song)
-                } label: {
-                    SongListRow(song: song)
-                        .contextMenu(menuItems: {
-                            Button(role: .destructive) {
-                                viewModel.deleteSong(song)
-                            } label: {
-                                Label("Delete", systemImage: "trash.fill")
-                            }
-                        })
-                    
-                        .swipeActions(edge: .trailing) {
-                            Button(role: .destructive) {
-                                viewModel.deleteSong(song)
-                            } label: {
-                                Label("Delete", systemImage: "trash.fill")
-                            }
+        List(viewModel.songs, id:\.signature) { song in
+            NavigationLink {
+                SongDetailView(viewModel: SongDetailViewModel(song: song))
+            } label: {
+                SongListRow(song: song)
+                    .contextMenu(menuItems: {
+                        Button(role: .destructive) {
+                            viewModel.deleteSong(song)
+                        } label: {
+                            Label("Delete", systemImage: "trash.fill")
                         }
-                }
+                    })
+                
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            viewModel.deleteSong(song)
+                        } label: {
+                            Label("Delete", systemImage: "trash.fill")
+                        }
+                    }
             }
+           
         }
         .searchable(text: $viewModel.searchText, prompt: "Search a song or artist")
     }

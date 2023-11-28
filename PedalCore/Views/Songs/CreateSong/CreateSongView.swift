@@ -75,8 +75,9 @@ struct CreateSongView: View {
         }
         .sheet(isPresented: $isPresentingSheet) {
             NavigationView {
-                SelectPedalView(pedalList: viewModel.pedalList) { pedals in
-                    viewModel.pedalList = pedals
+                SelectPedalView(alreadyChosenPedals: viewModel.pedalList) { selectedPedals in
+                    #warning("reduce coupling. create method for viewModel + tests")
+                    viewModel.pedalList = selectedPedals
                 }
             }
         }

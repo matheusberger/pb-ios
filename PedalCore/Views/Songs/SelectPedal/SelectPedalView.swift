@@ -10,11 +10,18 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    @State var availablePedals: [Pedal] = Pedal.pedalSample()
+    @State var availablePedals: [Pedal]
     @State var pedalList: [Pedal]
-    
-    var onDismiss: ([Pedal]) -> Void
     @State var searchText: String = ""
+    var onDismiss: ([Pedal]) -> Void
+    
+    init(availablePedals: [Pedal] = Pedal.pedalSample(), alreadyChosenPedals: [Pedal],
+         onDismiss: @escaping ([Pedal]) -> Void) {
+        self._availablePedals = State(initialValue: availablePedals)
+        self._pedalList = State(initialValue: alreadyChosenPedals)
+        self.onDismiss = onDismiss
+    }
+    
     
     public var filteredPedals: [Pedal] {
         if searchText.isEmpty {
@@ -54,6 +61,7 @@ struct SelectPedalView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Done") {
+
                         dismiss()
                     }
                 }
@@ -110,7 +118,7 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(pedalList: Pedal.pedalSample()) { _ in
+        SelectPedalView(alreadyChosenPedals: []) { _ in
             
         }
     }
