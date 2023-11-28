@@ -50,7 +50,7 @@ public struct SongsListView: View {
     private var listView: some View {
         List(viewModel.songs, id:\.signature) { song in
             NavigationLink {
-                SongDetailView(viewModel: SongDetailViewModel(song: song))
+                SongDetailView(viewModel: SongDetailViewModel(song: song, delegate: self.viewModel))
             } label: {
                 SongListRow(song: song)
                     .contextMenu(menuItems: {

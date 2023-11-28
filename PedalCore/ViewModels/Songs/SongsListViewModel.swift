@@ -15,18 +15,21 @@ class SongsListViewModel: ObservableObject {
     
     @Published var isShowingSheet: Bool = false
     @Published var allSongs: [Song]
-    @Published public var songs: [Song]
-    @Published var searchText: String = "" {
-        didSet {
-          filterListedSongs()
-        }
-    }
+    @Published var searchText: String = ""
     
     init(allSongs: [Song] = Song.getSample()) {
         self.allSongs = allSongs
-        self.songs = allSongs
     }
     
+    public var songs: [Song] {
+        if searchText.isEmpty {
+            return allSongs
+        } else {
+            return allSongs.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
     
     public var state: State {
         if allSongs.isEmpty {
@@ -45,28 +48,12 @@ class SongsListViewModel: ObservableObject {
         allSongs = allSongs.filter({ $0 != deletedSong })
     }
     
-    private func filterListedSongs() {
-        if searchText.isEmpty {
-            songs =  allSongs
-        } else {
-            songs = allSongs.filter {
-                $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
-            }
-        }
-    }
-    
     func populateSongs() {
         let songsDemo = Song.getSample()
         
         songsDemo.forEach {
             allSongs.append($0)
         }
-    }
-    
-    func updateSong(for updatedSong: Song) {
-        allSongs = allSongs.map({ song in
-            song == updatedSong ? updatedSong : song
-        })
     }
     
 }
@@ -87,6 +74,13 @@ extension SongsListViewModel: AddSongDelegate {
         if song.artist.isEmpty {
             throw AddSongError.missingArtist
         }
+    }
+    
+    func updateSong(for updatedSong: Song) {
+        allSongs = allSongs.map({ song in
+            song == updatedSong ? updatedSong : song
+        })
+        
     }
     
 }

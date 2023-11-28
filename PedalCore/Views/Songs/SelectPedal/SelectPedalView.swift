@@ -89,7 +89,7 @@ struct SelectPedalView: View {
         Form {
             Section {
                 List {
-                    ForEach(filteredPedals, id: \.self) { pedal in
+                    ForEach(filteredPedals, id: \.signature) { pedal in
                         Button {
                             withAnimation {
                                toggleSelection(for: pedal)

@@ -15,9 +15,11 @@ class SongDetailViewModel: ObservableObject {
     @Published var isEditingKnobs: Bool = false
     @Published var isEditingMusic: Bool = false
     
+    weak var delegate: AddSongDelegate?
     
-    init(song: Song) {
+    init(song: Song, delegate: AddSongDelegate? = nil) {
         self.song = song
+        self.delegate = delegate
     }
     
     var isEditing: Bool {
@@ -29,7 +31,7 @@ class SongDetailViewModel: ObservableObject {
     }
     
     public func saveButtonPressed() {
-        
+        delegate?.updateSong(for: self.song)
     }
     
     public func ChangePedalsButtonPressed() {
