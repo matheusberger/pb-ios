@@ -53,13 +53,13 @@ final class SongDetailViewModelTests: XCTestCase {
 
     }
     
-    func testViewModelStateShouldNotChangeWhenEditingKnobsPressedOnEditingMusicPressed() {
+    func testViewModelStateShouldNotChangeWhenEditingKnobsPressedOnEditingSongMode() {
         
         viewModel.state = .editingSong
         
         viewModel.editKnobsPressed()
         
-        XCTAssertTrue(viewModel.state == .editingKnobs)
+        XCTAssertTrue(viewModel.state == .editingSong)
 
     }
     
@@ -75,29 +75,18 @@ final class SongDetailViewModelTests: XCTestCase {
     
     func testSaveButtonCallsDelegate() {
         delegate.didCallAddSong = false
-        
+
         viewModel.saveButtonPressed()
         
         XCTAssertTrue(delegate.didCallAddSong)
         
     }
     
-    func testSaveButtonsShouldPresentAlertWhenSongHasNoName() {
-        viewModel.alertMessage = ""
+    func testSaveButtonsShouldPresentAlertWhenDelegateThrowAnError() {
         viewModel.isPresentingAlert = false
-        viewModel.song = Song(name: "", artist: "Brand1", pedals: [])
-        
-        viewModel.saveButtonPressed()
-        
-        XCTAssertTrue(viewModel.isPresentingAlert)
-        XCTAssertFalse(viewModel.alertMessage.isEmpty)
-        
-    }
-    
-    func testSaveButtonsShouldPresentAlertWhenSongHasNoArtist() {
         viewModel.alertMessage = ""
-        viewModel.isPresentingAlert = false
-        viewModel.song = Song(name: "Song1", artist: "", pedals: [])
+        delegate.shouldThrowAddSongError = .missingName
+
         
         viewModel.saveButtonPressed()
         
@@ -132,5 +121,18 @@ final class SongDetailViewModelTests: XCTestCase {
         
     }
     
-    
+    func testViewModeReturnRelateStateMode() {
+        
+        viewModel.state = .editingKnobs
+        
+        XCTAssertTrue(viewModel.isInEditing)
+        
+        viewModel.state = .editingSong
+        
+        XCTAssertTrue(viewModel.isInEditing)
+        
+        viewModel.state = .presentation
+        
+        XCTAssertTrue(viewModel.isInPresentationMode)
+    }
 }

@@ -83,7 +83,6 @@ struct CreateSongView: View {
         } message: {
             Text(viewModel.alertMessage)
         }
-        
     }
 }
 

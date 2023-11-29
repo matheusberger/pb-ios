@@ -19,8 +19,6 @@ class SongDetailViewModel: ObservableObject {
     
     @Published var isPresentingSheet: Bool = false
     @Published var hasChanges: Bool = false
-    @Published var isEditingKnobs: Bool = false
-    @Published var isEditingMusic: Bool = false
     
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
@@ -32,8 +30,21 @@ class SongDetailViewModel: ObservableObject {
         self.delegate = delegate
     }
     
-    var isEditing: Bool {
-        return isEditingKnobs || isEditingMusic
+    public var isInEditing: Bool {
+        return state != .presentation
+    }
+    
+    public var isInPresentationMode: Bool {
+        return state == .presentation
+    }
+    
+    
+    public var isInEditingSongMode: Bool {
+        return state == .editingSong
+    }
+    
+    public var isInEditingKnobsMode: Bool {
+        return state == .editingKnobs
     }
     
     var pedalsUsed: [Pedal]  {
@@ -57,20 +68,26 @@ class SongDetailViewModel: ObservableObject {
     }
     
     public func userDidSelectNewPedals(pedals: [Pedal]) {
-        isEditingKnobs = false
         song.pedals = pedals
     }
     
     public func editSongPressed() {
         hasChanges = true
-        isEditingKnobs = false
-        isEditingMusic.toggle()
+        state = state == .presentation ? .editingSong : .presentation
         
     }
     
     func editKnobsPressed() {
         hasChanges = true
-        isEditingKnobs.toggle()
+        
+        switch state {
+        case .presentation:
+            state = .editingKnobs
+        case .editingSong:
+            return
+        case .editingKnobs:
+            state = .presentation
+        }
     }
     
 }

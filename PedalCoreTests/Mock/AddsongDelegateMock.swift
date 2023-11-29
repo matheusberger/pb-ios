@@ -22,6 +22,10 @@ class AddsongDelegateMock: AddSongDelegate {
     }
     
     func updateSong(for updatedSong: PedalCore.Song) throws {
+        didCallAddSong = true
         
+        if let error = shouldThrowAddSongError {
+            throw error
+        }
     }
 }

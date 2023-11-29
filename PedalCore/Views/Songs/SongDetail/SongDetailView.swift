@@ -74,7 +74,7 @@ struct SongDetailView: View {
                 }
             }
             .overlay(alignment: .center) {
-                if viewModel.isEditingMusic {
+                if viewModel.isInEditingSongMode {
                     Text("Editing Song")
                         .font(.subheadline)
                         .foregroundStyle(Color.accentColor)
@@ -89,7 +89,7 @@ struct SongDetailView: View {
                     .foregroundStyle(.primary)
                     .padding(.horizontal, 5)
                 
-                if viewModel.isEditingMusic {
+                if viewModel.isInEditingSongMode {
                     Capsule(style: .continuous)
                         .frame(height: 1)
                         .padding(.horizontal)
@@ -103,12 +103,12 @@ struct SongDetailView: View {
                     .padding(5)
                 
             }
-            .allowsHitTesting(viewModel.isEditingMusic)
+            .allowsHitTesting(viewModel.isInEditingSongMode)
             .background(
                 Rectangle()
                     .cornerRadius(10)
                     .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
-                    .shadow(color: .accentColor, radius: viewModel.isEditingMusic ? 5 : 0)
+                    .shadow(color: .accentColor, radius: viewModel.isInEditingSongMode ? 5 : 0)
             )
         }
     }
@@ -123,25 +123,24 @@ struct SongDetailView: View {
                 Spacer()
                 
                 Button {
-                    if !viewModel.isEditingMusic {
                         withAnimation {
                             viewModel.editKnobsPressed()
-                        }
+                        
                     }
                 } label: {
-                    Image(systemName: viewModel.isEditingKnobs ? "lock.open.fill" : "lock.fill")
+                    Image(systemName: viewModel.isInEditingKnobsMode ? "lock.open.fill" : "lock.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 20, height: 20)
                         .foregroundStyle(Color.accentColor)
-                        .disabled(viewModel.isEditingMusic)
+                        .disabled(viewModel.isInEditingSongMode)
                 }
             }
             
             Divider()
             
             VStack {
-                if viewModel.isEditingKnobs {
+                if viewModel.isInEditingKnobsMode {
                     VStack {
                         Text("Editing Mode On")
                             .font(.subheadline)
@@ -155,7 +154,7 @@ struct SongDetailView: View {
                     .padding(.top)
                 }
                 
-                if viewModel.isEditingMusic {
+                if viewModel.isInEditingSongMode {
                     Button {
                         withAnimation {
                             viewModel.ChangePedalsButtonPressed()
@@ -178,9 +177,9 @@ struct SongDetailView: View {
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                         
-                        if !viewModel.isEditingMusic {
-                            KnobsGridView(knobs: $pedal.knobs, knobStyle: viewModel.isEditingKnobs ? .editing : .reference)
-                                .allowsHitTesting(viewModel.isEditingKnobs)
+                        if !viewModel.isInEditingSongMode {
+                            KnobsGridView(knobs: $pedal.knobs, knobStyle: viewModel.isInEditingKnobsMode ? .editing : .reference)
+                                .allowsHitTesting(viewModel.isInEditingKnobsMode)
                         }
                     }
                     .frame(maxWidth: .infinity,
@@ -192,7 +191,7 @@ struct SongDetailView: View {
                 Rectangle()
                     .cornerRadius(10)
                     .foregroundStyle(colorScheme == .light ?  Color.white : Color.black)
-                    .shadow(color: .accentColor, radius: viewModel.isEditing ? 5 : 0)
+                    .shadow(color: .accentColor, radius: viewModel.isInEditing ? 5 : 0)
             )
         }
     }
