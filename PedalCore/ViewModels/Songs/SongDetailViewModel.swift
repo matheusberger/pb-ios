@@ -8,7 +8,14 @@
 import Foundation
 
 class SongDetailViewModel: ObservableObject {
+    
+    enum State {
+        case presentation, editingSong, editingKnobs
+    }
+    
     @Published var song: Song
+    
+    @Published var state: State = .presentation
     
     @Published var isPresentingSheet: Bool = false
     @Published var hasChanges: Bool = false
