@@ -39,7 +39,6 @@ class CreateSongViewModel: ObservableObject {
         self.pedalList = pedals
     }
     
-    #warning("Create test")
     public func attachPedalPressed() {
         self.isPresentingSheet = true
 
