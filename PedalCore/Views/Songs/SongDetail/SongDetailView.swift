@@ -187,6 +187,7 @@ struct SongDetailView: View {
                     .padding()
                 }
             }
+            .padding(.bottom, 20)
             .background(
                 Rectangle()
                     .cornerRadius(10)
