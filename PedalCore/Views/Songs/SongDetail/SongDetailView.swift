@@ -108,7 +108,7 @@ struct SongDetailView: View {
                 Rectangle()
                     .cornerRadius(10)
                     .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
-                    .shadow(color: .accentColor, radius: viewModel.isInEditingSongMode ? 5 : 0)
+                    .shadow(color: viewModel.isInEditingSongMode ? .accentColor: Color.clear, radius: viewModel.isInEditingSongMode ? 5 : 0)
             )
         }
     }
