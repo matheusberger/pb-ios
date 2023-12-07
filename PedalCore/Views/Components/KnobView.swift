@@ -10,10 +10,10 @@ import SwiftUI
 struct KnobView: View {
   
     @Binding var knob: Knob
-    
+    var knobViewStyle: KnobViewStyle
     @State var dragOffset: CGSize = .zero
     
-    let sensitivity: Float = 0.00005
+    private let sensitivity: Float = 0.00005
     
     private func maxTrin(for level: Float) -> CGFloat {
         return CGFloat(0.75 * level)
@@ -36,36 +36,41 @@ struct KnobView: View {
     }
     
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: knobViewStyle.stackSpacing) {
             Text(knob.name)
+                .dynamicTypeSize(.small)
+                .lineLimit(1)
                 .font(.subheadline)
                 .foregroundStyle(.primary)
                         
             ZStack {
                 Circle()
                     .trim(from: 0.0, to: maxTrin(for: 1))
-                    .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                    .stroke(style: StrokeStyle(lineWidth: knobViewStyle.strokeWidth, lineCap: .round, lineJoin: .round))
                     .foregroundColor(.accentColor)
                     .rotationEffect(.degrees(135))
-                    .frame(width: 80, height: 80)
+                    .frame(width: knobViewStyle.frameSize,
+                           height: knobViewStyle.frameSize)
                     .opacity(0.15)
                 
                 
                 Circle()
                     .trim(from: 0.0, to: maxTrin(for: knob.level))
-                    .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                    .stroke(style: StrokeStyle(lineWidth: knobViewStyle.strokeWidth, lineCap: .round, lineJoin: .round))
                     .foregroundColor(.accentColor)
                     .rotationEffect(.degrees(135))
-                    .frame(width: 80, height: 80)
+                    .frame(width: knobViewStyle.frameSize,
+                           height: knobViewStyle.frameSize)
                 
                 Circle()
                     .foregroundColor(.accentColor)
-                    .frame(width: 8, height: 8)
+                    .frame(width: knobViewStyle.circleSize,
+                           height: knobViewStyle.circleSize)
                 
                 Text("\(roundedLevel) %")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .offset(y: 40)
+                    .offset(y: knobViewStyle.labelOffSet)
 
             }
             
@@ -83,6 +88,6 @@ struct KnobView: View {
 
 struct KnobView_Previews: PreviewProvider {
     static var previews: some View {
-        KnobView(knob: .constant(Knob(name: "Drive", level: 0.5)))
+        KnobView(knob: .constant(Knob(name: "Drive", level: 0.5)), knobViewStyle: .reference)
     }
 }

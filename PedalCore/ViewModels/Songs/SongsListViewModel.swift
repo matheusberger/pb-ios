@@ -7,28 +7,18 @@
 
 import Foundation
 
-class SongsViewModel: ObservableObject {
+class SongsListViewModel: ObservableObject {
     
     enum State {
         case empty, content
     }
     
-    @Published var allSongs: [Song]
     @Published var isShowingSheet: Bool = false
-    
+    @Published var allSongs: [Song]
     @Published var searchText: String = ""
     
-    init(allSongs: [Song] = []) {
+    init(allSongs: [Song] = Song.getSample()) {
         self.allSongs = allSongs
-    }
-    
-    
-    public var state: State {
-        if allSongs.isEmpty {
-            return .empty
-        } else {
-            return .content
-        }
     }
     
     public var songs: [Song] {
@@ -39,7 +29,14 @@ class SongsViewModel: ObservableObject {
                 $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
             }
         }
-        
+    }
+    
+    public var state: State {
+        if allSongs.isEmpty {
+            return .empty
+        } else {
+            return .content
+        }
     }
     
     public func addSongPressed() {
@@ -57,15 +54,22 @@ class SongsViewModel: ObservableObject {
             allSongs.append($0)
         }
     }
-    
 }
 
-extension SongsViewModel: AddSongDelegate {
+extension SongsListViewModel: AddSongDelegate {
     func addSong(_ song: Song) throws {
         try validateSong(song)
         
         self.allSongs.append(song)
         isShowingSheet = false
+    }
+    
+    func updateSong(for updatedSong: Song) throws {
+        try validateSong(updatedSong)
+        
+        allSongs = allSongs.map({ song in
+            song == updatedSong ? updatedSong : song
+        })
     }
     
     private func validateSong(_ song: Song) throws {
@@ -77,5 +81,4 @@ extension SongsViewModel: AddSongDelegate {
             throw AddSongError.missingArtist
         }
     }
-    
 }

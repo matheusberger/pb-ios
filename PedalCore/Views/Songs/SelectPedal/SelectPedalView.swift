@@ -10,39 +10,62 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    @ObservedObject var viewModel: CreateSongViewModel
+    @State var availablePedals: [Pedal]
+    @State var pedalList: [Pedal]
     @State var searchText: String = ""
+    var onDismiss: ([Pedal]) -> Void
+    
+    init(availablePedals: [Pedal] = Pedal.pedalSample(), alreadyChosenPedals: [Pedal],
+         onDismiss: @escaping ([Pedal]) -> Void) {
+        self._availablePedals = State(initialValue: availablePedals)
+        self._pedalList = State(initialValue: alreadyChosenPedals)
+        self.onDismiss = onDismiss
+    }
+    
     
     public var filteredPedals: [Pedal] {
-        let pedals = viewModel.availablePedals
         if searchText.isEmpty {
-            return pedals
+            return availablePedals
         } else {
-            return pedals.filter { pedal in
+            return availablePedals.filter { pedal in
                 pedal.name.localizedCaseInsensitiveContains(searchText) || pedal.brand.localizedCaseInsensitiveContains(searchText) ||
-                viewModel.pedalList.contains(pedal)
+                availablePedals.contains(pedal)
             }
         }
     }
     
+    private func toggleSelection(for pedal: Pedal) {
+        if pedalList.contains(pedal) {
+            pedalList.removeAll(where: {$0 == pedal})
+        } else {
+            pedalList.append(pedal)
+        }
+    }
+    
+    public func shouldBeIndicatedWithLight(for pedal: Pedal) -> Bool {
+        return pedalList.contains(pedal)
+    }
+    
     var body: some View {
-        NavigationView {
             Group {
-                if viewModel.availablePedals.isEmpty {
+                if availablePedals.isEmpty {
                     emptyView
                 } else {
                     pedalContentList
                 }
             }
+            .onDisappear {
+                onDismiss(pedalList)
+            }
             .navigationTitle("Select pedals")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Done") {
+
                         dismiss()
                     }
                 }
             }
-        }
     }
     
     @ViewBuilder
@@ -66,14 +89,15 @@ struct SelectPedalView: View {
         Form {
             Section {
                 List {
-                    ForEach(filteredPedals, id: \.self) { pedal in
+                    ForEach(filteredPedals, id: \.signature) { pedal in
                         Button {
                             withAnimation {
-                                viewModel.toggleSelection(for: pedal)
+                               toggleSelection(for: pedal)
                             }
                             
                         } label: {
-                            SelectPedalRow(pedal: pedal, isOn: viewModel.shouldBeIndicatedWithLight(for: pedal))
+                            SelectPedalRow(pedal: pedal,
+                                           isOn: shouldBeIndicatedWithLight(for: pedal))
                             .padding(.vertical, 4)
                         }
                     }
@@ -94,6 +118,8 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(viewModel: CreateSongViewModel())
+        SelectPedalView(alreadyChosenPedals: []) { _ in
+            
+        }
     }
 }

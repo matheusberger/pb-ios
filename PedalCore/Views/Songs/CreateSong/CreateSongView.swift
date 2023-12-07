@@ -10,9 +10,9 @@ import SwiftUI
 struct CreateSongView: View {
     
     @ObservedObject var viewModel: CreateSongViewModel
-    @State var isPresentingSheet: Bool = false
+
     
-    init(viewModel: CreateSongViewModel = CreateSongViewModel()) {
+    init(viewModel: CreateSongViewModel) {
         self.viewModel = viewModel
     }
     
@@ -36,12 +36,8 @@ struct CreateSongView: View {
                                     .font(.headline)
                                     .foregroundStyle(.primary)
                                 
-                                LazyVGrid(columns: [GridItem(),GridItem()]) {
-                                    ForEach($pedal.knobs) { $knobs in
-                                        KnobView(knob: $knobs)
-                                            .padding()
-                                    }
-                                }
+                                KnobsGridView(knobs: $pedal.knobs)
+                                
                             }
                         }
                         .contextMenu(menuItems: {
@@ -57,7 +53,7 @@ struct CreateSongView: View {
                     })
                     
                     Button {
-                        self.isPresentingSheet = true
+                        viewModel.attachPedalPressed()
                     } label: {
                         Text("Attach pedal")
                             .foregroundStyle(Color.accentColor)
@@ -76,19 +72,22 @@ struct CreateSongView: View {
             .navigationTitle("Add new song")
             .navigationBarTitleDisplayMode(.inline)
         }
-        .sheet(isPresented: $isPresentingSheet) {
-            SelectPedalView(viewModel: self.viewModel)
+        .sheet(isPresented: $viewModel.isPresentingSheet) {
+            NavigationView {
+                SelectPedalView(alreadyChosenPedals: viewModel.pedalList) { selectedPedals in
+                    viewModel.updateSelectedPedals(selectedPedals)
+                }
+            }
         }
         .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
         } message: {
             Text(viewModel.alertMessage)
         }
-        
     }
 }
 
 struct CreateSongView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateSongView()
+        CreateSongView(viewModel: CreateSongViewModel())
     }
 }
