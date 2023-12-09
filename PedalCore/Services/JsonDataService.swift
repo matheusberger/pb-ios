@@ -8,38 +8,41 @@
 import Foundation
 import CoreData
 
-final class CoreDataService: PersistenceProtocol {
-    private let container: NSPersistentContainer
+final class JsonDataService<T>: PersistenceProtocol where T: Identifiable {
+    typealias T = T
+    private var data: [T]
     
-    init(containerName: String) {
-        container = NSPersistentContainer(name: containerName)
-        container.viewContext.automaticallyMergesChangesFromParent = true
-    }
+    private let fileUrl: URL
     
-    func save() {
+    init(filePath: String) {
+        fileUrl = URL(fileURLWithPath: filePath)
+        data = []
         do {
-            try container.viewContext.save()
+            try self.load { loadedData in
+                data = loadedData
+            }
         } catch {
-            
+            print("Error loading initial values: \(error)")
         }
     }
     
-    func load() {
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+    func save() throws {
+        // Save self.data to filePath
+    }
+    
+    func load(onLoad: ([T]) -> Void) throws {
+        // load from fileUrl
+        let loadedData = [T]()
+        onLoad(loadedData)
+    }
+    
+    func update(_ data: [T]) {
+        self.data = data
+    }
+}
 
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
+extension JsonDataService {
+    enum ServiceError: Error {
+        case invalidID(String)
     }
 }
