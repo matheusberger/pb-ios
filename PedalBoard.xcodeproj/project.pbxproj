@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AC062302B2206CA0062451F /* JsonDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0622F2B2206CA0062451F /* JsonDataService.swift */; };
+		0AC062332B229B1E0062451F /* PersistenceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062322B229B1E0062451F /* PersistenceProtocol.swift */; };
+		0AC062352B229BB60062451F /* PedalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062342B229BB60062451F /* PedalProvider.swift */; };
+		0AC062372B23F9990062451F /* SongProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062362B23F9990062451F /* SongProvider.swift */; };
 		0C0A07C42B03AD890036B04E /* HomeViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0A07C32B03AD890036B04E /* HomeViewModelsTests.swift */; };
 		0C12A41C2B05463F005D8F3D /* SongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C12A41B2B05463F005D8F3D /* SongsView.swift */; };
 		0C12A41E2B05464E005D8F3D /* SongsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C12A41D2B05464E005D8F3D /* SongsViewModel.swift */; };
@@ -86,6 +90,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0AC0622F2B2206CA0062451F /* JsonDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataService.swift; sourceTree = "<group>"; };
+		0AC062322B229B1E0062451F /* PersistenceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceProtocol.swift; sourceTree = "<group>"; };
+		0AC062342B229BB60062451F /* PedalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalProvider.swift; sourceTree = "<group>"; };
+		0AC062362B23F9990062451F /* SongProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongProvider.swift; sourceTree = "<group>"; };
 		0C0A07C32B03AD890036B04E /* HomeViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelsTests.swift; sourceTree = "<group>"; };
 		0C12A41B2B05463F005D8F3D /* SongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsView.swift; sourceTree = "<group>"; };
 		0C12A41D2B05464E005D8F3D /* SongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewModel.swift; sourceTree = "<group>"; };
@@ -153,6 +161,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0AC061EF2B21FFEA0062451F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0AC0622F2B2206CA0062451F /* JsonDataService.swift */,
+				0AC062322B229B1E0062451F /* PersistenceProtocol.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0AC062312B22977A0062451F /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				0AC062342B229BB60062451F /* PedalProvider.swift */,
+				0AC062362B23F9990062451F /* SongProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
 		0C0A07C22B03AD760036B04E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +298,8 @@
 		56827F292A95869D0043277A /* PedalCore */ = {
 			isa = PBXGroup;
 			children = (
+				0AC062312B22977A0062451F /* Providers */,
+				0AC061EF2B21FFEA0062451F /* Services */,
 				0C48B1722ACBB13200E52627 /* Enums */,
 				0C48B16F2ACBB10A00E52627 /* Protocols */,
 				56827F4C2A959D8C0043277A /* Models */,
@@ -476,6 +504,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AC062302B2206CA0062451F /* JsonDataService.swift in Sources */,
+				0AC062332B229B1E0062451F /* PersistenceProtocol.swift in Sources */,
 				56827F4E2A959DBB0043277A /* Pedal.swift in Sources */,
 				0C12A4232B05494A005D8F3D /* SelectPedalView.swift in Sources */,
 				0C3293B92ACB607100A9BC34 /* CreatePedalView.swift in Sources */,
@@ -485,6 +515,7 @@
 				56827F4B2A9597FA0043277A /* HomeViewModel.swift in Sources */,
 				0C12A4302B059A19005D8F3D /* CreateSongViewModel.swift in Sources */,
 				0C12A4322B05A101005D8F3D /* SongDetailView.swift in Sources */,
+				0AC062372B23F9990062451F /* SongProvider.swift in Sources */,
 				0C28FF312AE05B3A00994E12 /* Pedal+Populate.swift in Sources */,
 				0C12A4252B054ABD005D8F3D /* CreateSongView.swift in Sources */,
 				0C48B1782ACBB5FF00E52627 /* KnobView.swift in Sources */,
@@ -496,6 +527,7 @@
 				0C12A41C2B05463F005D8F3D /* SongsView.swift in Sources */,
 				0C12A4272B05522A005D8F3D /* Song+Populate.swift in Sources */,
 				0C12A42A2B056B12005D8F3D /* SongRow.swift in Sources */,
+				0AC062352B229BB60062451F /* PedalProvider.swift in Sources */,
 				0C12A42E2B056DF3005D8F3D /* AddSongError.swift in Sources */,
 				56827F2C2A95869D0043277A /* PedalCore.docc in Sources */,
 				0C48B1742ACBB14400E52627 /* AddPedalError.swift in Sources */,
