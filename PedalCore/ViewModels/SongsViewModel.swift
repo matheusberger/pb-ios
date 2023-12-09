@@ -13,13 +13,16 @@ class SongsViewModel: ObservableObject {
         case empty, content
     }
     
-    @Published var allSongs: [Song]
+    @Published var allSongs: [Song] {
+        didSet {
+            SongProvider.shared.update(allSongs)
+        }
+    }
     @Published var isShowingSheet: Bool = false
-    
     @Published var searchText: String = ""
     
-    init(allSongs: [Song] = []) {
-        self.allSongs = allSongs
+    init() {
+        self.allSongs = SongProvider.shared.songs
     }
     
     
@@ -47,7 +50,7 @@ class SongsViewModel: ObservableObject {
     }
     
     func deleteSong(_ deletedSong: Song) {
-        allSongs = allSongs.filter({ $0 != deletedSong })
+        allSongs = allSongs.filter { $0 != deletedSong }
     }
     
     func populateSongs() {
