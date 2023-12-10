@@ -6,24 +6,25 @@
 //
 
 import Foundation
+import SwiftUI
 
 class CreateSongViewModel: ObservableObject {
     
     weak var delegate: AddSongDelegate?
     
-    var availablePedals: [Pedal]
+    var availablePedals: [Pedal] = Pedal.pedalSample()
     
     @Published public var songName: String = ""
     @Published var bandName: String = ""
     @Published var pedalList: [Pedal] = []
     
+    @Published var isPresentingSheet: Bool = false
+    
     @Published var isPresentingAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    init(delegate: AddSongDelegate? = nil, availablePedals: [Pedal] = Pedal.pedalSample()) {
+    init(delegate: AddSongDelegate? = nil) {
         self.delegate = delegate
-        self.availablePedals = availablePedals
-        
     }
     
     public func removePedal(at index: IndexSet) {
@@ -38,8 +39,9 @@ class CreateSongViewModel: ObservableObject {
         self.pedalList = pedals
     }
     
-    public func shouldBeIndicatedWithLight(for pedal: Pedal) -> Bool {
-        return pedalList.contains(pedal)
+    public func attachPedalPressed() {
+        self.isPresentingSheet = true
+
     }
     
     public func addSongPressed() {
@@ -55,12 +57,5 @@ class CreateSongViewModel: ObservableObject {
             }
         }
     }
-    
-    public func toggleSelection(for pedal: Pedal) {
-        if pedalList.contains(pedal) {
-            pedalList.removeAll(where: {$0 == pedal})
-        } else {
-            pedalList.append(pedal)
-        }
-    }
+
 }

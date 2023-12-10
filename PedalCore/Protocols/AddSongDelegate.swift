@@ -10,4 +10,6 @@ import Foundation
 protocol AddSongDelegate: AnyObject {
     func addSong(_ song: Song) throws
     
+    func updateSong(for updatedSong: Song) throws
+    
 }

@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-public struct SongsView: View {
-    
-    @StateObject var viewModel: SongsViewModel = SongsViewModel()
+public struct SongsListView: View {
+    @Environment(\.colorScheme) var colorScheme
+    @StateObject var viewModel: SongsListViewModel = SongsListViewModel()
     
     public init() {}
     
@@ -48,11 +48,11 @@ public struct SongsView: View {
     
     @ViewBuilder
     private var listView: some View {
-        List(viewModel.songs) { song in
+        List(viewModel.songs, id:\.signature) { song in
             NavigationLink {
-                SongDetailView()
+                SongDetailView(viewModel: SongDetailViewModel(song: song, delegate: self.viewModel))
             } label: {
-                SongRow(song: song)
+                SongListRow(song: song)
                     .contextMenu(menuItems: {
                         Button(role: .destructive) {
                             viewModel.deleteSong(song)
@@ -69,6 +69,7 @@ public struct SongsView: View {
                         }
                     }
             }
+           
         }
         .searchable(text: $viewModel.searchText, prompt: "Search a song or artist")
     }
@@ -81,6 +82,7 @@ public struct SongsView: View {
                 Text("Create new Song")
                     .fontWeight(.bold)
                     .frame(width: 250,height: 30)
+                    .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
                 
             }.buttonStyle(.borderedProminent)
             
@@ -95,6 +97,6 @@ public struct SongsView: View {
 
 struct SongsView_Previews: PreviewProvider {
     static var previews: some View {
-        SongsView()
+        SongsListView()
     }
 }

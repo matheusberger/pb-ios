@@ -12,38 +12,18 @@ extension Song {
         return [
             Song(name: "Paranoid Android",
                  artist: "Radiohead",
-                 pedals: [
-                    Pedal(name: "Shredmaster",
-                          brand: "Marshall",
-                          knobs: [
-                            Knob(name: "volume"),
-                            Knob(name: "gain"),
-                            Knob(name: "Contuor")
-                          ]
-                         ),
-                    Pedal(name: "Small Stone",
-                          brand: "Eletro-Harmonix",
-                          knobs: [
-                            Knob(name: "Speed"),
-                            Knob(name: "Tone")
-                          ]
-                         )
-                    
-                 ]
+                 pedals: [Pedal.pedalSample()[0],
+                          Pedal.pedalSample()[1],
+                          Pedal.pedalSample()[2]
+                         ]
                 ),
             Song(name: "Teddy Picker",
-                 artist: "Arctic Monkeys",
-                 pedals: [
-                    Pedal(name: "Proco Rat",
-                          brand: "Generic",
-                          knobs: [
-                            Knob(name: "volume"),
-                            Knob(name: "gain"),
-                            Knob(name: "Tone")
-                          ]
-                         )
-                 ]
-                )
+                 artist: "ArcticMonkeys",
+                 pedals: [Pedal.pedalSample()[2],
+                          Pedal.pedalSample()[3]
+                         ]
+                ),
+            
         ]
     }
 }

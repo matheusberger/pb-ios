@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct SongRow: View {
+struct SongListRow: View {
     let song: Song
     
     var body: some View {
@@ -34,6 +34,7 @@ struct SongRow: View {
                         }
                         
                     }
+                    .foregroundStyle(Color.accentColor)
                     .frame(height: 25)
                     HStack(alignment: .bottom) {
                         Text(pedal.name)
@@ -52,6 +53,6 @@ struct SongRow: View {
 
 struct SongRow_Previews: PreviewProvider {
     static var previews: some View {
-        SongRow(song: Song.getSample().first!)
+        SongListRow(song: Song.getSample().first!)
     }
 }
