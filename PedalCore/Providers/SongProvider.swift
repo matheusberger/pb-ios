@@ -14,7 +14,7 @@ class SongProvider {
     private(set) var songs: [Song] = []
     
     init() {
-        self.persistenceService = JsonDataService<Song>(filePath: "")
+        self.persistenceService = JsonDataService<Song>(fileName: "Songs")
         do {
             try persistenceService.load { data in
                 self.songs = data
@@ -24,12 +24,12 @@ class SongProvider {
         }
     }
     
-    func update(_ songs: [Song]) {
+    func update(_ songs: [Song]) throws {
         self.songs = songs
-        persistenceService.update(songs)
+        try persistenceService.save(songs)
     }
     
-    enum PedalProviderErrors: Error {
+    enum SongProviderErrors: Error {
         case loadingError(String)
     }
 }

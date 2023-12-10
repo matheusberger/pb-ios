@@ -11,14 +11,10 @@ class PedalProvider {
     static let shared = PedalProvider()
     private let persistenceService: any PersistenceProtocol<Pedal>
     
-    private var pedals: [Pedal] = [] {
-        didSet {
-            persistenceService.update(pedals)
-        }
-    }
+    private(set) var pedals: [Pedal] = []
     
     init() {
-        self.persistenceService = JsonDataService<Pedal>(filePath: "")
+        self.persistenceService = JsonDataService<Pedal>(fileName: "Pedals")
         do {
             try persistenceService.load { data in
                 self.pedals = data
@@ -28,20 +24,9 @@ class PedalProvider {
         }
     }
     
-    func addPedal(_ pedal: Pedal) {
-        pedals.append(pedal)
-    }
-    
-    func updatePedal(_ pedal: Pedal) {
-        pedals = pedals.map {
-            $0.id == pedal.id ? pedal : $0
-        }
-    }
-    
-    func delete(_ pedal: Pedal) {
-        pedals = pedals.filter {
-            $0.id != pedal.id
-        }
+    func update(_ pedals: [Pedal]) throws {
+        self.pedals = pedals
+        try persistenceService.save(pedals)
     }
     
     enum PedalProviderErrors: Error {
