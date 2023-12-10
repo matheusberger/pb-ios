@@ -15,7 +15,11 @@ class SongsViewModel: ObservableObject {
     
     @Published var allSongs: [Song] {
         didSet {
-            SongProvider.shared.update(allSongs)
+            do {
+                try SongProvider.shared.update(allSongs)
+            } catch {
+                print(error) // get all songs
+            }
         }
     }
     @Published var isShowingSheet: Bool = false
