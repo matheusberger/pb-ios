@@ -6,43 +6,51 @@
 //
 
 import Foundation
-import CoreData
 
-final class JsonDataService<T>: PersistenceProtocol where T: Identifiable {
+final class JsonDataService<T: Codable>: PersistenceProtocol where T: Hashable {
     typealias T = T
-    private var data: [T]
     
-    private let fileUrl: URL
+    private let fileUrl: URL?
     
-    init(filePath: String) {
-        fileUrl = URL(fileURLWithPath: filePath)
-        data = []
+    init(fileName: String) {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fileUrl = nil
+            return // throw error instead
+        }
+        
+        fileUrl = documentDirectory.appendingPathComponent(fileName).appendingPathExtension("json")
+    }
+    
+    func save(_ data: [T]) throws {
         do {
-            try self.load { loadedData in
-                data = loadedData
+            // convert data to json
+            let jsonData = try JSONEncoder().encode(data)
+            
+            // save json to fileURL
+            guard let fileUrl = self.fileUrl else {
+                throw ServiceError.noFileUrl("No valid file URL to write to.")
             }
-        } catch {
-            print("Error loading initial values: \(error)")
+            try jsonData.write(to: fileUrl)
         }
     }
     
-    func save() throws {
-        // Save self.data to filePath
-    }
-    
     func load(onLoad: ([T]) -> Void) throws {
+        // get fileURL
+        guard let fileUrl = self.fileUrl else {
+            throw ServiceError.noFileUrl("No valid file URL to read from.")
+        }
+        
         // load from fileUrl
-        let loadedData = [T]()
-        onLoad(loadedData)
-    }
-    
-    func update(_ data: [T]) {
-        self.data = data
+        let jsonData = try Data(contentsOf: fileUrl)
+        let decodedData = try JSONDecoder().decode([T].self, from: jsonData)
+        onLoad(decodedData)
     }
 }
 
 extension JsonDataService {
     enum ServiceError: Error {
         case invalidID(String)
+        case failedSerialization(String)
+        case noFileUrl(String)
     }
 }

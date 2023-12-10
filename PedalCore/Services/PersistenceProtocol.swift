@@ -8,9 +8,8 @@
 import Foundation
 
 protocol PersistenceProtocol<T> {
-    associatedtype T
+    associatedtype T where T: Hashable
     
-    func save() throws
+    func save(_: [T]) throws
     func load(onLoad: (_: [T]) -> Void) throws
-    func update(_: [T])
 }
