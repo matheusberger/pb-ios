@@ -15,18 +15,18 @@ class PedalProvider {
     
     init() {
         self.persistenceService = JsonDataService<Pedal>(fileName: "Pedals")
-        do {
-            try persistenceService.load { data in
-                self.pedals = data
-            }
-        } catch {
-            print(error)
-        }
     }
     
     func update(_ pedals: [Pedal]) throws {
         self.pedals = pedals
         try persistenceService.save(pedals)
+    }
+    
+    func load(onLoad: ([Pedal]) -> Void) throws {
+        try persistenceService.load { data in
+            self.pedals = data
+            onLoad(data)
+        }
     }
     
     enum PedalProviderErrors: Error {
