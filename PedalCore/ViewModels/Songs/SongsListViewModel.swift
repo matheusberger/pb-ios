@@ -5,7 +5,7 @@
 //  Created by Lucas Migge on 15/11/23.
 //
 
-import Foundation
+import SwiftUI
 
 class SongsListViewModel: ObservableObject {
     
@@ -18,15 +18,37 @@ class SongsListViewModel: ObservableObject {
             do {
                 try SongProvider.shared.update(allSongs)
             } catch {
-                print(error) // get all songs
+                isShowingAlert = true
+                alert = Alert(title: Text("Saving error"),
+                              message: Text(error.localizedDescription),
+                              dismissButton: .default(Text("OK"), action: {
+                    self.isShowingAlert = false
+                    self.alert = nil
+                }))
             }
         }
     }
+    @Published var isShowingAlert = false
     @Published var isShowingSheet: Bool = false
     @Published var searchText: String = ""
     
+    var alert: Alert?
+    
     init() {
-        self.allSongs = SongProvider.shared.songs
+        allSongs = []
+        do {
+            try SongProvider.shared.load { songs in
+                allSongs = songs
+            }
+        } catch {
+            isShowingAlert = true
+            alert = Alert(title: Text("Loading error"),
+                          message: Text(error.localizedDescription),
+                          dismissButton: .default(Text("OK"), action: {
+                self.isShowingAlert = false
+                self.alert = nil
+            }))
+        }
     }
     
     public var songs: [Song] {
