@@ -7,12 +7,12 @@
 
 import Foundation
 
-final class JsonDataService<T: Codable>: PersistenceProtocol where T: Hashable {
+public final class JsonDataService<T: Codable>: PersistenceProtocol where T: Hashable {
     typealias T = T
     
     private let fileUrl: URL?
     
-    init(fileName: String) {
+    public init(fileName: String) {
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fileUrl = nil
             return // throw error instead
@@ -21,7 +21,7 @@ final class JsonDataService<T: Codable>: PersistenceProtocol where T: Hashable {
         fileUrl = documentDirectory.appendingPathComponent(fileName).appendingPathExtension("json")
     }
     
-    func save(_ data: [T]) throws {
+    public func save(_ data: [T]) throws {
         do {
             // convert data to json
             let jsonData = try JSONEncoder().encode(data)
@@ -34,7 +34,7 @@ final class JsonDataService<T: Codable>: PersistenceProtocol where T: Hashable {
         }
     }
     
-    func load(onLoad: ([T]) -> Void) throws {
+    public func load(onLoad: ([T]) -> Void) throws {
         // get fileURL
         guard let fileUrl = self.fileUrl else {
             throw ServiceError.noFileUrl("No valid file URL to read from.")
@@ -45,9 +45,7 @@ final class JsonDataService<T: Codable>: PersistenceProtocol where T: Hashable {
         let decodedData = try JSONDecoder().decode([T].self, from: jsonData)
         onLoad(decodedData)
     }
-}
-
-extension JsonDataService {
+    
     enum ServiceError: Error {
         case invalidID(String)
         case failedSerialization(String)

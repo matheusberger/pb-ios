@@ -8,8 +8,8 @@
 import Foundation
 
 /// Representation for a pedal knob
-struct Knob: Identifiable, Codable {
-    var id: UUID = UUID()
+public struct Knob: Identifiable, Codable {
+    public var id: UUID = UUID()
     
     /// Knob label
     var name: String

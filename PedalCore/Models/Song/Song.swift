@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Song: Identifiable, Hashable, Codable {
-    var id: UUID = UUID()
+public struct Song: Identifiable, Hashable, Codable {
+    public var id: UUID = UUID()
     var name: String
     var artist: String
     var pedals: [Pedal]
@@ -26,7 +26,7 @@ struct Song: Identifiable, Hashable, Codable {
         return name + artist + pedalNames.reduce("", +)
     }
     
-    static func ==(lhs: Song, rhs: Song) -> Bool {
+    public static func ==(lhs: Song, rhs: Song) -> Bool {
         return lhs.id == rhs.id
     }
 }
