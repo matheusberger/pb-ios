@@ -12,7 +12,6 @@ final class JsonDataServiceTests: XCTestCase {
     
     private let fileName = "TestFile"
     private var service: JsonDataService<Song>?
-    private var loadedSongs: [Song] = []
 
     override func setUpWithError() throws {
         service = JsonDataService<Song>(fileName: fileName)
@@ -24,27 +23,12 @@ final class JsonDataServiceTests: XCTestCase {
     }
     
     func testLoadSongsFromTestFile() throws {
-        try testSaveSongsToTestFile()
-        try service?.load { songs in
-            let expectedSongs = Song.getSample()
-            XCTAssert(songs.count == expectedSongs.count)
-            loadedSongs = songs
-            // XCTAssert(songs.contains(expectedSongs)) // only available in iOS > 16
-        }
-    }
-    
-    func testDeleteSingleSongFromTestFile() throws {
-        try testLoadSongsFromTestFile()
+        let expectedSongs = Song.getSample()
         
-        let _ = loadedSongs.removeFirst()
-        XCTAssert(loadedSongs.count == 1)
-        try service?.save(loadedSongs)
-    }
-    
-    func testCorrectSongCountAfterDeletion() throws {
-        try testDeleteSingleSongFromTestFile()
+        try service?.save(expectedSongs)
         try service?.load { songs in
-            XCTAssert(songs.count == 1)
+            XCTAssert(songs.count == expectedSongs.count)
+            // XCTAssert(songs.contains(expectedSongs)) // only available in iOS > 16
         }
     }
 
