@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import PedalCore
+@testable import PedalCore
 
 final class JsonDataServiceTests: XCTestCase {
     
