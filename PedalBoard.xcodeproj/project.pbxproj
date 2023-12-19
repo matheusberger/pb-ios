@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A8557462B32269E0082E968 /* DataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557452B32269E0082E968 /* DataProviderProtocol.swift */; };
+		0A8557482B3227760082E968 /* LocalDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557472B3227760082E968 /* LocalDataProvider.swift */; };
 		0AC062302B2206CA0062451F /* JsonDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0622F2B2206CA0062451F /* JsonDataService.swift */; };
 		0AC062332B229B1E0062451F /* PersistenceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062322B229B1E0062451F /* PersistenceProtocol.swift */; };
 		0AC062352B229BB60062451F /* PedalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062342B229BB60062451F /* PedalProvider.swift */; };
@@ -96,6 +98,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A8557452B32269E0082E968 /* DataProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderProtocol.swift; sourceTree = "<group>"; };
+		0A8557472B3227760082E968 /* LocalDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataProvider.swift; sourceTree = "<group>"; };
 		0AC0622F2B2206CA0062451F /* JsonDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataService.swift; sourceTree = "<group>"; };
 		0AC062322B229B1E0062451F /* PersistenceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceProtocol.swift; sourceTree = "<group>"; };
 		0AC062342B229BB60062451F /* PedalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalProvider.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 			children = (
 				0AC062342B229BB60062451F /* PedalProvider.swift */,
 				0AC062362B23F9990062451F /* SongProvider.swift */,
+				0A8557452B32269E0082E968 /* DataProviderProtocol.swift */,
+				0A8557472B3227760082E968 /* LocalDataProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -590,6 +596,7 @@
 				56827F4B2A9597FA0043277A /* HomeViewModel.swift in Sources */,
 				0C22704D2B0BBF4C0046EC29 /* KnobsGridView.swift in Sources */,
 				0C12A4302B059A19005D8F3D /* CreateSongViewModel.swift in Sources */,
+				0A8557462B32269E0082E968 /* DataProviderProtocol.swift in Sources */,
 				0C12A4322B05A101005D8F3D /* SongDetailView.swift in Sources */,
 				0AC062372B23F9990062451F /* SongProvider.swift in Sources */,
 				0CE482492B14D99E0011E42E /* KnobViewStyle.swift in Sources */,
@@ -602,6 +609,7 @@
 				0C12A4202B0547D1005D8F3D /* Song.swift in Sources */,
 				0C12A41E2B05464E005D8F3D /* SongsListViewModel.swift in Sources */,
 				0C12A41C2B05463F005D8F3D /* SongsListView.swift in Sources */,
+				0A8557482B3227760082E968 /* LocalDataProvider.swift in Sources */,
 				0C12A4272B05522A005D8F3D /* Song+Populate.swift in Sources */,
 				0AC062352B229BB60062451F /* PedalProvider.swift in Sources */,
 				0C12A42A2B056B12005D8F3D /* SongListRow.swift in Sources */,
