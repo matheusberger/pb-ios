@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PersistenceProtocol<T> {
+public protocol PersistenceProtocol<T> {
     associatedtype T where T: Hashable
     
     func save(_: [T]) throws

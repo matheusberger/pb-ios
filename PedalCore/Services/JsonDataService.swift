@@ -8,7 +8,7 @@
 import Foundation
 
 public final class JsonDataService<T: Codable>: PersistenceProtocol where T: Hashable {
-    typealias T = T
+    public typealias T = T
     
     private let fileUrl: URL?
     
@@ -47,7 +47,6 @@ public final class JsonDataService<T: Codable>: PersistenceProtocol where T: Has
     }
     
     enum ServiceError: Error {
-        case invalidID(String)
         case failedSerialization(String)
         case noFileUrl(String)
     }
