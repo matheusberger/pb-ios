@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension Song {
+extension Song {
     static func getSample() -> [Song] {
         return [
             Song(name: "Paranoid Android",
