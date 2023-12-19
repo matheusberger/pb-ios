@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0A8557462B32269E0082E968 /* DataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557452B32269E0082E968 /* DataProviderProtocol.swift */; };
 		0A8557482B3227760082E968 /* LocalDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557472B3227760082E968 /* LocalDataProvider.swift */; };
+		0A85574A2B3238250082E968 /* LocalDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557492B3238250082E968 /* LocalDataProviderTests.swift */; };
 		0AC062302B2206CA0062451F /* JsonDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0622F2B2206CA0062451F /* JsonDataService.swift */; };
 		0AC062332B229B1E0062451F /* PersistenceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062322B229B1E0062451F /* PersistenceProtocol.swift */; };
 		0AC062352B229BB60062451F /* PedalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062342B229BB60062451F /* PedalProvider.swift */; };
@@ -100,6 +101,7 @@
 /* Begin PBXFileReference section */
 		0A8557452B32269E0082E968 /* DataProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderProtocol.swift; sourceTree = "<group>"; };
 		0A8557472B3227760082E968 /* LocalDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataProvider.swift; sourceTree = "<group>"; };
+		0A8557492B3238250082E968 /* LocalDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataProviderTests.swift; sourceTree = "<group>"; };
 		0AC0622F2B2206CA0062451F /* JsonDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataService.swift; sourceTree = "<group>"; };
 		0AC062322B229B1E0062451F /* PersistenceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceProtocol.swift; sourceTree = "<group>"; };
 		0AC062342B229BB60062451F /* PedalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalProvider.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				0AC928442B2CCE36006A259B /* SongProviderTests.swift */,
+				0A8557492B3238250082E968 /* LocalDataProviderTests.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -627,6 +630,7 @@
 				0C9089FE2B03FD6400458814 /* CreatePedalViewModelTests.swift in Sources */,
 				0CACD5212B063B520084BCB2 /* SongsViewModelTests.swift in Sources */,
 				0C46ED6D2B16633500DBFCBB /* SongDetailViewModelTests.swift in Sources */,
+				0A85574A2B3238250082E968 /* LocalDataProviderTests.swift in Sources */,
 				0AC928452B2CCE36006A259B /* SongProviderTests.swift in Sources */,
 				0AC928422B2A7A60006A259B /* JsonDataServiceTests.swift in Sources */,
 				56827F392A95869D0043277A /* PedalCoreTests.swift in Sources */,
