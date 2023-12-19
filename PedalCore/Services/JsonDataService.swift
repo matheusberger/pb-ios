@@ -34,7 +34,7 @@ public final class JsonDataService<T: Codable>: PersistenceProtocol where T: Has
         }
     }
     
-    public func load(onLoad: ([T]) -> Void) throws {
+    public func load(_ onLoad: ([T]) -> Void) throws {
         // get fileURL
         guard let fileUrl = self.fileUrl else {
             throw ServiceError.noFileUrl("No valid file URL to read from.")
