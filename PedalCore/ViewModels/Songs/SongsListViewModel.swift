@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class SongsListViewModel: ObservableObject {
+public class SongsListViewModel: ObservableObject {
     
     enum State {
         case empty, content
@@ -16,7 +16,7 @@ class SongsListViewModel: ObservableObject {
     @Published var allSongs: [Song] {
         didSet {
             do {
-                try SongProvider.shared.update(allSongs)
+                try provider.update(allSongs)
             } catch {
                 isShowingAlert = true
                 alert = Alert(title: Text("Saving error"),
@@ -34,10 +34,26 @@ class SongsListViewModel: ObservableObject {
     
     var alert: Alert?
     
-    init() {
-        allSongs = []
+    private var provider: LocalDataProvider<Song>
+    
+    public init() {
+        let persistence = JsonDataService<Song>(fileName: "Song")
+        self.provider =  LocalDataProvider<Song>(persistenceService: persistence)
+        self.allSongs = []
+        
+        load()
+    }
+    
+    init(songProvider: LocalDataProvider<Song>) {
+        self.allSongs = []
+        self.provider = songProvider
+        
+        load()
+    }
+    
+    private func load() {
         do {
-            try SongProvider.shared.load { songs in
+            try provider.load { songs in
                 allSongs = songs
             }
         } catch {
@@ -51,7 +67,7 @@ class SongsListViewModel: ObservableObject {
         }
     }
     
-    public var songs: [Song] {
+    var songs: [Song] {
         if searchText.isEmpty {
             return allSongs
         } else {
@@ -61,7 +77,7 @@ class SongsListViewModel: ObservableObject {
         }
     }
     
-    public var state: State {
+    var state: State {
         if allSongs.isEmpty {
             return .empty
         } else {

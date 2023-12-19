@@ -9,9 +9,11 @@ import SwiftUI
 
 public struct SongsListView: View {
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: SongsListViewModel = SongsListViewModel()
+    @StateObject var viewModel: SongsListViewModel
     
-    public init() {}
+    public init(viewModel: SongsListViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     public var body: some View {
         NavigationView {
@@ -97,6 +99,9 @@ public struct SongsListView: View {
 
 struct SongsView_Previews: PreviewProvider {
     static var previews: some View {
-        SongsListView()
+        let persistence = JsonDataService<Song>(fileName: "SongPreview")
+        let provider =  LocalDataProvider<Song>(persistenceService: persistence)
+        let viewModel = SongsListViewModel(songProvider: provider)
+        SongsListView(viewModel: viewModel)
     }
 }
