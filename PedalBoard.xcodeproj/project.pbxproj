@@ -10,6 +10,7 @@
 		0A8557462B32269E0082E968 /* DataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557452B32269E0082E968 /* DataProviderProtocol.swift */; };
 		0A8557482B3227760082E968 /* LocalDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557472B3227760082E968 /* LocalDataProvider.swift */; };
 		0A85574A2B3238250082E968 /* LocalDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557492B3238250082E968 /* LocalDataProviderTests.swift */; };
+		0A85574C2B323DA80082E968 /* MockPersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A85574B2B323DA80082E968 /* MockPersistanceService.swift */; };
 		0AC062302B2206CA0062451F /* JsonDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC0622F2B2206CA0062451F /* JsonDataService.swift */; };
 		0AC062332B229B1E0062451F /* PersistenceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC062322B229B1E0062451F /* PersistenceProtocol.swift */; };
 		0AC928422B2A7A60006A259B /* JsonDataServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC928412B2A7A60006A259B /* JsonDataServiceTests.swift */; };
@@ -99,6 +100,7 @@
 		0A8557452B32269E0082E968 /* DataProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderProtocol.swift; sourceTree = "<group>"; };
 		0A8557472B3227760082E968 /* LocalDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataProvider.swift; sourceTree = "<group>"; };
 		0A8557492B3238250082E968 /* LocalDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataProviderTests.swift; sourceTree = "<group>"; };
+		0A85574B2B323DA80082E968 /* MockPersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistanceService.swift; sourceTree = "<group>"; };
 		0AC0622F2B2206CA0062451F /* JsonDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataService.swift; sourceTree = "<group>"; };
 		0AC062322B229B1E0062451F /* PersistenceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceProtocol.swift; sourceTree = "<group>"; };
 		0AC928412B2A7A60006A259B /* JsonDataServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataServiceTests.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 			children = (
 				0C908A002B03FE6600458814 /* CreatePedalDelegateMock.swift */,
 				0CACD5242B064ECB0084BCB2 /* AddsongDelegateMock.swift */,
+				0A85574B2B323DA80082E968 /* MockPersistanceService.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				56827F392A95869D0043277A /* PedalCoreTests.swift in Sources */,
 				0CACD5232B064E140084BCB2 /* CreateSongViewModelTests.swift in Sources */,
 				0CACD5252B064ECB0084BCB2 /* AddsongDelegateMock.swift in Sources */,
+				0A85574C2B323DA80082E968 /* MockPersistanceService.swift in Sources */,
 				0C0A07C42B03AD890036B04E /* HomeViewModelsTests.swift in Sources */,
 				0C908A012B03FE6600458814 /* CreatePedalDelegateMock.swift in Sources */,
 			);
