@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-public struct HomeView: View {
+struct HomeView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: HomeViewModel = HomeViewModel()
+    @StateObject var viewModel: HomeViewModel
     
-    public init() {
+    init(viewModel: HomeViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
         // Large Navigation Title
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
         // Inline Navigation Title
@@ -20,27 +21,25 @@ public struct HomeView: View {
     }
     
     public var body: some View {
-        NavigationView {
-            VStack {
-                switch viewModel.state {
-                case .empty:
-                    emptyView
-                case .content:
-                    contentView
-                }
-            
-                footerButtonsView
+        VStack {
+            switch viewModel.state {
+            case .empty:
+                emptyView
+            case .content:
+                contentView
             }
-            .navigationTitle("Pedal List")
-            .padding(.bottom, 20)
-            .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
-                viewModel.sheetDidDismiss()
-            }) {
-                if let pedal = viewModel.editPedal {
-                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
-                } else {
-                    CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
-                }
+            
+            footerButtonsView
+        }
+        .navigationTitle("Pedal List")
+        .padding(.bottom, 20)
+        .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
+            viewModel.sheetDidDismiss()
+        }) {
+            if let pedal = viewModel.editPedal {
+                CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
+            } else {
+                CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
             }
         }
     }
@@ -123,6 +122,11 @@ public struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        let persistence = JsonDataService<Pedal>(fileName: "PedalPreview")
+        let provider =  LocalDataProvider<Pedal>(persistence: persistence)
+        let viewModel = HomeViewModel(provider: provider)
+        NavigationStack {
+            HomeView(viewModel: viewModel)
+        }
     }
 }
