@@ -52,6 +52,24 @@ public class SongsListViewModel: ObservableObject {
         load()
     }
     
+    var songs: [Song] {
+        if searchText.isEmpty {
+            return allSongs
+        } else {
+            return allSongs.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
+    
+    var state: State {
+        if allSongs.isEmpty {
+            return .empty
+        } else {
+            return .content
+        }
+    }
+    
     init(songProvider: LocalDataProvider<Song>) {
         self.allSongs = []
         self.songProvider = songProvider
@@ -75,24 +93,6 @@ public class SongsListViewModel: ObservableObject {
                 self.isShowingAlert = false
                 self.alert = nil
             }))
-        }
-    }
-    
-    var songs: [Song] {
-        if searchText.isEmpty {
-            return allSongs
-        } else {
-            return allSongs.filter {
-                $0.name.localizedCaseInsensitiveContains(searchText) || $0.artist.localizedCaseInsensitiveContains(searchText)
-            }
-        }
-    }
-    
-    var state: State {
-        if allSongs.isEmpty {
-            return .empty
-        } else {
-            return .content
         }
     }
     
