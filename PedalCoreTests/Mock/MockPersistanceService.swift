@@ -8,22 +8,25 @@
 import Foundation
 import PedalCore
 
-class MockPersistanceService<T>: PersistenceProtocol where T: Hashable {
+class MockPersistanceService<T: Codable>: PersistenceProtocol where T: Hashable {
     
     private var shouldThrowSaving: Bool
     private var shouldThrowLoading: Bool
     
-    init(shouldThrowSaving: Bool, shouldThrowLoading: Bool) {
+    private var service: JsonDataService<T>
+    
+    init(fileName: String, shouldThrowSaving: Bool = false, shouldThrowLoading: Bool = false) {
         self.shouldThrowSaving = shouldThrowSaving
         self.shouldThrowLoading = shouldThrowLoading
+        self.service = JsonDataService<T>(fileName: fileName)
     }
     
-    func save(_: [T]) throws {
+    func save(_ data: [T]) throws {
         if shouldThrowSaving {
             throw MockedError.failedSave("Error saving data")
         }
         
-        return
+        try service.save(data)
     }
     
     func load(_ onLoad: ([T]) -> Void) throws {
@@ -31,7 +34,9 @@ class MockPersistanceService<T>: PersistenceProtocol where T: Hashable {
             throw MockedError.failedLoad("Error loading data")
         }
         
-        onLoad([])
+        try service.load { data in
+            onLoad(data)
+        }
     }
     
     enum MockedError: Error {
