@@ -20,7 +20,7 @@ class MockPersistanceService<T>: PersistenceProtocol where T: Hashable {
     
     func save(_: [T]) throws {
         if shouldThrowSaving {
-            return
+            throw MockedError.failedSave("Error saving data")
         }
         
         return
@@ -28,7 +28,7 @@ class MockPersistanceService<T>: PersistenceProtocol where T: Hashable {
     
     func load(_ onLoad: ([T]) -> Void) throws {
         if shouldThrowLoading {
-            
+            throw MockedError.failedLoad("Error loading data")
         }
         
         onLoad([])
