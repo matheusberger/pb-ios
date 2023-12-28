@@ -19,6 +19,12 @@ class HomeViewModel: ObservableObject {
     
     var editPedal: Pedal?
     
+    private var provider: LocalDataProvider<Pedal>
+    
+    init(provider: LocalDataProvider<Pedal>) {
+        self.provider = provider
+    }
+    
     var state: State {
         if allPedals.isEmpty {
             return .empty
