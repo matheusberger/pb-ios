@@ -18,13 +18,16 @@ final class SongsViewModelTests: XCTestCase {
     }
 
     func testViewModelEmptyStateWhenHasNoSongs() {
-        viewModel = SongsListViewModel(allSongs: [])
+        let persistance = JsonDataService<Song>(fileName: "SongsViewModelTests")
+        let provider = LocalDataProvider<Song>(persistenceService: persistance)
+        viewModel = SongsListViewModel(songProvider: provider)
         
         XCTAssertTrue(viewModel.state == .empty)
     }
     
     func testViewModelContentStateWhenHasSongs() {
-        viewModel = SongsListViewModel(allSongs: Song.getSample())
+        viewModel = SongsListViewModel()
+        viewModel.allSongs = Song.getSample()
         
         XCTAssertTrue(viewModel.state == .content)
     }
@@ -39,7 +42,8 @@ final class SongsViewModelTests: XCTestCase {
         let song2 = Song(name: "test2", artist: "test2", pedals: [])
         let song3 = Song(name: "test3", artist: "test3", pedals: [])
         let songsArray = [song1, song2, song3]
-        viewModel = SongsListViewModel(allSongs: songsArray)
+        viewModel = SongsListViewModel()
+        viewModel.allSongs = songsArray
         
         viewModel.deleteSong(song1)
         
@@ -54,7 +58,8 @@ final class SongsViewModelTests: XCTestCase {
         let song2 = Song(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
         let song3 = Song(name: "Reckoner", artist: "Radiohead", pedals: [])
         let songsArray = [song1, song2, song3]
-        viewModel = SongsListViewModel(allSongs: songsArray)
+        viewModel = SongsListViewModel()
+        viewModel.allSongs = songsArray
         
         viewModel.searchText = "rec"
         
@@ -68,7 +73,8 @@ final class SongsViewModelTests: XCTestCase {
         let song2 = Song(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
         let song3 = Song(name: "Reckoner", artist: "Radiohead", pedals: [])
         let songsArray = [song1, song2, song3]
-        viewModel = SongsListViewModel(allSongs: songsArray)
+        viewModel = SongsListViewModel()
+        viewModel.allSongs = songsArray
         
         viewModel.searchText = ""
         

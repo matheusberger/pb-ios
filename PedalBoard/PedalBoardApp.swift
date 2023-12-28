@@ -12,8 +12,8 @@ import PedalCore
 struct PedalBoardApp: App {
     var body: some Scene {
         WindowGroup {
-//            HomeView()
-            SongsListView()
+            let viewModel = SongsListViewModel()
+            SongsListView(viewModel: viewModel)
         }
     }
 }

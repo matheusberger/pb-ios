@@ -5,23 +5,69 @@
 //  Created by Lucas Migge on 15/11/23.
 //
 
-import Foundation
+import SwiftUI
 
-class SongsListViewModel: ObservableObject {
+public class SongsListViewModel: ObservableObject {
     
     enum State {
         case empty, content
     }
     
+    @Published var allSongs: [Song] {
+        didSet {
+            do {
+                try provider.update(allSongs)
+            } catch {
+                isShowingAlert = true
+                alert = Alert(title: Text("Saving error"),
+                              message: Text(error.localizedDescription),
+                              dismissButton: .default(Text("OK"), action: {
+                    self.isShowingAlert = false
+                    self.alert = nil
+                }))
+            }
+        }
+    }
+    @Published var isShowingAlert = false
     @Published var isShowingSheet: Bool = false
-    @Published var allSongs: [Song]
     @Published var searchText: String = ""
     
-    init(allSongs: [Song] = Song.getSample()) {
-        self.allSongs = allSongs
+    var alert: Alert?
+    
+    private var provider: LocalDataProvider<Song>
+    
+    public init() {
+        let persistence = JsonDataService<Song>(fileName: "Song")
+        self.provider =  LocalDataProvider<Song>(persistenceService: persistence)
+        self.allSongs = []
+        
+        load()
     }
     
-    public var songs: [Song] {
+    init(songProvider: LocalDataProvider<Song>) {
+        self.allSongs = []
+        self.provider = songProvider
+        
+        load()
+    }
+    
+    private func load() {
+        do {
+            try provider.load { songs in
+                allSongs = songs
+            }
+        } catch {
+            isShowingAlert = true
+            alert = Alert(title: Text("Loading error"),
+                          message: Text(error.localizedDescription),
+                          dismissButton: .default(Text("OK"), action: {
+                self.isShowingAlert = false
+                self.alert = nil
+            }))
+        }
+    }
+    
+    var songs: [Song] {
         if searchText.isEmpty {
             return allSongs
         } else {
@@ -31,7 +77,7 @@ class SongsListViewModel: ObservableObject {
         }
     }
     
-    public var state: State {
+    var state: State {
         if allSongs.isEmpty {
             return .empty
         } else {
@@ -44,7 +90,7 @@ class SongsListViewModel: ObservableObject {
     }
     
     func deleteSong(_ deletedSong: Song) {
-        allSongs = allSongs.filter({ $0 != deletedSong })
+        allSongs = allSongs.filter { $0 != deletedSong }
     }
     
     func populateSongs() {

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Song: Identifiable, Equatable {
-    var id: UUID
+struct Song: Identifiable, Hashable, Codable {
+    var id: UUID = UUID()
     var name: String
     var artist: String
     var pedals: [Pedal]
