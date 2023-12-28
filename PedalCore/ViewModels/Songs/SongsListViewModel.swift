@@ -16,7 +16,7 @@ public class SongsListViewModel: ObservableObject {
     @Published var allSongs: [Song] {
         didSet {
             do {
-                try provider.update(allSongs)
+                try songProvider.update(allSongs)
             } catch {
                 isShowingAlert = true
                 alert = Alert(title: Text("Saving error"),
@@ -34,26 +34,37 @@ public class SongsListViewModel: ObservableObject {
     
     var alert: Alert?
     
-    private var provider: LocalDataProvider<Song>
+    var pedalViewModel: HomeViewModel {
+        return HomeViewModel(provider: pedalProvider)
+    }
+    
+    private var songProvider: LocalDataProvider<Song>
+    private var pedalProvider: LocalDataProvider<Pedal>
     
     public init() {
-        let persistence = JsonDataService<Song>(fileName: "Song")
-        self.provider =  LocalDataProvider<Song>(persistenceService: persistence)
+        let songPersistence = JsonDataService<Song>(fileName: "Song")
+        self.songProvider =  LocalDataProvider<Song>(persistence: songPersistence)
         self.allSongs = []
+        
+        let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
+        self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
         
         load()
     }
     
     init(songProvider: LocalDataProvider<Song>) {
         self.allSongs = []
-        self.provider = songProvider
+        self.songProvider = songProvider
+        
+        let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
+        self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
         
         load()
     }
     
     private func load() {
         do {
-            try provider.load { songs in
+            try songProvider.load { songs in
                 allSongs = songs
             }
         } catch {
