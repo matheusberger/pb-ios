@@ -13,7 +13,7 @@ final class LocalDataProviderTests: XCTestCase {
     private var provider: LocalDataProvider<Song>?
 
     override func setUpWithError() throws {
-        let persistance = JsonDataService<Song>(fileName: "TestingFile")
+        let persistance = MockPersistanceService<Song>(fileName: "TestingFile")
         provider = LocalDataProvider<Song>(persistenceService: persistance)
     }
 
@@ -28,6 +28,21 @@ final class LocalDataProviderTests: XCTestCase {
         try provider?.load{ songs in
             XCTAssert(songs.count == expectedSongs.count)
         }
+    }
+    
+    func testSavingError() throws {
+        let persistance = MockPersistanceService<Song>(fileName: "TestingFile", shouldThrowSaving: true)
+        provider = LocalDataProvider<Song>(persistenceService: persistance)
+        
+        XCTAssertThrowsError(try provider?.update([]))
+    }
+    
+    func testLoadingError() throws {
+        let persistance = MockPersistanceService<Song>(fileName: "TestingFile", shouldThrowLoading: true)
+        provider = LocalDataProvider<Song>(persistenceService: persistance)
+        
+        XCTAssertThrowsError(try provider?.load({ _ in /*do nothing*/ }))
+
     }
     
     func testPerformanceExample() throws {
