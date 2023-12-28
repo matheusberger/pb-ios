@@ -18,7 +18,9 @@ final class SongsViewModelTests: XCTestCase {
     }
 
     func testViewModelEmptyStateWhenHasNoSongs() {
-        viewModel = SongsListViewModel()
+        let persistance = JsonDataService<Song>(fileName: "SongsViewModelTests")
+        let provider = LocalDataProvider<Song>(persistenceService: persistance)
+        viewModel = SongsListViewModel(songProvider: provider)
         
         XCTAssertTrue(viewModel.state == .empty)
     }
