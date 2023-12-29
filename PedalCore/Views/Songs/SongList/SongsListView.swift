@@ -29,6 +29,13 @@ public struct SongsListView: View {
                 footerButtonsView
             }
             .navigationTitle("My Songs")
+            .toolbar {
+                NavigationLink {
+                    HomeView(viewModel: viewModel.pedalViewModel)
+                } label: {
+                    Image(systemName: "lanyardcard.fill")
+                }
+            }
             .sheet(isPresented: $viewModel.isShowingSheet) {
                 CreateSongView(viewModel: CreateSongViewModel(delegate: self.viewModel))
             }
@@ -100,7 +107,7 @@ public struct SongsListView: View {
 struct SongsView_Previews: PreviewProvider {
     static var previews: some View {
         let persistence = JsonDataService<Song>(fileName: "SongPreview")
-        let provider =  LocalDataProvider<Song>(persistenceService: persistence)
+        let provider =  LocalDataProvider<Song>(persistence: persistence)
         let viewModel = SongsListViewModel(songProvider: provider)
         SongsListView(viewModel: viewModel)
     }

@@ -13,7 +13,9 @@ final class HomeViewModelsTests: XCTestCase {
     private var viewModel: HomeViewModel!
     
     override func setUpWithError() throws {
-        viewModel = HomeViewModel()
+        let persistance = JsonDataService<Pedal>(fileName: "TestingFile")
+        let provider = LocalDataProvider<Pedal>(persistence: persistance)
+        viewModel = HomeViewModel(provider: provider)
         
         continueAfterFailure = false
     }

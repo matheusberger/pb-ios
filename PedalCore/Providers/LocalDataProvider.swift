@@ -10,22 +10,22 @@ import Foundation
 class LocalDataProvider<T: Hashable>: DataProviderProtocol {
     typealias T = T
     
-    private let persistenceService: any PersistenceProtocol<T>
+    private let persistence: any PersistenceProtocol<T>
     
     private(set) var data: [T]
     
-    init(persistenceService: any PersistenceProtocol<T>) {
-        self.persistenceService = persistenceService
+    init(persistence: any PersistenceProtocol<T>) {
+        self.persistence = persistence
         self.data = []
     }
     
     func update(_ newData: [T]) throws {
         self.data = newData
-        try persistenceService.save(data)
+        try persistence.save(data)
     }
     
     func load(_ onLoad: ([T]) -> Void) throws {
-        try persistenceService.load { loadedData in
+        try persistence.load { loadedData in
             self.data = loadedData
             onLoad(loadedData)
         }
