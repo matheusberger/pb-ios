@@ -87,12 +87,6 @@ public struct SongsListView: View {
                     .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
                 
             }.buttonStyle(.borderedProminent)
-            
-            Button {
-                viewModel.populateSongs()
-            } label: {
-                Image(systemName: "eyes")
-            }
         }
     }
 }
