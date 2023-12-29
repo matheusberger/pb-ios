@@ -16,7 +16,7 @@ public class SongsListViewModel: ObservableObject {
     @Published var allSongs: [Song] {
         didSet {
             do {
-                try provider.update(allSongs)
+                try songProvider.update(allSongs)
             } catch {
                 isShowingAlert = true
                 alert = Alert(title: Text("Saving error"),
@@ -34,37 +34,22 @@ public class SongsListViewModel: ObservableObject {
     
     var alert: Alert?
     
-    private var provider: LocalDataProvider<Song>
+    var pedalViewModel: HomeViewModel {
+        return HomeViewModel(provider: pedalProvider)
+    }
+    
+    private var songProvider: LocalDataProvider<Song>
+    private var pedalProvider: LocalDataProvider<Pedal>
     
     public init() {
-        let persistence = JsonDataService<Song>(fileName: "Song")
-        self.provider =  LocalDataProvider<Song>(persistenceService: persistence)
+        let songPersistence = JsonDataService<Song>(fileName: "Song")
+        self.songProvider =  LocalDataProvider<Song>(persistence: songPersistence)
         self.allSongs = []
         
-        load()
-    }
-    
-    init(songProvider: LocalDataProvider<Song>) {
-        self.allSongs = []
-        self.provider = songProvider
+        let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
+        self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
         
         load()
-    }
-    
-    private func load() {
-        do {
-            try provider.load { songs in
-                self.allSongs = songs
-            }
-        } catch {
-            isShowingAlert = true
-            alert = Alert(title: Text("Loading error"),
-                          message: Text(error.localizedDescription),
-                          dismissButton: .default(Text("OK"), action: {
-                self.isShowingAlert = false
-                self.alert = nil
-            }))
-        }
     }
     
     var songs: [Song] {
@@ -82,6 +67,32 @@ public class SongsListViewModel: ObservableObject {
             return .empty
         } else {
             return .content
+        }
+    }
+    
+    init(songProvider: LocalDataProvider<Song>) {
+        self.allSongs = []
+        self.songProvider = songProvider
+        
+        let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
+        self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
+        
+        load()
+    }
+    
+    private func load() {
+        do {
+            try provider.load { songs in
+                self.allSongs = songs
+            }
+        } catch {
+            isShowingAlert = true
+            alert = Alert(title: Text("Loading error"),
+                          message: Text(error.localizedDescription),
+                          dismissButton: .default(Text("OK"), action: {
+                self.isShowingAlert = false
+                self.alert = nil
+            }))
         }
     }
     
