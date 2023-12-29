@@ -94,6 +94,7 @@ public struct SongsListView: View {
                 Image(systemName: "eyes")
             }
         }
+        .padding(.bottom)
     }
 }
 
