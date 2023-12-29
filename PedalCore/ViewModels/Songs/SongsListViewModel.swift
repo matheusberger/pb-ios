@@ -54,7 +54,7 @@ public class SongsListViewModel: ObservableObject {
     private func load() {
         do {
             try provider.load { songs in
-                allSongs = songs
+                self.allSongs = songs
             }
         } catch {
             isShowingAlert = true

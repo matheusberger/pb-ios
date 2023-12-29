@@ -29,7 +29,7 @@ class MockPersistanceService<T: Codable>: PersistenceProtocol where T: Hashable 
         try service.save(data)
     }
     
-    func load(_ onLoad: ([T]) -> Void) throws {
+    func load(_ onLoad: @escaping ([T]) -> Void) throws {
         if shouldThrowLoading {
             throw MockedError.failedLoad("Error loading data")
         }
