@@ -39,15 +39,15 @@ public class SongsListViewModel: ObservableObject {
     }
     
     private var songProvider: LocalDataProvider<Song>
-    private var pedalProvider: LocalDataProvider<Pedal>
+    private var pedalProvider: LocalDataProvider<Pedal.Model>
     
     public init() {
         let songPersistence = JsonDataService<Song>(fileName: "Song")
         self.songProvider =  LocalDataProvider<Song>(persistence: songPersistence)
         self.allSongs = []
         
-        let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
-        self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
+        let pedalPersistence = JsonDataService<Pedal.Model>(fileName: "Pedal")
+        self.pedalProvider =  LocalDataProvider<Pedal.Model>(persistence: pedalPersistence)
         
         load()
     }
@@ -74,8 +74,8 @@ public class SongsListViewModel: ObservableObject {
         self.allSongs = []
         self.songProvider = songProvider
         
-        let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
-        self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
+        let pedalPersistence = JsonDataService<Pedal.Model>(fileName: "Pedal")
+        self.pedalProvider =  LocalDataProvider<Pedal.Model>(persistence: pedalPersistence)
         
         load()
     }

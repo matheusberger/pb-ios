@@ -37,9 +37,9 @@ struct PedalListView: View {
             viewModel.sheetDidDismiss()
         }) {
             if let pedal = viewModel.editPedal {
-                PedalCreationView(viewModel: PedalCreationViewModel(delegate: self.viewModel, editPedal: pedal))
+                PedalCreationView(viewModel: Pedal.CreationViewModel(delegate: self.viewModel, editPedal: pedal))
             } else {
-                PedalCreationView(viewModel: PedalCreationViewModel(delegate: self.viewModel))
+                PedalCreationView(viewModel: Pedal.CreationViewModel(delegate: self.viewModel))
             }
         }
     }
@@ -114,10 +114,10 @@ struct PedalListView: View {
 }
 
 
-struct HomeView_Previews: PreviewProvider {
+struct PedalListView_Previews: PreviewProvider {
     static var previews: some View {
-        let persistence = JsonDataService<Pedal>(fileName: "PedalPreview")
-        let provider =  LocalDataProvider<Pedal>(persistence: persistence)
+        let persistence = JsonDataService<Pedal.Model>(fileName: "PedalPreview")
+        let provider =  LocalDataProvider<Pedal.Model>(persistence: persistence)
         let viewModel = PedalListViewModel(provider: provider)
         NavigationStack {
             PedalListView(viewModel: viewModel)

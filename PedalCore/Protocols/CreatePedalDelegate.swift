@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CreatePedalDelegate: AnyObject {
-    func finishedEditingPedal(_ pedal: Pedal) throws
+    func finishedEditingPedal(_ pedal: Pedal.Model) throws
     
-    func addNewPedal(_ pedal: Pedal) throws
+    func addNewPedal(_ pedal: Pedal.Model) throws
 }

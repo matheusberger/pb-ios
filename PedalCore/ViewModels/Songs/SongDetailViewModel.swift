@@ -47,7 +47,7 @@ class SongDetailViewModel: ObservableObject {
         return state == .editingKnobs
     }
     
-    var pedalsUsed: [Pedal]  {
+    var pedalsUsed: [Pedal.Model]  {
         return song.pedals
     }
     
@@ -67,7 +67,7 @@ class SongDetailViewModel: ObservableObject {
         isPresentingSheet.toggle()
     }
     
-    public func userDidSelectNewPedals(pedals: [Pedal]) {
+    public func userDidSelectNewPedals(pedals: [Pedal.Model]) {
         song.pedals = pedals
     }
     

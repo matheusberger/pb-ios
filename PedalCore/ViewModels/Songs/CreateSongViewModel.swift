@@ -12,11 +12,11 @@ class CreateSongViewModel: ObservableObject {
     
     weak var delegate: AddSongDelegate?
     
-    var availablePedals: [Pedal] = Pedal.pedalSample()
+    var availablePedals: [Pedal.Model] = Pedal.pedalSample()
     
     @Published public var songName: String = ""
     @Published var bandName: String = ""
-    @Published var pedalList: [Pedal] = []
+    @Published var pedalList: [Pedal.Model] = []
     
     @Published var isPresentingSheet: Bool = false
     
@@ -31,11 +31,11 @@ class CreateSongViewModel: ObservableObject {
         self.pedalList.remove(atOffsets: index)
     }
     
-    public func removePedal(_ pedal: Pedal) {
+    public func removePedal(_ pedal: Pedal.Model) {
         self.pedalList = pedalList.filter({ $0.id != pedal.id})
     }
     
-    public func updateSelectedPedals(_ pedals: [Pedal]) {
+    public func updateSelectedPedals(_ pedals: [Pedal.Model]) {
         self.pedalList = pedals
     }
     

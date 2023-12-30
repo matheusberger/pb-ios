@@ -13,8 +13,8 @@ final class PedalListViewModelsTests: XCTestCase {
     private var viewModel: PedalListViewModel!
     
     override func setUpWithError() throws {
-        let persistance = JsonDataService<Pedal>(fileName: "TestingFile")
-        let provider = LocalDataProvider<Pedal>(persistence: persistance)
+        let persistance = JsonDataService<Pedal.Model>(fileName: "TestingFile")
+        let provider = LocalDataProvider<Pedal.Model>(persistence: persistance)
         viewModel = PedalListViewModel(provider: provider)
         
         continueAfterFailure = false
@@ -23,8 +23,8 @@ final class PedalListViewModelsTests: XCTestCase {
     func testRemovePedalDeletsItFromPedalArray() {
 
         // given
-        let pedal1 = Pedal(name: "name1", brand: "brand1", knobs: [])
-        let pedal2 = Pedal(name: "name2", brand: "brand2", knobs: [])
+        let pedal1 = Pedal.Model(name: "name1", brand: "brand1", knobs: [])
+        let pedal2 = Pedal.Model(name: "name2", brand: "brand2", knobs: [])
         viewModel.allPedals = [pedal1, pedal2]
         
         // when
@@ -37,8 +37,8 @@ final class PedalListViewModelsTests: XCTestCase {
     
     func testSearchWithValidInfoFiltersShowPedals() {
         
-        let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
-        let pedal2 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
+        let pedal1 = Pedal.Model(name: "Space Echo", brand: "Boss", knobs: [])
+        let pedal2 = Pedal.Model(name: "Tube Screamer", brand: "Ibanez", knobs: [])
         viewModel.allPedals = [pedal1, pedal2]
         
         viewModel.searchText = "space"
@@ -49,9 +49,9 @@ final class PedalListViewModelsTests: XCTestCase {
     
     func testSearchWithBrandNameFiltersPedals() {
         
-        let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
-        let pedal2 = Pedal(name: "Overdrive 3", brand: "Boss", knobs: [])
-        let pedal3 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
+        let pedal1 = Pedal.Model(name: "Space Echo", brand: "Boss", knobs: [])
+        let pedal2 = Pedal.Model(name: "Overdrive 3", brand: "Boss", knobs: [])
+        let pedal3 = Pedal.Model(name: "Tube Screamer", brand: "Ibanez", knobs: [])
         viewModel.allPedals = [pedal1, pedal2, pedal3]
         
         viewModel.searchText = "boss"
@@ -64,8 +64,8 @@ final class PedalListViewModelsTests: XCTestCase {
     
     func testSeachWithWrongInfoFiltersEveryPedals() {
         
-        let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
-        let pedal2 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
+        let pedal1 = Pedal.Model(name: "Space Echo", brand: "Boss", knobs: [])
+        let pedal2 = Pedal.Model(name: "Tube Screamer", brand: "Ibanez", knobs: [])
         viewModel.allPedals = [pedal1, pedal2]
         
         viewModel.searchText = "spaceeeeeeeeeeeeee"
@@ -79,7 +79,7 @@ final class PedalListViewModelsTests: XCTestCase {
         let name = "pedalName"
         let brand = "brand"
         let knobs = [Knob(name: "Knob1"), Knob(name: "Knob2")]
-        let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
+        let newPedal = Pedal.Model(name: name, brand: brand, knobs: knobs)
         
         try? viewModel.addNewPedal(newPedal)
         
@@ -91,13 +91,13 @@ final class PedalListViewModelsTests: XCTestCase {
         let name = ""
         let brand = ""
         let knobs: [Knob] = []
-        let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
+        let newPedal = Pedal.Model(name: name, brand: brand, knobs: knobs)
         
         XCTAssertThrowsError(try viewModel.addNewPedal(newPedal))
     }
     
     func testEditPedalPressedPutsPedalToEditPedalReference() {
-        let pedal = Pedal(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
         
         viewModel.editPedalPressed(pedal)
         
@@ -105,7 +105,7 @@ final class PedalListViewModelsTests: XCTestCase {
     }
     
     func testDismissingSheetTurnsEditPedalToNil() {
-        let pedal = Pedal(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
         viewModel.editPedal = pedal
         
         viewModel.sheetDidDismiss()

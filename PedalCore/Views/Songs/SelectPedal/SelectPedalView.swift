@@ -10,20 +10,20 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    @State var availablePedals: [Pedal]
-    @State var pedalList: [Pedal]
+    @State var availablePedals: [Pedal.Model]
+    @State var pedalList: [Pedal.Model]
     @State var searchText: String = ""
-    var onDismiss: ([Pedal]) -> Void
+    var onDismiss: ([Pedal.Model]) -> Void
     
-    init(availablePedals: [Pedal] = Pedal.pedalSample(), alreadyChosenPedals: [Pedal],
-         onDismiss: @escaping ([Pedal]) -> Void) {
+    init(availablePedals: [Pedal.Model] = Pedal.pedalSample(), alreadyChosenPedals: [Pedal.Model],
+         onDismiss: @escaping ([Pedal.Model]) -> Void) {
         self._availablePedals = State(initialValue: availablePedals)
         self._pedalList = State(initialValue: alreadyChosenPedals)
         self.onDismiss = onDismiss
     }
     
     
-    public var filteredPedals: [Pedal] {
+    public var filteredPedals: [Pedal.Model] {
         if searchText.isEmpty {
             return availablePedals
         } else {
@@ -34,7 +34,7 @@ struct SelectPedalView: View {
         }
     }
     
-    private func toggleSelection(for pedal: Pedal) {
+    private func toggleSelection(for pedal: Pedal.Model) {
         if pedalList.contains(pedal) {
             pedalList.removeAll(where: {$0 == pedal})
         } else {
@@ -42,7 +42,7 @@ struct SelectPedalView: View {
         }
     }
     
-    public func shouldBeIndicatedWithLight(for pedal: Pedal) -> Bool {
+    public func shouldBeIndicatedWithLight(for pedal: Pedal.Model) -> Bool {
         return pedalList.contains(pedal)
     }
     

@@ -11,9 +11,9 @@ struct Song: Identifiable, Hashable, Codable {
     var id: UUID = UUID()
     var name: String
     var artist: String
-    var pedals: [Pedal]
+    var pedals: [Pedal.Model]
     
-    init(id: UUID = UUID(), name: String, artist: String, pedals: [Pedal]) {
+    init(id: UUID = UUID(), name: String, artist: String, pedals: [Pedal.Model]) {
         self.id = id
         self.name = name
         self.artist = artist

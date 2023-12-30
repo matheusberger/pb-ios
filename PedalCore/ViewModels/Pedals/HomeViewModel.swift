@@ -13,7 +13,7 @@ class PedalListViewModel: ObservableObject {
         case empty, content
     }
     
-    @Published var allPedals: [Pedal] {
+    @Published var allPedals: [Pedal.Model] {
         didSet {
             do {
                 try provider.update(allPedals)
@@ -33,9 +33,9 @@ class PedalListViewModel: ObservableObject {
     @Published var isShowingSheet: Bool = false
     @Published var searchText: String = ""
     
-    var editPedal: Pedal?
+    var editPedal: Pedal.Model?
     
-    private var provider: LocalDataProvider<Pedal>
+    private var provider: LocalDataProvider<Pedal.Model>
     
     var state: State {
         if allPedals.isEmpty {
@@ -45,7 +45,7 @@ class PedalListViewModel: ObservableObject {
         }
     }
     
-    public var filteredPedals: [Pedal] {
+    public var filteredPedals: [Pedal.Model] {
         if searchText.isEmpty {
             return allPedals
         } else {
@@ -55,7 +55,7 @@ class PedalListViewModel: ObservableObject {
         }
     }
     
-    init(provider: LocalDataProvider<Pedal>) {
+    init(provider: LocalDataProvider<Pedal.Model>) {
         self.provider = provider
         self.allPedals = []
         
@@ -88,13 +88,13 @@ class PedalListViewModel: ObservableObject {
         allPedals = Pedal.pedalSample()
     }
     
-    func removePedalPressed(_ removedPedal: Pedal) {
+    func removePedalPressed(_ removedPedal: Pedal.Model) {
         allPedals = allPedals.filter { pedal in
             pedal != removedPedal
         }
     }
     
-    func editPedalPressed(_ pedal: Pedal) {
+    func editPedalPressed(_ pedal: Pedal.Model) {
         editPedal = pedal
         isShowingSheet = true
     }
@@ -105,7 +105,7 @@ class PedalListViewModel: ObservableObject {
 }
 
 extension PedalListViewModel: CreatePedalDelegate {
-    func addNewPedal(_ pedal: Pedal) throws {
+    func addNewPedal(_ pedal: Pedal.Model) throws {
         
         try validadePedalInfo(pedal)
         
@@ -115,7 +115,7 @@ extension PedalListViewModel: CreatePedalDelegate {
         isShowingSheet = false
     }
     
-    func finishedEditingPedal(_ pedal: Pedal) throws {
+    func finishedEditingPedal(_ pedal: Pedal.Model) throws {
        
         try validadePedalInfo(pedal)
         
@@ -125,7 +125,7 @@ extension PedalListViewModel: CreatePedalDelegate {
         isShowingSheet = false
     }
     
-    private func validadePedalInfo(_ pedal: Pedal) throws {
+    private func validadePedalInfo(_ pedal: Pedal.Model) throws {
         if pedal.name.isEmpty {
             throw AddPedalError.missingName
         }
@@ -145,7 +145,7 @@ extension PedalListViewModel: CreatePedalDelegate {
         }
     }
     
-    private func updatePedal(_ updatedPedal: Pedal) {
+    private func updatePedal(_ updatedPedal: Pedal.Model) {
         allPedals = allPedals.map { pedal in
             pedal == updatedPedal ? updatedPedal : pedal
         }

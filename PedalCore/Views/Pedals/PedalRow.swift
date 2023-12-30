@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PedalRow: View {
-    var pedal: Pedal
+    var pedal: Pedal.Model
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -33,7 +33,7 @@ struct PedalRow: View {
 
 struct PedalRow_Previews: PreviewProvider {
     static var previews: some View {
-        PedalRow(pedal: Pedal(name: "Big Muff Pi",
+        PedalRow(pedal: Pedal.Model(name: "Big Muff Pi",
                               brand: "Eletro Hamonix",
                               knobs: [    Knob(name: "Volume", level: 0.25),
                                           Knob(name: "Tone", level: 0.5),
