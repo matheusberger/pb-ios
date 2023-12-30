@@ -31,7 +31,7 @@ public struct SongsListView: View {
             .navigationTitle("My Songs")
             .toolbar {
                 NavigationLink {
-                    PedalListView(viewModel: viewModel.pedalViewModel)
+                    Pedal.List.View(viewModel: viewModel.pedalViewModel)
                 } label: {
                     Image(systemName: "lanyardcard.fill")
                 }

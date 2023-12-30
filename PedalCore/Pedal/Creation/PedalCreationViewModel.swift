@@ -7,14 +7,14 @@
 
 import Foundation
 
-extension Pedal {
-    class CreationViewModel: ObservableObject {
+extension Pedal.Creation {
+    class ViewModel: ObservableObject {
         
         enum Style {
             case editPedal, createPedal
         }
         
-        var editePedal: Model?
+        var editePedal: Pedal.Model?
         
         @Published var pedalName: String
         @Published var brandName: String
@@ -23,7 +23,7 @@ extension Pedal {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        weak var delegate: CreatePedalDelegate?
+        weak var delegate: PedalCreationDelegate?
         
         public var style: Style {
             if editePedal != nil {
@@ -33,7 +33,7 @@ extension Pedal {
             }
         }
         
-        init(delegate: CreatePedalDelegate? = nil, editPedal: Model? = nil) {
+        init(delegate: PedalCreationDelegate? = nil, editPedal: Pedal.Model? = nil) {
             self.delegate = delegate
             
             if let pedal = editPedal {
@@ -71,7 +71,7 @@ extension Pedal {
         
         func addNewPedal() {
             do {
-                let pedal = Model(name: self.pedalName, brand: self.brandName, knobs: self.knobs)
+                let pedal = Pedal.Model(name: self.pedalName, brand: self.brandName, knobs: self.knobs)
                 try delegate?.addNewPedal(pedal)
                 
             } catch {
@@ -83,7 +83,7 @@ extension Pedal {
             do {
                 guard let oldPedal = editePedal else { return }
             
-                let pedal = Model(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
+                let pedal = Pedal.Model(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
                 try delegate?.finishedEditingPedal(pedal)
                 
             } catch {

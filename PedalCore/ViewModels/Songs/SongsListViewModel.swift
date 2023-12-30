@@ -34,8 +34,8 @@ public class SongsListViewModel: ObservableObject {
     
     var alert: Alert?
     
-    var pedalViewModel: PedalListViewModel {
-        return PedalListViewModel(provider: pedalProvider)
+    var pedalViewModel: Pedal.List.ViewModel {
+        return Pedal.List.ViewModel(provider: pedalProvider)
     }
     
     private var songProvider: LocalDataProvider<Song>

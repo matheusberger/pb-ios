@@ -1,5 +1,5 @@
 //
-//  CreatePedalDelegateMock.swift
+//  PedalCreationDelegateMock.swift
 //  PedalCoreTests
 //
 //  Created by Lucas Migge on 14/11/23.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import PedalCore
 
-class CreatePedalDelegateMock: CreatePedalDelegate {
+class PedalCreationDelegateMock: PedalCreationDelegate {
     var didCallFinishedEditingPedal: Bool = false
     var finishedEditingPedalShouldThrowError: AddPedalError? = nil
     
