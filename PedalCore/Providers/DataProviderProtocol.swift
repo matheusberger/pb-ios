@@ -11,5 +11,5 @@ protocol DataProviderProtocol<T> {
     associatedtype T
     
     func update(_: [T]) throws
-    func load(_: (_: [T]) -> Void) throws
+    func load(_: @escaping (_: [T]) -> Void) throws
 }

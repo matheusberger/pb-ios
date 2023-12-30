@@ -24,8 +24,8 @@ class LocalDataProvider<T: Hashable>: DataProviderProtocol {
         try persistence.save(data)
     }
     
-    func load(_ onLoad: ([T]) -> Void) throws {
-        try persistence.load { loadedData in
+    func load(_ onLoad: @escaping ([T]) -> Void) throws {
+        try persistenceService.load { loadedData in
             self.data = loadedData
             onLoad(loadedData)
         }

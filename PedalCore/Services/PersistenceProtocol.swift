@@ -11,5 +11,5 @@ public protocol PersistenceProtocol<T> {
     associatedtype T where T: Hashable
     
     func save(_: [T]) throws
-    func load(_: (_: [T]) -> Void) throws
+    func load(_: @escaping (_: [T]) -> Void) throws
 }

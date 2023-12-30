@@ -22,28 +22,32 @@ public final class JsonDataService<T: Codable>: PersistenceProtocol where T: Has
     }
     
     public func save(_ data: [T]) throws {
-        do {
-            // convert data to json
-            let jsonData = try JSONEncoder().encode(data)
-            
-            // save json to fileURL
-            guard let fileUrl = self.fileUrl else {
-                throw ServiceError.noFileUrl("No valid file URL to write to.")
+        Task {
+            do {
+                // convert data to json
+                let jsonData = try JSONEncoder().encode(data)
+                
+                // save json to fileURL
+                guard let fileUrl = self.fileUrl else {
+                    throw ServiceError.noFileUrl("No valid file URL to write to.")
+                }
+                try jsonData.write(to: fileUrl)
             }
-            try jsonData.write(to: fileUrl)
         }
     }
     
-    public func load(_ onLoad: ([T]) -> Void) throws {
-        // get fileURL
-        guard let fileUrl = self.fileUrl else {
-            throw ServiceError.noFileUrl("No valid file URL to read from.")
+    public func load(_ onLoad: @escaping ([T]) -> Void) throws {
+        Task {
+            // get fileURL
+            guard let fileUrl = self.fileUrl else {
+                throw ServiceError.noFileUrl("No valid file URL to read from.")
+            }
+            
+            // load from fileUrl
+            let jsonData = try Data(contentsOf: fileUrl)
+            let decodedData = try JSONDecoder().decode([T].self, from: jsonData)
+            onLoad(decodedData)
         }
-        
-        // load from fileUrl
-        let jsonData = try Data(contentsOf: fileUrl)
-        let decodedData = try JSONDecoder().decode([T].self, from: jsonData)
-        onLoad(decodedData)
     }
     
     enum ServiceError: Error {
