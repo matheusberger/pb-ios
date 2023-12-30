@@ -1,5 +1,6 @@
 ## Changes
 _Summary of all changes_
+
 ### Screenshots
 _If appropriate add screenshots here_
 
