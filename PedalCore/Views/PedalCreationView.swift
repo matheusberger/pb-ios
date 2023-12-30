@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct CreatePedalView: View {
+struct PedalCreationView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: CreatePedalViewModel
+    @ObservedObject var viewModel: PedalCreationViewModel
     
-    init(viewModel: CreatePedalViewModel) {
+    init(viewModel: PedalCreationViewModel) {
         self.viewModel = viewModel
     }
     
@@ -89,8 +89,8 @@ struct CreatePedalView: View {
 
 
 
-struct CreatePedalView_Previews: PreviewProvider {
+struct PedalCreationView_Previews: PreviewProvider {
     static var previews: some View {
-        CreatePedalView(viewModel: CreatePedalViewModel(editPedal: Pedal.emptyPedal()))
+        PedalCreationView(viewModel: PedalCreationViewModel(editPedal: Pedal.emptyPedal()))
     }
 }

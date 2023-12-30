@@ -1,5 +1,5 @@
 //
-//  CreatePedalViewModel.swift
+//  PedalCreationViewModel.swift
 //  PedalCore
 //
 //  Created by Lucas Migge on 18/10/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CreatePedalViewModel: ObservableObject {
+class PedalCreationViewModel: ObservableObject {
     
     enum Style {
         case editPedal, createPedal

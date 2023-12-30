@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  PedalListViewModel.swift
 //  PedalCore
 //
 //  Created by Migge on 22/08/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomeViewModel: ObservableObject {
+class PedalListViewModel: ObservableObject {
 
     enum State {
         case empty, content
@@ -65,7 +65,7 @@ class HomeViewModel: ObservableObject {
     private func load() {
         do {
             try provider.load { pedals in
-                allPedals = pedals
+                self.allPedals = pedals
             }
         } catch {
             print(error)
@@ -104,7 +104,7 @@ class HomeViewModel: ObservableObject {
     }
 }
 
-extension HomeViewModel: CreatePedalDelegate {
+extension PedalListViewModel: CreatePedalDelegate {
     func addNewPedal(_ pedal: Pedal) throws {
         
         try validadePedalInfo(pedal)

@@ -34,8 +34,8 @@ public class SongsListViewModel: ObservableObject {
     
     var alert: Alert?
     
-    var pedalViewModel: HomeViewModel {
-        return HomeViewModel(provider: pedalProvider)
+    var pedalViewModel: PedalListViewModel {
+        return PedalListViewModel(provider: pedalProvider)
     }
     
     private var songProvider: LocalDataProvider<Song>
@@ -82,7 +82,7 @@ public class SongsListViewModel: ObservableObject {
     
     private func load() {
         do {
-            try provider.load { songs in
+            try songProvider.load { songs in
                 self.allSongs = songs
             }
         } catch {

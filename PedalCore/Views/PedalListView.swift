@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  PedalListView.swift
 //  PedalCore
 //
 //  Created by Migge on 22/08/23.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct PedalListView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: HomeViewModel
+    @StateObject var viewModel: PedalListViewModel
     
-    init(viewModel: HomeViewModel) {
+    init(viewModel: PedalListViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel)
         // Large Navigation Title
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
@@ -37,9 +37,9 @@ struct HomeView: View {
             viewModel.sheetDidDismiss()
         }) {
             if let pedal = viewModel.editPedal {
-                CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel, editPedal: pedal))
+                PedalCreationView(viewModel: PedalCreationViewModel(delegate: self.viewModel, editPedal: pedal))
             } else {
-                CreatePedalView(viewModel: CreatePedalViewModel(delegate: self.viewModel))
+                PedalCreationView(viewModel: PedalCreationViewModel(delegate: self.viewModel))
             }
         }
     }
@@ -118,9 +118,9 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         let persistence = JsonDataService<Pedal>(fileName: "PedalPreview")
         let provider =  LocalDataProvider<Pedal>(persistence: persistence)
-        let viewModel = HomeViewModel(provider: provider)
+        let viewModel = PedalListViewModel(provider: provider)
         NavigationStack {
-            HomeView(viewModel: viewModel)
+            PedalListView(viewModel: viewModel)
         }
     }
 }
