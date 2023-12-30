@@ -123,8 +123,8 @@ struct SongDetailView: View {
                 Spacer()
                 
                 Button {
-                        withAnimation {
-                            viewModel.editKnobsPressed()
+                    withAnimation {
+                        viewModel.editKnobsPressed()
                         
                     }
                 } label: {
@@ -199,11 +199,8 @@ struct SongDetailView: View {
     
     @ViewBuilder
     private var sheetSelectPedalsView: some View {
-        SelectPedalView(alreadyChosenPedals: viewModel.pedalsUsed) { selectedPedals in
-            withAnimation {
-                viewModel.userDidSelectNewPedals(pedals: selectedPedals)
-            }
-        }
+        SelectPedalView(viewModel: SelectPedalViewModel(selectedPedals: viewModel.pedalsUsed,
+                                                        delegate: viewModel))
     }
 }
 

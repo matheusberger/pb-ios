@@ -65,7 +65,7 @@ class HomeViewModel: ObservableObject {
     private func load() {
         do {
             try provider.load { pedals in
-                allPedals = pedals
+                self.allPedals = pedals
             }
         } catch {
             print(error)

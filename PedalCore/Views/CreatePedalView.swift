@@ -77,7 +77,7 @@ struct CreatePedalView: View {
                     
                 }
             }
-            .navigationTitle("Add new song")
+            .navigationTitle("Add new Pedal")
             .navigationBarTitleDisplayMode(.inline)
             .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
             } message: {

@@ -12,6 +12,7 @@ class CreateSongViewModel: ObservableObject {
     
     weak var delegate: AddSongDelegate?
     
+    #warning("Delete this on the future")
     var availablePedals: [Pedal] = Pedal.pedalSample()
     
     @Published public var songName: String = ""
@@ -35,13 +36,14 @@ class CreateSongViewModel: ObservableObject {
         self.pedalList = pedalList.filter({ $0.id != pedal.id})
     }
     
+    #warning("Delete this on the future")
     public func updateSelectedPedals(_ pedals: [Pedal]) {
         self.pedalList = pedals
     }
     
     public func attachPedalPressed() {
         self.isPresentingSheet = true
-
+        
     }
     
     public func addSongPressed() {
@@ -57,5 +59,16 @@ class CreateSongViewModel: ObservableObject {
             }
         }
     }
+    
+}
 
+
+extension CreateSongViewModel: SelectPedalDelegate {
+    func didFinishSelectingPedals(_ pedals: [Pedal]) {
+        withAnimation {
+            self.pedalList = pedals
+        }
+
+    }
+    
 }

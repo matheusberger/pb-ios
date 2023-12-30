@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class SongDetailViewModel: ObservableObject {
     
@@ -67,6 +68,7 @@ class SongDetailViewModel: ObservableObject {
         isPresentingSheet.toggle()
     }
     
+    #warning("Delete this on the future")
     public func userDidSelectNewPedals(pedals: [Pedal]) {
         song.pedals = pedals
     }
@@ -90,4 +92,13 @@ class SongDetailViewModel: ObservableObject {
         }
     }
     
+}
+
+extension SongDetailViewModel: SelectPedalDelegate {
+    func didFinishSelectingPedals(_ pedals: [Pedal]) {
+        withAnimation {
+            song.pedals = pedals
+        }
+    }
+
 }

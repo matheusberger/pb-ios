@@ -82,7 +82,7 @@ public class SongsListViewModel: ObservableObject {
     
     private func load() {
         do {
-            try provider.load { songs in
+            try songProvider.load { songs in
                 self.allSongs = songs
             }
         } catch {

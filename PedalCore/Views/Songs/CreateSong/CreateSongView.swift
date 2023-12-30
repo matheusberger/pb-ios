@@ -74,9 +74,8 @@ struct CreateSongView: View {
         }
         .sheet(isPresented: $viewModel.isPresentingSheet) {
             NavigationView {
-                SelectPedalView(alreadyChosenPedals: viewModel.pedalList) { selectedPedals in
-                    viewModel.updateSelectedPedals(selectedPedals)
-                }
+                SelectPedalView(viewModel: SelectPedalViewModel(selectedPedals: viewModel.pedalList,
+                                                                delegate: viewModel))
             }
         }
         .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {

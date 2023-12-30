@@ -7,21 +7,29 @@
 
 import SwiftUI
 
-struct SelectPedalView: View {
-    @Environment(\.dismiss) var dismiss
+protocol SelectPedalDelegate: AnyObject {
+    func didFinishSelectingPedals(_ pedals: [Pedal])
     
-    @State var availablePedals: [Pedal]
-    @State var pedalList: [Pedal]
-    @State var searchText: String = ""
-    var onDismiss: ([Pedal]) -> Void
+}
+
+class SelectPedalViewModel: ObservableObject {
+    @Published var availablePedals: [Pedal] = []
+    @Published var selectedPedals: [Pedal] = []
+    @Published var searchText: String = ""
     
-    init(availablePedals: [Pedal] = Pedal.pedalSample(), alreadyChosenPedals: [Pedal],
-         onDismiss: @escaping ([Pedal]) -> Void) {
-        self._availablePedals = State(initialValue: availablePedals)
-        self._pedalList = State(initialValue: alreadyChosenPedals)
-        self.onDismiss = onDismiss
+    weak var delegate: SelectPedalDelegate?
+    var pedalProvider: LocalDataProvider<Pedal>
+    
+    init(selectedPedals: [Pedal], delegate: SelectPedalDelegate?) {
+        let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
+        self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
+        try? self.pedalProvider.load { pedals in
+            self.availablePedals = pedals
+        }
+        
+        self.selectedPedals = selectedPedals
+        self.delegate = delegate
     }
-    
     
     public var filteredPedals: [Pedal] {
         if searchText.isEmpty {
@@ -34,38 +42,55 @@ struct SelectPedalView: View {
         }
     }
     
-    private func toggleSelection(for pedal: Pedal) {
-        if pedalList.contains(pedal) {
-            pedalList.removeAll(where: {$0 == pedal})
+    public func toggleSelection(for pedal: Pedal) {
+        if selectedPedals.contains(pedal) {
+            selectedPedals.removeAll(where: {$0 == pedal})
         } else {
-            pedalList.append(pedal)
+            selectedPedals.append(pedal)
         }
     }
     
     public func shouldBeIndicatedWithLight(for pedal: Pedal) -> Bool {
-        return pedalList.contains(pedal)
+        return selectedPedals.contains(pedal)
     }
     
-    var body: some View {
-            Group {
-                if availablePedals.isEmpty {
-                    emptyView
-                } else {
-                    pedalContentList
-                }
-            }
-            .onDisappear {
-                onDismiss(pedalList)
-            }
-            .navigationTitle("Select pedals")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button("Done") {
+    public func viewWillDisappear() {
+        delegate?.didFinishSelectingPedals(self.selectedPedals)
+    }
+    
+}
 
-                        dismiss()
-                    }
+struct SelectPedalView: View {
+    @Environment(\.dismiss) var dismiss
+    
+    @ObservedObject var viewModel: SelectPedalViewModel
+    
+    init(viewModel: SelectPedalViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    
+    var body: some View {
+        Group {
+            if viewModel.availablePedals.isEmpty {
+                emptyView
+            } else {
+                pedalContentList
+            }
+        }
+        .onDisappear {
+            viewModel.viewWillDisappear()
+        }
+        .navigationTitle("Select pedals")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Done") {
+                    viewModel.viewWillDisappear()
+                    dismiss()
                 }
             }
+        }
     }
     
     @ViewBuilder
@@ -89,20 +114,20 @@ struct SelectPedalView: View {
         Form {
             Section {
                 List {
-                    ForEach(filteredPedals, id: \.signature) { pedal in
+                    ForEach(viewModel.filteredPedals, id: \.signature) { pedal in
                         Button {
                             withAnimation {
-                               toggleSelection(for: pedal)
+                                viewModel.toggleSelection(for: pedal)
                             }
                             
                         } label: {
                             SelectPedalRow(pedal: pedal,
-                                           isOn: shouldBeIndicatedWithLight(for: pedal))
+                                           isOn: viewModel.shouldBeIndicatedWithLight(for: pedal))
                             .padding(.vertical, 4)
                         }
                     }
                 }
-                .searchable(text: $searchText)
+                .searchable(text: $viewModel.searchText)
                 .buttonStyle(.plain)
                 
             }
@@ -118,8 +143,6 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(alreadyChosenPedals: []) { _ in
-            
-        }
+        SelectPedalView(viewModel: SelectPedalViewModel(selectedPedals: [], delegate: nil))
     }
 }
