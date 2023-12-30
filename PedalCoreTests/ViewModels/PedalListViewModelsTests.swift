@@ -1,5 +1,5 @@
 //
-//  HomeViewModelsTests.swift
+//  PedalListViewModelsTests.swift
 //  PedalCoreTests
 //
 //  Created by Lucas Migge on 14/11/23.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import PedalCore
 
-final class HomeViewModelsTests: XCTestCase {
+final class PedalListViewModelsTests: XCTestCase {
     
     private var viewModel: PedalListViewModel!
     
