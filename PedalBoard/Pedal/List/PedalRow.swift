@@ -37,9 +37,9 @@ struct PedalRow_Previews: PreviewProvider {
     static var previews: some SwiftUI.View {
         Pedal.List.Row(pedal: Pedal.Model(name: "Big Muff Pi",
                               brand: "Eletro Hamonix",
-                              knobs: [    Knob(name: "Volume", level: 0.25),
-                                          Knob(name: "Tone", level: 0.5),
-                                          Knob(name: "Gain", level: 0.9)
+                                          knobs: [    Knob.Model(name: "Volume", level: 0.25),
+                                                      Knob.Model(name: "Tone", level: 0.5),
+                                                      Knob.Model(name: "Gain", level: 0.9)
                                      ]
                              )
         )

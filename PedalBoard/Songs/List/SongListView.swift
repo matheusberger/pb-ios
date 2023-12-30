@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PedalCore
 
 extension Song.List {
     public struct View: SwiftUI.View {

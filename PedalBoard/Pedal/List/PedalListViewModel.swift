@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PedalCore
 
 extension Pedal.List {
     class ViewModel: ObservableObject {

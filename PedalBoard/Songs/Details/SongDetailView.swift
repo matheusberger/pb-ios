@@ -179,7 +179,7 @@ extension Song.Details {
                                 .foregroundStyle(.secondary)
                             
                             if !viewModel.isInEditingSongMode {
-                                KnobsGridView(knobs: $pedal.knobs, knobStyle: viewModel.isInEditingKnobsMode ? .editing : .reference)
+                                Knob.GridView(knobs: $pedal.knobs, knobStyle: viewModel.isInEditingKnobsMode ? .editing : .reference)
                                     .allowsHitTesting(viewModel.isInEditingKnobsMode)
                             }
                         }

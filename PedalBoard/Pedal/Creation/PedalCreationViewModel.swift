@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PedalCore
 
 extension Pedal.Creation {
     class ViewModel: ObservableObject {
@@ -18,7 +19,7 @@ extension Pedal.Creation {
         
         @Published var pedalName: String
         @Published var brandName: String
-        @Published var knobs: [Knob] = []
+        @Published var knobs: [Knob.Model] = []
         
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
@@ -49,7 +50,7 @@ extension Pedal.Creation {
         }
         
         public func addKnobPressed() {
-            knobs.append(Knob(name: ""))
+            knobs.append(Knob.Model(name: ""))
         }
         
         @MainActor
