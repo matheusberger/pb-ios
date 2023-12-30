@@ -95,6 +95,7 @@ public struct SongsListView: View {
                 
             }.buttonStyle(.borderedProminent)
         }
+        .padding(.bottom)
     }
 }
 
