@@ -109,12 +109,6 @@ struct HomeView: View {
                     .frame(width: 250,height: 30)
                 
             }.buttonStyle(.borderedProminent)
-            
-            Button {
-                viewModel.populatePedals()
-            } label: {
-                Image(systemName: "eyes")
-            }
         }
     }
 }
