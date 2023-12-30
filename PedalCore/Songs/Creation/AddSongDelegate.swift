@@ -8,8 +8,8 @@
 import Foundation
 
 protocol AddSongDelegate: AnyObject {
-    func addSong(_ song: Song) throws
+    func addSong(_ song: Song.Model) throws
     
-    func updateSong(for updatedSong: Song) throws
+    func updateSong(for updatedSong: Song.Model) throws
     
 }
