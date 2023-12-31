@@ -1,21 +1,21 @@
 //
-//  CreateSongViewModelTests.swift
+//  SongCreationViewModelTests.swift
 //  PedalCoreTests
 //
 //  Created by Lucas Migge on 16/11/23.
 //
 
 import XCTest
-@testable import PedalCore
+@testable import PedalBoard
 
-final class CreateSongViewModelTests: XCTestCase {
+final class SongCreationViewModelTests: XCTestCase {
     
-    var viewModel: CreateSongViewModel!
+    var viewModel: Song.Creation.ViewModel!
     var delegate: AddsongDelegateMock!
     
     override func setUpWithError() throws {
         delegate = AddsongDelegateMock()
-        viewModel = CreateSongViewModel(delegate: delegate)
+        viewModel = Song.Creation.ViewModel(delegate: delegate)
         
     }
     

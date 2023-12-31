@@ -6,14 +6,14 @@
 //
 
 import Foundation
-@testable import PedalCore
+@testable import PedalBoard
 
 class AddsongDelegateMock: AddSongDelegate {
     
     var didCallAddSong: Bool = false
     var shouldThrowAddSongError: AddSongError?
     
-    func addSong(_ song: PedalCore.Song) throws {
+    func addSong(_ song: Song.Model) throws {
         didCallAddSong = true
         
         if let error = shouldThrowAddSongError {
@@ -21,7 +21,7 @@ class AddsongDelegateMock: AddSongDelegate {
         }
     }
     
-    func updateSong(for updatedSong: PedalCore.Song) throws {
+    func updateSong(for updatedSong: Song.Model) throws {
         didCallAddSong = true
         
         if let error = shouldThrowAddSongError {

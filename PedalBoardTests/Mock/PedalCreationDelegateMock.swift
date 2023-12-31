@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@testable import PedalCore
+@testable import PedalBoard
 
 class PedalCreationDelegateMock: PedalCreationDelegate {
     var didCallFinishedEditingPedal: Bool = false

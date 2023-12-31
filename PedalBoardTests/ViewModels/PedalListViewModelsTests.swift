@@ -6,7 +6,8 @@
 //
 
 import XCTest
-@testable import PedalCore
+import PedalCore
+@testable import PedalBoard
 
 final class PedalListViewModelsTests: XCTestCase {
     
@@ -78,7 +79,7 @@ final class PedalListViewModelsTests: XCTestCase {
         
         let name = "pedalName"
         let brand = "brand"
-        let knobs = [Knob(name: "Knob1"), Knob(name: "Knob2")]
+        let knobs = [Knob.Model(name: "Knob1"), Knob.Model(name: "Knob2")]
         let newPedal = Pedal.Model(name: name, brand: brand, knobs: knobs)
         
         try? viewModel.addNewPedal(newPedal)
@@ -90,14 +91,14 @@ final class PedalListViewModelsTests: XCTestCase {
         
         let name = ""
         let brand = ""
-        let knobs: [Knob] = []
+        let knobs: [Knob.Model] = []
         let newPedal = Pedal.Model(name: name, brand: brand, knobs: knobs)
         
         XCTAssertThrowsError(try viewModel.addNewPedal(newPedal))
     }
     
     func testEditPedalPressedPutsPedalToEditPedalReference() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
         
         viewModel.editPedalPressed(pedal)
         
@@ -105,7 +106,7 @@ final class PedalListViewModelsTests: XCTestCase {
     }
     
     func testDismissingSheetTurnsEditPedalToNil() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
         viewModel.editPedal = pedal
         
         viewModel.sheetDidDismiss()

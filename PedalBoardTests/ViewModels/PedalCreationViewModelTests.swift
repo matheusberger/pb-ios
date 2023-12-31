@@ -1,14 +1,14 @@
 //
-//  CreatePedalViewModelTestes.swift
+//  PedalCreationViewModelTests.swift
 //  PedalCoreTests
 //
 //  Created by Lucas Migge on 14/11/23.
 //
 
 import XCTest
-@testable import PedalCore
+@testable import PedalBoard
 
-final class CreatePedalViewModelTests: XCTestCase {
+final class PedalCreationViewModelTests: XCTestCase {
     
     private var viewModel: Pedal.Creation.ViewModel!
     private var delegate: PedalCreationDelegateMock!
@@ -28,7 +28,7 @@ final class CreatePedalViewModelTests: XCTestCase {
     }
     
     func testWhenEditingPedalViewModelHasRelatedStyle() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
         viewModel = Pedal.Creation.ViewModel(editPedal: pedal)
         
         XCTAssertTrue(viewModel.style == .editPedal)
@@ -36,7 +36,7 @@ final class CreatePedalViewModelTests: XCTestCase {
     }
     
     func testWhenEditingPedalFieldsHasContent() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
         viewModel = Pedal.Creation.ViewModel(editPedal: pedal)
         
         
@@ -58,7 +58,10 @@ final class CreatePedalViewModelTests: XCTestCase {
 
     @MainActor
     func testRemoveKnobRemovesElementFromArray() {
-        let knobs: [Knob] = [Knob(name: "Drive"), Knob(name: "Tone"), Knob(name: "Level")]
+        let knobs: [Knob.Model] = [
+            Knob.Model(name: "Drive"),
+            Knob.Model(name: "Tone"),
+            Knob.Model(name: "Level")]
         viewModel.knobs = knobs
         
         viewModel.removeKnob(at: IndexSet(integer: 0))
@@ -66,7 +69,6 @@ final class CreatePedalViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.knobs.count == 2)
         
         XCTAssertFalse(viewModel.knobs.contains(where: {$0.name == knobs.first!.name}))
-        
     }
     
     
@@ -79,7 +81,7 @@ final class CreatePedalViewModelTests: XCTestCase {
     
     
     func testWhenOnEditPedalStyleDoneButtonCallsEdidPedalDone() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
         viewModel = Pedal.Creation.ViewModel(delegate: self.delegate, editPedal: pedal)
         
         viewModel.doneButtonPressed()
@@ -97,7 +99,7 @@ final class CreatePedalViewModelTests: XCTestCase {
     }
     
     func testEditPedalPresentsAlertWhenErrorOccurs() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
         viewModel = Pedal.Creation.ViewModel(delegate: self.delegate, editPedal: pedal)
         viewModel.isPresentingAlert = false
         delegate.finishedEditingPedalShouldThrowError = .missingBrand

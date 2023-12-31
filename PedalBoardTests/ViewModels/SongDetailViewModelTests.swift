@@ -6,19 +6,19 @@
 //
 
 import XCTest
-@testable import PedalCore
+@testable import PedalBoard
 
 final class SongDetailViewModelTests: XCTestCase {
     
-    var viewModel: SongDetailViewModel!
+    var viewModel: Song.Details.ViewModel!
     var delegate: AddsongDelegateMock!
     
     override func setUpWithError() throws {
         
-        let song: Song = Song(name: "Example", artist: "Example", pedals: [Pedal.Model(name: "pedal1", brand: "brand1", knobs: [Knob(name: "Leve")])])
+        let song = Song.Model(name: "Example", artist: "Example", pedals: [Pedal.Model(name: "pedal1", brand: "brand1", knobs: [Knob.Model(name: "Leve")])])
         
         delegate = AddsongDelegateMock()
-        viewModel = SongDetailViewModel(song: song, delegate: delegate)
+        viewModel = Song.Details.ViewModel(song: song, delegate: delegate)
         
     }
     
