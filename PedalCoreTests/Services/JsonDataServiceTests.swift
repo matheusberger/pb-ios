@@ -6,15 +6,16 @@
 //
 
 import XCTest
+@testable import PedalBoard
 @testable import PedalCore
 
 final class JsonDataServiceTests: XCTestCase {
     
     private let fileName = "TestFile"
-    private var service: JsonDataService<Song>?
+    private var service: JsonDataService<Song.Model>?
 
     override func setUpWithError() throws {
-        service = JsonDataService<Song>(fileName: fileName)
+        service = JsonDataService<Song.Model>(fileName: fileName)
     }
     
     func testSaveSongsToTestFile() throws {
