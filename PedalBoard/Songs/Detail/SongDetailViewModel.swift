@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PedalCore
 
 extension Song {
     class DetailViewModel: ObservableObject {
@@ -26,8 +27,11 @@ extension Song {
         
         weak var delegate: EditDelegate?
         
-        init(song: Song.Model, delegate: EditDelegate? = nil) {
+        private let pedalProvider: any DataProviderProtocol<Pedal.Model>
+        
+        init(song: Song.Model, pedalProvider: any DataProviderProtocol<Pedal.Model>, delegate: EditDelegate? = nil) {
             self.song = song
+            self.pedalProvider = pedalProvider
             self.delegate = delegate
         }
         
@@ -53,7 +57,7 @@ extension Song {
         }
         
         var selectPedalView: SelectPedalView {
-            SelectPedalView(allPedals: [], selectedPedals: pedalsUsed) { [self] selectedPedals in
+            SelectPedalView(allPedals: pedalProvider.data, selectedPedals: pedalsUsed) { [self] selectedPedals in
                 userDidSelectNewPedals(pedals: selectedPedals)
             }
         }

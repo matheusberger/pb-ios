@@ -47,25 +47,24 @@ struct SelectPedalView: View {
     }
     
     var body: some View {
-            Group {
-                if allPedals.isEmpty {
-                    emptyView
-                } else {
-                    pedalContentList
+        Group {
+            if allPedals.isEmpty {
+                emptyView
+            } else {
+                pedalContentList
+            }
+        }
+        .onDisappear {
+            onDismiss(selectedPedals)
+        }
+        .navigationTitle("Select pedals")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Done") {
+                    dismiss()
                 }
             }
-            .onDisappear {
-                onDismiss(selectedPedals)
-            }
-            .navigationTitle("Select pedals")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button("Done") {
-
-                        dismiss()
-                    }
-                }
-            }
+        }
     }
     
     @ViewBuilder
@@ -92,7 +91,7 @@ struct SelectPedalView: View {
                     ForEach(filteredPedals, id: \.signature) { pedal in
                         Button {
                             withAnimation {
-                               toggleSelection(for: pedal)
+                                toggleSelection(for: pedal)
                             }
                             
                         } label: {
@@ -106,11 +105,11 @@ struct SelectPedalView: View {
                 .buttonStyle(.plain)
                 
             }
-        header: {
-            Text("Your PedalBoard")
-        } footer: {
-            Text("You can add new pedals on pedal List view")
-        }
+            header: {
+                Text("Your PedalBoard")
+            } footer: {
+                Text("You can add new pedals on pedal List view")
+            }
         }
     }
 }

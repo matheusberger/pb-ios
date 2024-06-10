@@ -32,13 +32,13 @@ extension Song {
             .navigationTitle("My Songs")
             .toolbar {
                 NavigationLink {
-                    Pedal.ListView(viewModel: viewModel.pedalViewModel)
+                    viewModel.pedalView
                 } label: {
                     Image(systemName: "lanyardcard.fill")
                 }
             }
             .sheet(isPresented: $viewModel.isShowingSheet) {
-                Song.EditView(viewModel: Song.EditViewModel(delegate: self.viewModel))
+                viewModel.editView
             }
         }
         
@@ -59,7 +59,7 @@ extension Song {
         private var listView: some View {
             List(viewModel.songs, id:\.signature) { song in
                 NavigationLink {
-                    Song.DetailView(viewModel: Song.DetailViewModel(song: song, delegate: self.viewModel))
+                    viewModel.detailView(song)
                 } label: {
                     ListRow(song: song)
                         .contextMenu(menuItems: {

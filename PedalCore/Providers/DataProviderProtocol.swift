@@ -7,8 +7,10 @@
 
 import Foundation
 
-protocol DataProviderProtocol<T> {
+public protocol DataProviderProtocol<T> {
     associatedtype T
+    
+    var data: [T] { get }
     
     func update(_: [T]) throws
     func load(_: @escaping (_: [T]) -> Void) throws

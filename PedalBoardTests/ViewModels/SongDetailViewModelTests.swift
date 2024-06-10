@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import PedalCore
 @testable import PedalBoard
 
 final class SongDetailViewModelTests: XCTestCase {
@@ -18,7 +19,8 @@ final class SongDetailViewModelTests: XCTestCase {
         let song = Song.Model(name: "Example", artist: "Example", pedals: [Pedal.Model(name: "pedal1", brand: "brand1", knobs: [Pedal.Knob(name: "Leve")])])
         
         delegate = MockSongEditDelegate()
-        viewModel = Song.DetailViewModel(song: song, delegate: delegate)
+        let provider = LocalDataProvider<Pedal.Model>(persistence: JsonDataService(fileName: "Preview"))
+        viewModel = Song.DetailViewModel(song: song, pedalProvider: provider, delegate: delegate)
         
     }
     

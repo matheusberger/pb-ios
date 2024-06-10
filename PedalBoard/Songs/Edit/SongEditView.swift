@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PedalCore
 
 extension Song {
     struct EditView: View {
@@ -72,8 +73,10 @@ extension Song {
             .navigationTitle("Add new song")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $viewModel.isPresentingSheet) {
-                SelectPedalView(allPedals: [], selectedPedals: viewModel.pedalList) { selectedPedals in
-                    viewModel.updateSelectedPedals(selectedPedals)
+                NavigationView {
+                    withAnimation {
+                        viewModel.selectPedalView
+                    }
                 }
             }
             .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
@@ -86,8 +89,9 @@ extension Song {
 
 struct CreateSongView_Previews: PreviewProvider {
     static var previews: some View {
+        let viewModel = Song.EditViewModel(pedalProvider: LocalDataProvider<Pedal.Model>(persistence: JsonDataService(fileName: "Preview")))
         NavigationStack {
-            Song.EditView(viewModel: Song.EditViewModel())
+            Song.EditView(viewModel: viewModel)
         }
     }
 }

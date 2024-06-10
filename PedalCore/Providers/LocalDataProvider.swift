@@ -8,11 +8,11 @@
 import Foundation
 
 public class LocalDataProvider<T: Hashable>: DataProviderProtocol {
-    typealias T = T
+    public typealias T = T
     
     private let persistence: any PersistenceProtocol<T>
     
-    private(set) var data: [T]
+    private(set) public var data: [T]
     
     public init(persistence: any PersistenceProtocol<T>) {
         self.persistence = persistence
