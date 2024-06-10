@@ -11,23 +11,23 @@ import PedalCore
 
 final class SongViewModelTests: XCTestCase {
     
-    var viewModel: Song.List.ViewModel!
+    var viewModel: Song.ListViewModel!
 
     override func setUpWithError() throws {
-        viewModel = Song.List.ViewModel()
+        viewModel = Song.ListViewModel()
         
     }
 
     func testViewModelEmptyStateWhenHasNoSongs() {
         let persistance = JsonDataService<Song.Model>(fileName: "SongsViewModelTests")
         let provider = LocalDataProvider<Song.Model>(persistence: persistance)
-        viewModel = Song.List.ViewModel(songProvider: provider)
+        viewModel = Song.ListViewModel(songProvider: provider)
         
         XCTAssertTrue(viewModel.state == .empty)
     }
     
     func testViewModelContentStateWhenHasSongs() {
-        viewModel = Song.List.ViewModel()
+        viewModel = Song.ListViewModel()
         viewModel.allSongs = Song.getSample()
         
         XCTAssertTrue(viewModel.state == .content)
@@ -43,7 +43,7 @@ final class SongViewModelTests: XCTestCase {
         let song2 = Song.Model(name: "test2", artist: "test2", pedals: [])
         let song3 = Song.Model(name: "test3", artist: "test3", pedals: [])
         let songsArray = [song1, song2, song3]
-        viewModel = Song.List.ViewModel()
+        viewModel = Song.ListViewModel()
         viewModel.allSongs = songsArray
         
         viewModel.deleteSong(song1)
@@ -59,7 +59,7 @@ final class SongViewModelTests: XCTestCase {
         let song2 = Song.Model(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
         let song3 = Song.Model(name: "Reckoner", artist: "Radiohead", pedals: [])
         let songsArray = [song1, song2, song3]
-        viewModel = Song.List.ViewModel()
+        viewModel = Song.ListViewModel()
         viewModel.allSongs = songsArray
         
         viewModel.searchText = "rec"
@@ -74,7 +74,7 @@ final class SongViewModelTests: XCTestCase {
         let song2 = Song.Model(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
         let song3 = Song.Model(name: "Reckoner", artist: "Radiohead", pedals: [])
         let songsArray = [song1, song2, song3]
-        viewModel = Song.List.ViewModel()
+        viewModel = Song.ListViewModel()
         viewModel.allSongs = songsArray
         
         viewModel.searchText = ""
@@ -117,7 +117,7 @@ final class SongViewModelTests: XCTestCase {
         do {
             try viewModel.addSong(song)
         } catch {
-            if let addSongError = error as? AddSongError {
+            if let addSongError = error as? Song.EditError {
                 XCTAssertTrue(addSongError == .missingName)
             }
         
@@ -131,7 +131,7 @@ final class SongViewModelTests: XCTestCase {
         do {
             try viewModel.addSong(song)
         } catch {
-            if let addSongError = error as? AddSongError {
+            if let addSongError = error as? Song.EditError {
                 XCTAssertTrue(addSongError == .missingArtist)
             }
         }

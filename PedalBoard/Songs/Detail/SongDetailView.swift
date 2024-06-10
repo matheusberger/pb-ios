@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-extension Song.Details {
-    struct View: SwiftUI.View {
+extension Song {
+    struct DetailView: View {
         @Environment(\.colorScheme) var colorScheme
         
-        @ObservedObject var viewModel: ViewModel
+        @ObservedObject var viewModel: DetailViewModel
         
-        var body: some SwiftUI.View {
+        var body: some View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     
@@ -52,7 +52,7 @@ extension Song.Details {
         
         
         @ViewBuilder
-        private var headerView: some SwiftUI.View {
+        private var headerView: some View {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Song Info")
@@ -114,7 +114,7 @@ extension Song.Details {
             }
         }
         
-        private var pedalListView: some SwiftUI.View {
+        private var pedalListView: some View {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Pedals")
@@ -199,7 +199,7 @@ extension Song.Details {
         }
         
         @ViewBuilder
-        private var sheetSelectPedalsView: some SwiftUI.View {
+        private var sheetSelectPedalsView: some View {
             SelectPedalView(alreadyChosenPedals: viewModel.pedalsUsed) { selectedPedals in
                 withAnimation {
                     viewModel.userDidSelectNewPedals(pedals: selectedPedals)
@@ -212,7 +212,7 @@ extension Song.Details {
 struct SongDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            Song.Details.View(viewModel: Song.Details.ViewModel(song: Song.getSample().first!))
+            Song.DetailView(viewModel: Song.DetailViewModel(song: Song.getSample().first!))
         }
     }
 }

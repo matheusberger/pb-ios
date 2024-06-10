@@ -10,15 +10,15 @@ import XCTest
 
 final class SongDetailViewModelTests: XCTestCase {
     
-    var viewModel: Song.Details.ViewModel!
-    var delegate: AddsongDelegateMock!
+    var viewModel: Song.DetailViewModel!
+    var delegate: MockSongEditDelegate!
     
     override func setUpWithError() throws {
         
         let song = Song.Model(name: "Example", artist: "Example", pedals: [Pedal.Model(name: "pedal1", brand: "brand1", knobs: [Knob.Model(name: "Leve")])])
         
-        delegate = AddsongDelegateMock()
-        viewModel = Song.Details.ViewModel(song: song, delegate: delegate)
+        delegate = MockSongEditDelegate()
+        viewModel = Song.DetailViewModel(song: song, delegate: delegate)
         
     }
     

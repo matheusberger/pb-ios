@@ -11,9 +11,9 @@ import PedalCore
 extension Song {
     public struct ListView: View {
         @Environment(\.colorScheme) var colorScheme
-        @StateObject var viewModel: ViewModel
+        @StateObject var viewModel: ListViewModel
         
-        public init(viewModel: ViewModel) {
+        public init(viewModel: ListViewModel) {
             self._viewModel = StateObject(wrappedValue: viewModel)
         }
         
@@ -39,7 +39,7 @@ extension Song {
                     }
                 }
                 .sheet(isPresented: $viewModel.isShowingSheet) {
-                    Song.Creation.View(viewModel: Song.Creation.ViewModel(delegate: self.viewModel))
+                    Song.EditView(viewModel: Song.EditViewModel(delegate: self.viewModel))
                 }
             }
         }
@@ -61,9 +61,9 @@ extension Song {
         private var listView: some View {
             List(viewModel.songs, id:\.signature) { song in
                 NavigationLink {
-                    Song.Details.View(viewModel: Song.Details.ViewModel(song: song, delegate: self.viewModel))
+                    Song.DetailView(viewModel: Song.DetailViewModel(song: song, delegate: self.viewModel))
                 } label: {
-                    Row(song: song)
+                    ListRow(song: song)
                         .contextMenu(menuItems: {
                             Button(role: .destructive) {
                                 viewModel.deleteSong(song)

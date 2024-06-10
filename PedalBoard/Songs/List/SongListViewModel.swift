@@ -116,7 +116,7 @@ extension Song {
     }
 }
 
-extension Song.List.ViewModel: AddSongDelegate {
+extension Song.ListViewModel: Song.EditDelegate {
     func addSong(_ song: Song.Model) throws {
         try validateSong(song)
         
@@ -134,11 +134,11 @@ extension Song.List.ViewModel: AddSongDelegate {
     
     private func validateSong(_ song: Song.Model) throws {
         if song.name.isEmpty {
-            throw AddSongError.missingName
+            throw Song.EditError.missingName
         }
         
         if song.artist.isEmpty {
-            throw AddSongError.missingArtist
+            throw Song.EditError.missingArtist
         }
     }
 }

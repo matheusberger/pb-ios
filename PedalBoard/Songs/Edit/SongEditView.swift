@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-extension Song.Creation {
-    struct View: SwiftUI.View {
+extension Song {
+    struct EditView: View {
         
-        @ObservedObject var viewModel: ViewModel
+        @ObservedObject var viewModel: EditViewModel
 
         
-        init(viewModel: ViewModel) {
+        init(viewModel: EditViewModel) {
             self.viewModel = viewModel
         }
         
-        var body: some SwiftUI.View {
+        var body: some View {
             NavigationView {
                 List {
                     Section {
@@ -90,6 +90,6 @@ extension Song.Creation {
 
 struct CreateSongView_Previews: PreviewProvider {
     static var previews: some View {
-        Song.Creation.View(viewModel: Song.Creation.ViewModel())
+        Song.EditView(viewModel: Song.EditViewModel())
     }
 }
