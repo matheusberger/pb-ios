@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension Song.Details {
-    class ViewModel: ObservableObject {
+extension Song {
+    class DetailViewModel: ObservableObject {
         
         enum State {
             case presentation, editingSong, editingKnobs
@@ -24,9 +24,9 @@ extension Song.Details {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        weak var delegate: AddSongDelegate?
+        weak var delegate: EditDelegate?
         
-        init(song: Song.Model, delegate: AddSongDelegate? = nil) {
+        init(song: Song.Model, delegate: EditDelegate? = nil) {
             self.song = song
             self.delegate = delegate
         }
@@ -56,7 +56,7 @@ extension Song.Details {
             do {
                 try delegate?.updateSong(for: self.song)
             } catch {
-                if let songError = error as? AddSongError {
+                if let songError = error as? EditError {
                     alertMessage = songError.alertDescription
                     isPresentingAlert = true
                 }

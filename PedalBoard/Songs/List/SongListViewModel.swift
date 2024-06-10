@@ -8,8 +8,8 @@
 import SwiftUI
 import PedalCore
 
-extension Song.List {
-    public class ViewModel: ObservableObject {
+extension Song {
+    public class ListViewModel: ObservableObject {
         
         enum State {
             case empty, content
@@ -36,8 +36,8 @@ extension Song.List {
         
         var alert: Alert?
         
-        var pedalViewModel: Pedal.List.ViewModel {
-            return Pedal.List.ViewModel(provider: pedalProvider)
+        var pedalViewModel: Pedal.ListViewModel {
+            return Pedal.ListViewModel(provider: pedalProvider)
         }
         
         private var songProvider: LocalDataProvider<Song.Model>
@@ -116,7 +116,7 @@ extension Song.List {
     }
 }
 
-extension Song.List.ViewModel: AddSongDelegate {
+extension Song.ListViewModel: Song.EditDelegate {
     func addSong(_ song: Song.Model) throws {
         try validateSong(song)
         
@@ -134,11 +134,11 @@ extension Song.List.ViewModel: AddSongDelegate {
     
     private func validateSong(_ song: Song.Model) throws {
         if song.name.isEmpty {
-            throw AddSongError.missingName
+            throw Song.EditError.missingName
         }
         
         if song.artist.isEmpty {
-            throw AddSongError.missingArtist
+            throw Song.EditError.missingArtist
         }
     }
 }

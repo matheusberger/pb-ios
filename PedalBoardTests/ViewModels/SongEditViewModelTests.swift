@@ -8,14 +8,14 @@
 import XCTest
 @testable import PedalBoard
 
-final class SongCreationViewModelTests: XCTestCase {
+final class SongEditViewModelTests: XCTestCase {
     
-    var viewModel: Song.Creation.ViewModel!
-    var delegate: AddsongDelegateMock!
+    var viewModel: Song.EditViewModel!
+    var delegate: MockSongEditDelegate!
     
     override func setUpWithError() throws {
-        delegate = AddsongDelegateMock()
-        viewModel = Song.Creation.ViewModel(delegate: delegate)
+        delegate = MockSongEditDelegate()
+        viewModel = Song.EditViewModel(delegate: delegate)
         
     }
     
@@ -69,12 +69,12 @@ final class SongCreationViewModelTests: XCTestCase {
     
     func testWhenDelegateTrowsErrorAlertIsPresented() {
         
-        delegate.shouldThrowAddSongError = .missingArtist
+        delegate.shouldThrowAddSongError = Song.EditError.missingArtist
         
         viewModel.addSongPressed()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
-        XCTAssertEqual(viewModel.alertMessage, AddSongError.missingArtist.alertDescription)
+        XCTAssertEqual(viewModel.alertMessage, Song.EditError.missingArtist.alertDescription)
     }
     
     func testAttachPedalPresentsPedalSheet() {

@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-extension Song.Creation {
-    class ViewModel: ObservableObject {
+extension Song {
+    class EditViewModel: ObservableObject {
         
-        weak var delegate: AddSongDelegate?
+        weak var delegate: EditDelegate?
         
         var availablePedals: [Pedal.Model] = Pedal.pedalSample()
         
@@ -24,7 +24,7 @@ extension Song.Creation {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        init(delegate: AddSongDelegate? = nil) {
+        init(delegate: EditDelegate? = nil) {
             self.delegate = delegate
         }
         
@@ -51,7 +51,7 @@ extension Song.Creation {
                 try delegate?.addSong(song)
                 
             } catch {
-                if let songError = error as? AddSongError {
+                if let songError = error as? EditError {
                     alertMessage = songError.alertDescription
                     isPresentingAlert = true
                     

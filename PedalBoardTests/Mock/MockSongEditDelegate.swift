@@ -8,10 +8,10 @@
 import Foundation
 @testable import PedalBoard
 
-class AddsongDelegateMock: AddSongDelegate {
+class MockSongEditDelegate: Song.EditDelegate {
     
     var didCallAddSong: Bool = false
-    var shouldThrowAddSongError: AddSongError?
+    var shouldThrowAddSongError: Song.EditError?
     
     func addSong(_ song: Song.Model) throws {
         didCallAddSong = true

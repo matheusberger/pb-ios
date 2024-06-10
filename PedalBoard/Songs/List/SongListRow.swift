@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-extension Song.List {
-    struct Row: SwiftUI.View {
+extension Song {
+    struct ListRow: View {
         let song: Song.Model
         
         var body: some SwiftUI.View {
@@ -55,6 +55,6 @@ extension Song.List {
 
 struct SongRow_Previews: PreviewProvider {
     static var previews: some View {
-        Song.List.Row(song: Song.getSample().first!)
+        Song.ListRow(song: Song.getSample().first!)
     }
 }

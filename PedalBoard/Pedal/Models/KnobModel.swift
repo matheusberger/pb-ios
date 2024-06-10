@@ -7,9 +7,9 @@
 
 import Foundation
 
-extension Knob {
+extension Pedal {
     /// Representation for a pedal knob
-    struct Model: Identifiable, Codable {
+    struct Knob: Identifiable, Codable {
         var id: UUID = UUID()
         
         /// Knob label
