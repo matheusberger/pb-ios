@@ -33,7 +33,7 @@ extension Song {
                 .navigationTitle("My Songs")
                 .toolbar {
                     NavigationLink {
-                        Pedal.List.View(viewModel: viewModel.pedalViewModel)
+                        Pedal.ListView(viewModel: viewModel.pedalViewModel)
                     } label: {
                         Image(systemName: "lanyardcard.fill")
                     }

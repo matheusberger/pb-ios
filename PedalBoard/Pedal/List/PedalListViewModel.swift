@@ -8,8 +8,8 @@
 import Foundation
 import PedalCore
 
-extension Pedal.List {
-    class ViewModel: ObservableObject {
+extension Pedal {
+    class ListViewModel: ObservableObject {
 
         enum State {
             case empty, content
@@ -107,7 +107,7 @@ extension Pedal.List {
     }
 }
 
-extension Pedal.List.ViewModel: PedalCreationDelegate {
+extension Pedal.ListViewModel: Pedal.EditDelegate {
     func addNewPedal(_ pedal: Pedal.Model) throws {
         
         try validadePedalInfo(pedal)
@@ -130,20 +130,20 @@ extension Pedal.List.ViewModel: PedalCreationDelegate {
     
     private func validadePedalInfo(_ pedal: Pedal.Model) throws {
         if pedal.name.isEmpty {
-            throw AddPedalError.missingName
+            throw Pedal.EditError.missingName
         }
         
         if pedal.brand.isEmpty {
-            throw AddPedalError.missingBrand
+            throw Pedal.EditError.missingBrand
         }
         
         if pedal.knobs.isEmpty {
-            throw AddPedalError.missingKnobs
+            throw Pedal.EditError.missingKnobs
         }
         
         try pedal.knobs.forEach { knob in
             if knob.name.isEmpty {
-                throw AddPedalError.missingKnobName
+                throw Pedal.EditError.missingKnobName
             }
         }
     }

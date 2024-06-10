@@ -8,13 +8,13 @@
 import SwiftUI
 import PedalCore
 
-extension Pedal.List {
-    struct View: SwiftUI.View {
+extension Pedal {
+    struct ListView: View {
         
         @Environment(\.colorScheme) var colorScheme
-        @StateObject var viewModel: ViewModel
+        @StateObject var viewModel: ListViewModel
         
-        init(viewModel: ViewModel) {
+        init(viewModel: ListViewModel) {
             self._viewModel = StateObject(wrappedValue: viewModel)
             // Large Navigation Title
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
@@ -22,7 +22,7 @@ extension Pedal.List {
             UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.accentColor)]
         }
         
-        public var body: some SwiftUI.View {
+        public var body: some View {
             VStack {
                 switch viewModel.state {
                 case .empty:
@@ -39,15 +39,15 @@ extension Pedal.List {
                 viewModel.sheetDidDismiss()
             }) {
                 if let pedal = viewModel.editPedal {
-                    Pedal.Creation.View(viewModel: Pedal.Creation.ViewModel(delegate: self.viewModel, editPedal: pedal))
+                    Pedal.EditView(viewModel: Pedal.EditViewModel(delegate: self.viewModel, editPedal: pedal))
                 } else {
-                    Pedal.Creation.View(viewModel: Pedal.Creation.ViewModel(delegate: self.viewModel))
+                    Pedal.EditView(viewModel: Pedal.EditViewModel(delegate: self.viewModel))
                 }
             }
         }
         
         @ViewBuilder
-        private var emptyView: some SwiftUI.View {
+        private var emptyView: some View {
             VStack(alignment: .leading, spacing: 20) {
                 Spacer()
                 
@@ -64,9 +64,9 @@ extension Pedal.List {
         }
         
         @ViewBuilder
-        private var contentView: some SwiftUI.View {
+        private var contentView: some View {
             List(viewModel.filteredPedals, id: \.signature) { pedal in
-                Row(pedal: pedal)
+                ListRow(pedal: pedal)
                 
                     .contextMenu(menuItems: {
                         Button {
@@ -101,7 +101,7 @@ extension Pedal.List {
             .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
         }
         
-        private var footerButtonsView: some SwiftUI.View {
+        private var footerButtonsView: some View {
             VStack {
                 Button {
                     viewModel.addIconPressed()
@@ -120,9 +120,9 @@ struct PedalListView_Previews: PreviewProvider {
     static var previews: some View {
         let persistence = JsonDataService<Pedal.Model>(fileName: "PedalPreview")
         let provider =  LocalDataProvider<Pedal.Model>(persistence: persistence)
-        let viewModel = Pedal.List.ViewModel(provider: provider)
+        let viewModel = Pedal.ListViewModel(provider: provider)
         NavigationStack {
-            Pedal.List.View(viewModel: viewModel)
+            Pedal.ListView(viewModel: viewModel)
         }
     }
 }

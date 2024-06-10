@@ -28,7 +28,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     }
     
     func testWhenEditingPedalViewModelHasRelatedStyle() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.Creation.ViewModel(editPedal: pedal)
         
         XCTAssertTrue(viewModel.style == .editPedal)
@@ -36,7 +36,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     }
     
     func testWhenEditingPedalFieldsHasContent() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.Creation.ViewModel(editPedal: pedal)
         
         
@@ -58,10 +58,10 @@ final class PedalCreationViewModelTests: XCTestCase {
 
     @MainActor
     func testRemoveKnobRemovesElementFromArray() {
-        let knobs: [Knob.Model] = [
-            Knob.Model(name: "Drive"),
-            Knob.Model(name: "Tone"),
-            Knob.Model(name: "Level")]
+        let knobs: [Pedal.Knob] = [
+            Pedal.Knob(name: "Drive"),
+            Pedal.Knob(name: "Tone"),
+            Pedal.Knob(name: "Level")]
         viewModel.knobs = knobs
         
         viewModel.removeKnob(at: IndexSet(integer: 0))
@@ -81,7 +81,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     
     
     func testWhenOnEditPedalStyleDoneButtonCallsEdidPedalDone() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.Creation.ViewModel(delegate: self.delegate, editPedal: pedal)
         
         viewModel.doneButtonPressed()
@@ -99,7 +99,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     }
     
     func testEditPedalPresentsAlertWhenErrorOccurs() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Knob.Model(name: "test")])
+        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.Creation.ViewModel(delegate: self.delegate, editPedal: pedal)
         viewModel.isPresentingAlert = false
         delegate.finishedEditingPedalShouldThrowError = .missingBrand

@@ -7,52 +7,54 @@
 
 import Foundation
 
-enum KnobViewStyle {
-    case reference, editing
-    
-    var strokeWidth: Double {
-        switch self {
-        case .reference:
-            return 5
-        case .editing:
-            return 10
+extension Pedal {
+    enum KnobViewStyle {
+        case reference, editing
+        
+        var strokeWidth: Double {
+            switch self {
+            case .reference:
+                return 5
+            case .editing:
+                return 10
+            }
         }
-    }
-    
-    var frameSize: Double {
-        switch self {
-        case .reference:
-            return 40
-        case .editing:
-            return 80
+        
+        var frameSize: Double {
+            switch self {
+            case .reference:
+                return 40
+            case .editing:
+                return 80
+            }
         }
-    }
-    
-    var circleSize: Double {
-        switch self {
-        case .reference:
-            return 4
-        case .editing:
-            return 8
+        
+        var circleSize: Double {
+            switch self {
+            case .reference:
+                return 4
+            case .editing:
+                return 8
+            }
         }
-    }
-    
-    var labelOffSet: Double {
-        switch self {
-        case .reference:
-            return 30
-        case .editing:
-            return 40
+        
+        var labelOffSet: Double {
+            switch self {
+            case .reference:
+                return 30
+            case .editing:
+                return 40
+            }
         }
-    }
-    
-    var stackSpacing: Double {
-        switch self {
-        case .reference:
-            return 10
-        case .editing:
-            return 15
+        
+        var stackSpacing: Double {
+            switch self {
+            case .reference:
+                return 10
+            case .editing:
+                return 15
+            }
         }
+        
     }
-    
 }

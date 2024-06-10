@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-extension Knob {
-    struct View: SwiftUI.View {
+extension Pedal {
+    struct KnobView: View {
       
-        @Binding var knob: Model
+        @Binding var knob: Knob
         var knobViewStyle: KnobViewStyle
         @State var dragOffset: CGSize = .zero
         
@@ -36,7 +36,7 @@ extension Knob {
             dragOffset = .zero
         }
         
-        var body: some SwiftUI.View {
+        var body: some View {
             VStack(spacing: knobViewStyle.stackSpacing) {
                 Text(knob.name)
                     .dynamicTypeSize(.small)
@@ -85,11 +85,10 @@ extension Knob {
             )
         }
     }
-
 }
 
 struct KnobView_Previews: PreviewProvider {
     static var previews: some View {
-        Knob.View(knob: .constant(Knob.Model(name: "Drive", level: 0.5)), knobViewStyle: .reference)
+        Pedal.KnobView(knob: .constant(Pedal.Knob(name: "Drive", level: 0.5)), knobViewStyle: .reference)
     }
 }

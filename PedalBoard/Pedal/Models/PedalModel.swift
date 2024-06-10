@@ -12,7 +12,7 @@ extension Pedal {
         var id: String = UUID().uuidString
         var name: String
         var brand: String
-        var knobs: [Knob.Model]
+        var knobs: [Knob]
         
         var signature: String {
             let knobNames = knobs.map { $0.name }

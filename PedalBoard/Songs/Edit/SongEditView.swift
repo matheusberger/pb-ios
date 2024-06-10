@@ -37,7 +37,7 @@ extension Song {
                                         .font(.headline)
                                         .foregroundStyle(.primary)
                                     
-                                    Knob.GridView(knobs: $pedal.knobs)
+                                    Pedal.KnobGridView(knobs: $pedal.knobs)
                                     
                                 }
                             }

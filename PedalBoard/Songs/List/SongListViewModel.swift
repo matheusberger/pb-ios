@@ -36,8 +36,8 @@ extension Song {
         
         var alert: Alert?
         
-        var pedalViewModel: Pedal.List.ViewModel {
-            return Pedal.List.ViewModel(provider: pedalProvider)
+        var pedalViewModel: Pedal.ListViewModel {
+            return Pedal.ListViewModel(provider: pedalProvider)
         }
         
         private var songProvider: LocalDataProvider<Song.Model>

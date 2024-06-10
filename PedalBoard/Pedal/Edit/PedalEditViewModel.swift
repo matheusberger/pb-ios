@@ -1,5 +1,5 @@
 //
-//  PedalCreationViewModel.swift
+//  PedalEditViewModel.swift
 //  PedalCore
 //
 //  Created by Lucas Migge on 18/10/23.
@@ -8,8 +8,8 @@
 import Foundation
 import PedalCore
 
-extension Pedal.Creation {
-    class ViewModel: ObservableObject {
+extension Pedal {
+    class EditViewModel: ObservableObject {
         
         enum Style {
             case editPedal, createPedal
@@ -19,12 +19,12 @@ extension Pedal.Creation {
         
         @Published var pedalName: String
         @Published var brandName: String
-        @Published var knobs: [Knob.Model] = []
+        @Published var knobs: [Pedal.Knob] = []
         
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        weak var delegate: PedalCreationDelegate?
+        weak var delegate: Pedal.EditDelegate?
         
         public var style: Style {
             if editePedal != nil {
@@ -34,7 +34,7 @@ extension Pedal.Creation {
             }
         }
         
-        init(delegate: PedalCreationDelegate? = nil, editPedal: Pedal.Model? = nil) {
+        init(delegate: Pedal.EditDelegate? = nil, editPedal: Pedal.Model? = nil) {
             self.delegate = delegate
             
             if let pedal = editPedal {
@@ -50,7 +50,7 @@ extension Pedal.Creation {
         }
         
         public func addKnobPressed() {
-            knobs.append(Knob.Model(name: ""))
+            knobs.append(Pedal.Knob(name: ""))
         }
         
         @MainActor
@@ -93,7 +93,7 @@ extension Pedal.Creation {
         }
         
         private func dealWithErrors(error: Error) {
-            if let pedalError = error as? AddPedalError {
+            if let pedalError = error as? Pedal.EditError {
                 isPresentingAlert = true
                 alertMessage = pedalError.description
             }

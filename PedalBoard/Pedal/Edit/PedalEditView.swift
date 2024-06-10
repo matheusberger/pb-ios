@@ -1,5 +1,5 @@
 //
-//  CreatePedalView.swift
+//  PedalEditView.swift
 //  PedalBoard
 //
 //  Created by Lucas Migge on 02/10/23.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-extension Pedal.Creation {
-    struct View: SwiftUI.View {
+extension Pedal {
+    struct EditView: View {
         @Environment(\.dismiss) var dismiss
-        @ObservedObject var viewModel: Pedal.Creation.ViewModel
+        @ObservedObject var viewModel: EditViewModel
         
-        init(viewModel: Pedal.Creation.ViewModel) {
+        init(viewModel: EditViewModel) {
             self.viewModel = viewModel
         }
         
-        var body: some SwiftUI.View {
+        var body: some View {
             NavigationView {
                 List {
                     Section("Name") {
@@ -92,6 +92,6 @@ extension Pedal.Creation {
 
 struct PedalCreationView_Previews: PreviewProvider {
     static var previews: some View {
-        Pedal.Creation.View(viewModel: Pedal.Creation.ViewModel(editPedal: Pedal.Model.emptyPedal()))
+        Pedal.EditView(viewModel: Pedal.EditViewModel(editPedal: Pedal.Model.emptyPedal()))
     }
 }

@@ -8,12 +8,12 @@
 import Foundation
 @testable import PedalBoard
 
-class PedalCreationDelegateMock: PedalCreationDelegate {
+class PedalCreationDelegateMock: Pedal.EditDelegate {
     var didCallFinishedEditingPedal: Bool = false
-    var finishedEditingPedalShouldThrowError: AddPedalError? = nil
+    var finishedEditingPedalShouldThrowError: Pedal.EditError? = nil
     
     var didCallAddNewPedal: Bool = false
-    var addNewPedalShouldThrowError: AddPedalError? = nil
+    var addNewPedalShouldThrowError: Pedal.EditError? = nil
     
     func finishedEditingPedal(_ pedal: Pedal.Model) throws {
         didCallFinishedEditingPedal = true

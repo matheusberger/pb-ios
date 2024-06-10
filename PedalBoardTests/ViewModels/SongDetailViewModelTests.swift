@@ -15,7 +15,7 @@ final class SongDetailViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         
-        let song = Song.Model(name: "Example", artist: "Example", pedals: [Pedal.Model(name: "pedal1", brand: "brand1", knobs: [Knob.Model(name: "Leve")])])
+        let song = Song.Model(name: "Example", artist: "Example", pedals: [Pedal.Model(name: "pedal1", brand: "brand1", knobs: [Pedal.Knob(name: "Leve")])])
         
         delegate = MockSongEditDelegate()
         viewModel = Song.DetailViewModel(song: song, delegate: delegate)

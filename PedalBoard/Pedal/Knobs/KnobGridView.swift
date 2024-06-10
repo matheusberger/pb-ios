@@ -1,5 +1,5 @@
 //
-//  KnobsGridView.swift
+//  KnobGridView.swift
 //  PedalCore
 //
 //  Created by Lucas Migge on 20/11/23.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-extension Knob {
-    struct GridView: SwiftUI.View {
+extension Pedal {
+    struct KnobGridView: SwiftUI.View {
         
-        @Binding var knobs: [Model]
+        @Binding var knobs: [Knob]
         var knobStyle: KnobViewStyle = .editing
         
         var minimumDistance: CGFloat {
@@ -26,7 +26,7 @@ extension Knob {
             VStack {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: minimumDistance, maximum: 120))], spacing: 30) {
                     ForEach($knobs) { $knobs in
-                        View(knob: $knobs, knobViewStyle: knobStyle)
+                        KnobView(knob: $knobs, knobViewStyle: knobStyle)
                     }
                 }
             }
@@ -36,6 +36,6 @@ extension Knob {
 
 struct KnobsGridView_Previews: PreviewProvider {
     static var previews: some View {
-        Knob.GridView(knobs: .constant(Pedal.pedalSample().first!.knobs))
+        Pedal.KnobGridView(knobs: .constant(Pedal.pedalSample().first!.knobs))
     }
 }
