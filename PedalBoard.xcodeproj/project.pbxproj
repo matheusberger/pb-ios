@@ -327,8 +327,8 @@
 			children = (
 				0C12A4312B05A101005D8F3D /* SongDetailView.swift */,
 				0C46ED6A2B1638E500DBFCBB /* SongDetailViewModel.swift */,
-				0C34AEBF2B0F08E400ED3FDC /* SelectPedalRow.swift */,
 				0C12A4222B05494A005D8F3D /* SelectPedalView.swift */,
+				0C34AEBF2B0F08E400ED3FDC /* SelectPedalRow.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";

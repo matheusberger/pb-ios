@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PedalCore
 
 extension Song {
     struct DetailView: View {
@@ -200,10 +201,8 @@ extension Song {
         
         @ViewBuilder
         private var sheetSelectPedalsView: some View {
-            SelectPedalView(alreadyChosenPedals: viewModel.pedalsUsed) { selectedPedals in
-                withAnimation {
-                    viewModel.userDidSelectNewPedals(pedals: selectedPedals)
-                }
+            withAnimation {
+                viewModel.selectPedalView
             }
         }
     }
@@ -211,8 +210,10 @@ extension Song {
 
 struct SongDetailView_Previews: PreviewProvider {
     static var previews: some View {
+        let persistence = JsonDataService<Pedal.Model>(fileName: "Preview")
+        let provider =  LocalDataProvider<Pedal.Model>(persistence: persistence)
         NavigationView {
-            Song.DetailView(viewModel: Song.DetailViewModel(song: Song.getSample().first!))
+            Song.DetailView(viewModel: Song.DetailViewModel(song: Song.getSample().first!, pedalProvider: provider))
         }
     }
 }

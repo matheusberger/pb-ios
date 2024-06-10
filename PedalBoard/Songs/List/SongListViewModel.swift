@@ -36,8 +36,19 @@ extension Song {
         
         var alert: Alert?
         
-        var pedalViewModel: Pedal.ListViewModel {
-            return Pedal.ListViewModel(provider: pedalProvider)
+        var pedalView: Pedal.ListView {
+            let viewModel = Pedal.ListViewModel(provider: pedalProvider)
+            return Pedal.ListView(viewModel: viewModel)
+        }
+        
+        var editView: EditView {
+            let viewModel = EditViewModel(pedalProvider: pedalProvider, delegate: self)
+            return Song.EditView(viewModel: viewModel)
+        }
+        
+        func detailView(_ song: Song.Model) -> DetailView {
+            let viewModel = DetailViewModel(song: song, pedalProvider: pedalProvider, delegate: self)
+            return DetailView(viewModel: viewModel)
         }
         
         private var songProvider: LocalDataProvider<Song.Model>
@@ -104,14 +115,6 @@ extension Song {
         
         func deleteSong(_ deletedSong: Song.Model) {
             allSongs = allSongs.filter { $0 != deletedSong }
-        }
-        
-        func populateSongs() {
-            let songsDemo = Song.getSample()
-            
-            songsDemo.forEach {
-                allSongs.append($0)
-            }
         }
     }
 }

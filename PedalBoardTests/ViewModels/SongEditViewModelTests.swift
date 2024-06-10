@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import PedalCore
 @testable import PedalBoard
 
 final class SongEditViewModelTests: XCTestCase {
@@ -15,8 +16,8 @@ final class SongEditViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         delegate = MockSongEditDelegate()
-        viewModel = Song.EditViewModel(delegate: delegate)
-        
+        let provider = LocalDataProvider<Pedal.Model>(persistence: JsonDataService(fileName: "Preview"))
+        viewModel = Song.EditViewModel(pedalProvider: provider, delegate: delegate)
     }
     
     func testViewModelStartsWithEmptyFields() {

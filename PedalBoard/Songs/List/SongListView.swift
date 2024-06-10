@@ -18,29 +18,27 @@ extension Song {
         }
         
         public var body: some View {
-            NavigationView {
-                VStack {
-                    switch viewModel.state {
-                    case .empty:
-                        emptyView
-                        
-                    case .content:
-                        listView
-                    }
+            VStack {
+                switch viewModel.state {
+                case .empty:
+                    emptyView
                     
-                    footerButtonsView
+                case .content:
+                    listView
                 }
-                .navigationTitle("My Songs")
-                .toolbar {
-                    NavigationLink {
-                        Pedal.ListView(viewModel: viewModel.pedalViewModel)
-                    } label: {
-                        Image(systemName: "lanyardcard.fill")
-                    }
+                
+                footerButtonsView
+            }
+            .navigationTitle("My Songs")
+            .toolbar {
+                NavigationLink {
+                    viewModel.pedalView
+                } label: {
+                    Image(systemName: "lanyardcard.fill")
                 }
-                .sheet(isPresented: $viewModel.isShowingSheet) {
-                    Song.EditView(viewModel: Song.EditViewModel(delegate: self.viewModel))
-                }
+            }
+            .sheet(isPresented: $viewModel.isShowingSheet) {
+                viewModel.editView
             }
         }
         
@@ -61,7 +59,7 @@ extension Song {
         private var listView: some View {
             List(viewModel.songs, id:\.signature) { song in
                 NavigationLink {
-                    Song.DetailView(viewModel: Song.DetailViewModel(song: song, delegate: self.viewModel))
+                    viewModel.detailView(song)
                 } label: {
                     ListRow(song: song)
                         .contextMenu(menuItems: {
@@ -80,7 +78,7 @@ extension Song {
                             }
                         }
                 }
-               
+                
             }
             .searchable(text: $viewModel.searchText, prompt: "Search a song or artist")
         }
@@ -107,6 +105,8 @@ struct SongsView_Previews: PreviewProvider {
         let persistence = JsonDataService<Song.Model>(fileName: "SongPreview")
         let provider =  LocalDataProvider<Song.Model>(persistence: persistence)
         let viewModel = Song.ListViewModel(songProvider: provider)
-        Song.ListView(viewModel: viewModel)
+        NavigationStack {
+            Song.ListView(viewModel: viewModel)
+        }
     }
 }

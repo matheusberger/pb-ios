@@ -7,13 +7,22 @@
 
 import Foundation
 import SwiftUI
+import PedalCore
 
 extension Song {
     class EditViewModel: ObservableObject {
         
         weak var delegate: EditDelegate?
         
-        var availablePedals: [Pedal.Model] = Pedal.pedalSample()
+        var availablePedals: [Pedal.Model] {
+            return provider.data
+        }
+        
+        var selectPedalView: SelectPedalView {
+            SelectPedalView(allPedals: availablePedals, selectedPedals: pedalList) { [self] selectedPedals in
+                updateSelectedPedals(selectedPedals)
+            }
+        }
         
         @Published public var songName: String = ""
         @Published var bandName: String = ""
@@ -24,7 +33,10 @@ extension Song {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        init(delegate: EditDelegate? = nil) {
+        private let provider: any DataProviderProtocol<Pedal.Model>
+        
+        init(pedalProvider: any DataProviderProtocol<Pedal.Model>, delegate: EditDelegate? = nil) {
+            self.provider = pedalProvider
             self.delegate = delegate
         }
         
