@@ -10,52 +10,52 @@ import SwiftUI
 struct SelectPedalView: View {
     @Environment(\.dismiss) var dismiss
     
-    @State var availablePedals: [Pedal.Model]
-    @State var pedalList: [Pedal.Model]
+    @State var allPedals: [Pedal.Model]
+    @State var selectedPedals: [Pedal.Model]
     @State var searchText: String = ""
     var onDismiss: ([Pedal.Model]) -> Void
     
-    init(availablePedals: [Pedal.Model] = Pedal.pedalSample(), alreadyChosenPedals: [Pedal.Model],
+    init(allPedals: [Pedal.Model], selectedPedals: [Pedal.Model],
          onDismiss: @escaping ([Pedal.Model]) -> Void) {
-        self._availablePedals = State(initialValue: availablePedals)
-        self._pedalList = State(initialValue: alreadyChosenPedals)
+        self._allPedals = State(initialValue: allPedals)
+        self._selectedPedals = State(initialValue: selectedPedals)
         self.onDismiss = onDismiss
     }
     
     
     public var filteredPedals: [Pedal.Model] {
         if searchText.isEmpty {
-            return availablePedals
+            return allPedals
         } else {
-            return availablePedals.filter { pedal in
+            return allPedals.filter { pedal in
                 pedal.name.localizedCaseInsensitiveContains(searchText) || pedal.brand.localizedCaseInsensitiveContains(searchText) ||
-                availablePedals.contains(pedal)
+                allPedals.contains(pedal)
             }
         }
     }
     
     private func toggleSelection(for pedal: Pedal.Model) {
-        if pedalList.contains(pedal) {
-            pedalList.removeAll(where: {$0 == pedal})
+        if selectedPedals.contains(pedal) {
+            selectedPedals.removeAll(where: {$0 == pedal})
         } else {
-            pedalList.append(pedal)
+            selectedPedals.append(pedal)
         }
     }
     
     public func shouldBeIndicatedWithLight(for pedal: Pedal.Model) -> Bool {
-        return pedalList.contains(pedal)
+        return selectedPedals.contains(pedal)
     }
     
     var body: some View {
             Group {
-                if availablePedals.isEmpty {
+                if allPedals.isEmpty {
                     emptyView
                 } else {
                     pedalContentList
                 }
             }
             .onDisappear {
-                onDismiss(pedalList)
+                onDismiss(selectedPedals)
             }
             .navigationTitle("Select pedals")
             .toolbar {
@@ -118,7 +118,7 @@ struct SelectPedalView: View {
 
 struct SelectPedalView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectPedalView(alreadyChosenPedals: []) { _ in
+        SelectPedalView(allPedals: Pedal.pedalSample(), selectedPedals: []) { _ in
             
         }
     }

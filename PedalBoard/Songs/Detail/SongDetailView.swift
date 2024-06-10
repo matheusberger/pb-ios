@@ -200,10 +200,8 @@ extension Song {
         
         @ViewBuilder
         private var sheetSelectPedalsView: some View {
-            SelectPedalView(alreadyChosenPedals: viewModel.pedalsUsed) { selectedPedals in
-                withAnimation {
-                    viewModel.userDidSelectNewPedals(pedals: selectedPedals)
-                }
+            withAnimation {
+                viewModel.selectPedalView
             }
         }
     }

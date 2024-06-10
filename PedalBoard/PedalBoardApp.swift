@@ -13,7 +13,9 @@ struct PedalBoardApp: App {
     var body: some Scene {
         WindowGroup {
             let viewModel = Song.ListViewModel()
-            Song.ListView(viewModel: viewModel)
+            NavigationStack {
+                Song.ListView(viewModel: viewModel)
+            }
         }
     }
 }

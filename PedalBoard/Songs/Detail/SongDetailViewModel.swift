@@ -31,25 +31,31 @@ extension Song {
             self.delegate = delegate
         }
         
-        public var isInEditing: Bool {
+        var isInEditing: Bool {
             return state != .presentation
         }
         
-        public var isInPresentationMode: Bool {
+        var isInPresentationMode: Bool {
             return state == .presentation
         }
         
         
-        public var isInEditingSongMode: Bool {
+        var isInEditingSongMode: Bool {
             return state == .editingSong
         }
         
-        public var isInEditingKnobsMode: Bool {
+        var isInEditingKnobsMode: Bool {
             return state == .editingKnobs
         }
         
         var pedalsUsed: [Pedal.Model]  {
             return song.pedals
+        }
+        
+        var selectPedalView: SelectPedalView {
+            SelectPedalView(allPedals: [], selectedPedals: pedalsUsed) { [self] selectedPedals in
+                userDidSelectNewPedals(pedals: selectedPedals)
+            }
         }
         
         public func saveButtonPressed() {
