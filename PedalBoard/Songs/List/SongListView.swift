@@ -1,5 +1,5 @@
 //
-//  SongsView.swift
+//  SongListView.swift
 //  PedalCore
 //
 //  Created by Lucas Migge on 15/11/23.
@@ -8,8 +8,8 @@
 import SwiftUI
 import PedalCore
 
-extension Song.List {
-    public struct View: SwiftUI.View {
+extension Song {
+    public struct ListView: View {
         @Environment(\.colorScheme) var colorScheme
         @StateObject var viewModel: ViewModel
         
@@ -17,7 +17,7 @@ extension Song.List {
             self._viewModel = StateObject(wrappedValue: viewModel)
         }
         
-        public var body: some SwiftUI.View {
+        public var body: some View {
             NavigationView {
                 VStack {
                     switch viewModel.state {
@@ -45,7 +45,7 @@ extension Song.List {
         }
         
         @ViewBuilder
-        private var emptyView: some SwiftUI.View {
+        private var emptyView: some View {
             VStack {
                 Spacer()
                 
@@ -58,7 +58,7 @@ extension Song.List {
         }
         
         @ViewBuilder
-        private var listView: some SwiftUI.View {
+        private var listView: some View {
             List(viewModel.songs, id:\.signature) { song in
                 NavigationLink {
                     Song.Details.View(viewModel: Song.Details.ViewModel(song: song, delegate: self.viewModel))
@@ -85,7 +85,7 @@ extension Song.List {
             .searchable(text: $viewModel.searchText, prompt: "Search a song or artist")
         }
         
-        private var footerButtonsView: some SwiftUI.View {
+        private var footerButtonsView: some View {
             VStack {
                 Button {
                     viewModel.addSongPressed()
@@ -106,7 +106,7 @@ struct SongsView_Previews: PreviewProvider {
     static var previews: some View {
         let persistence = JsonDataService<Song.Model>(fileName: "SongPreview")
         let provider =  LocalDataProvider<Song.Model>(persistence: persistence)
-        let viewModel = Song.List.ViewModel(songProvider: provider)
-        Song.List.View(viewModel: viewModel)
+        let viewModel = Song.ListViewModel(songProvider: provider)
+        Song.ListView(viewModel: viewModel)
     }
 }

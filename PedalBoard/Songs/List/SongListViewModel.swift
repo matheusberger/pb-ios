@@ -8,8 +8,8 @@
 import SwiftUI
 import PedalCore
 
-extension Song.List {
-    public class ViewModel: ObservableObject {
+extension Song {
+    public class ListViewModel: ObservableObject {
         
         enum State {
             case empty, content
