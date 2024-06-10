@@ -8,7 +8,7 @@
 import XCTest
 @testable import PedalBoard
 
-final class SongCreationViewModelTests: XCTestCase {
+final class SongEditViewModelTests: XCTestCase {
     
     var viewModel: Song.EditViewModel!
     var delegate: MockSongEditDelegate!

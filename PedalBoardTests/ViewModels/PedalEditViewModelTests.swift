@@ -8,14 +8,14 @@
 import XCTest
 @testable import PedalBoard
 
-final class PedalCreationViewModelTests: XCTestCase {
+final class PedalEditViewModelTests: XCTestCase {
     
-    private var viewModel: Pedal.Creation.ViewModel!
+    private var viewModel: Pedal.EditViewModel!
     private var delegate: PedalCreationDelegateMock!
     
     override func setUpWithError() throws {
         delegate = PedalCreationDelegateMock()
-        viewModel = Pedal.Creation.ViewModel(delegate: self.delegate)
+        viewModel = Pedal.EditViewModel(delegate: self.delegate)
         
         continueAfterFailure = false
         
@@ -29,7 +29,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     
     func testWhenEditingPedalViewModelHasRelatedStyle() {
         let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.Creation.ViewModel(editPedal: pedal)
+        viewModel = Pedal.EditViewModel(editPedal: pedal)
         
         XCTAssertTrue(viewModel.style == .editPedal)
         
@@ -37,7 +37,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     
     func testWhenEditingPedalFieldsHasContent() {
         let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.Creation.ViewModel(editPedal: pedal)
+        viewModel = Pedal.EditViewModel(editPedal: pedal)
         
         
         XCTAssertFalse(viewModel.pedalName.isEmpty)
@@ -82,7 +82,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     
     func testWhenOnEditPedalStyleDoneButtonCallsEdidPedalDone() {
         let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.Creation.ViewModel(delegate: self.delegate, editPedal: pedal)
+        viewModel = Pedal.EditViewModel(delegate: self.delegate, editPedal: pedal)
         
         viewModel.doneButtonPressed()
         
@@ -100,7 +100,7 @@ final class PedalCreationViewModelTests: XCTestCase {
     
     func testEditPedalPresentsAlertWhenErrorOccurs() {
         let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.Creation.ViewModel(delegate: self.delegate, editPedal: pedal)
+        viewModel = Pedal.EditViewModel(delegate: self.delegate, editPedal: pedal)
         viewModel.isPresentingAlert = false
         delegate.finishedEditingPedalShouldThrowError = .missingBrand
         
