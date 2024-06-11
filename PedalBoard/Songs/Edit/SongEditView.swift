@@ -10,7 +10,6 @@ import PedalCore
 
 extension Song {
     struct EditView: View {
-        
         @ObservedObject var viewModel: EditViewModel
         
         init(viewModel: EditViewModel) {

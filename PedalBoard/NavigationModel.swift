@@ -23,11 +23,18 @@ final class NavigationModel: ObservableObject {
         self.isPresentingSheet = false
         self.presentedSheets = []
         
-        let songPersistence = JsonDataService<Song>(fileName: "song")
+        let songPersistence = JsonDataService<Song>(fileName: "Song")
         self.songProvider = SongProvider(persistence: songPersistence)
         
-        let pedalPersistance = JsonDataService<Pedal>(fileName: "pedal")
+        let pedalPersistance = JsonDataService<Pedal>(fileName: "Pedal")
         self.pedalProvider = PedalProvider(persistence: pedalPersistance)
+        
+        do {
+            try songProvider.load { _ in }
+            try pedalProvider.load { _ in }
+        } catch {
+            print("error initializing providers")
+        }
     }
     
     func push(_ view: AppView) {

@@ -72,7 +72,7 @@ struct SelectPedalView: View {
         VStack(alignment: .leading, spacing: 20) {
             Spacer()
             
-            Text("None pedals registered yet")
+            Text("No pedals registered yet")
                 .font(.headline)
             
                 .font(.subheadline)
