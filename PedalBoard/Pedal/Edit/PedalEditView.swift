@@ -92,6 +92,6 @@ extension Pedal {
 
 struct PedalCreationView_Previews: PreviewProvider {
     static var previews: some View {
-        Pedal.EditView(viewModel: Pedal.EditViewModel(editPedal: Pedal.emptyPedal()))
+        Pedal.EditView(viewModel: Pedal.EditViewModel(Pedal.emptyPedal()))
     }
 }

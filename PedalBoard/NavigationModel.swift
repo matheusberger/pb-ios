@@ -16,12 +16,12 @@ final class NavigationModel: ObservableObject {
     private(set) var songProvider: SongProvider
     private(set) var pedalProvider: PedalProvider
     
-    var songEditView: Song.EditView?
+    var presentedSheets: [AnyView]
     
     init(navigationPath: NavigationPath = .init()) {
         self.navigationPath = navigationPath
         self.isPresentingSheet = false
-        
+        self.presentedSheets = []
         
         let songPersistence = JsonDataService<Song>(fileName: "song")
         self.songProvider = SongProvider(persistence: songPersistence)
@@ -48,10 +48,27 @@ final class NavigationModel: ObservableObject {
         case songList
         case pedalList
     }
-    
+}
+
+/// Sheet presentation
+extension NavigationModel {
     func presentSongEditView(delegate: Song.EditDelegate) {
         isPresentingSheet = true
         let viewModel = Song.EditViewModel(pedalProvider: pedalProvider, delegate: delegate)
-        songEditView = Song.EditView(viewModel: viewModel)
+        let songEditView = Song.EditView(viewModel: viewModel)
+        presentedSheets.append(AnyView(songEditView))
+    }
+    
+    func presentPedalEditView(_ pedal: Pedal, delegate: Pedal.EditDelegate) {
+        isPresentingSheet = true
+        let viewModel = Pedal.EditViewModel(pedal, delegate: delegate)
+        let pedalEditView = Pedal.EditView(viewModel: viewModel)
+        presentedSheets.append(AnyView(pedalEditView))
+    }
+    
+    func dismissSheet() {
+        _ = presentedSheets.popLast()
+        isPresentingSheet = presentedSheets.isEmpty ? false : true
     }
 }
+

@@ -39,7 +39,7 @@ extension Pedal {
                 viewModel.sheetDidDismiss()
             }) {
                 if let pedal = viewModel.editPedal {
-                    Pedal.EditView(viewModel: Pedal.EditViewModel(delegate: self.viewModel, editPedal: pedal))
+                    Pedal.EditView(viewModel: Pedal.EditViewModel(pedal, delegate: self.viewModel))
                 } else {
                     Pedal.EditView(viewModel: Pedal.EditViewModel(delegate: self.viewModel))
                 }

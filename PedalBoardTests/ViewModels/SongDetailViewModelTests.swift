@@ -75,22 +75,22 @@ final class SongDetailViewModelTests: XCTestCase {
         
     }
     
-    func testSaveButtonCallsDelegate() {
+    func testSaveButtonCallsDelegate() async {
         delegate.didCallAddSong = false
 
-        viewModel.saveButtonPressed()
+        await viewModel.saveButtonPressed()
         
         XCTAssertTrue(delegate.didCallAddSong)
         
     }
     
-    func testSaveButtonsShouldPresentAlertWhenDelegateThrowAnError() {
+    func testSaveButtonsShouldPresentAlertWhenDelegateThrowAnError() async {
         viewModel.isPresentingAlert = false
         viewModel.alertMessage = ""
         delegate.shouldThrowAddSongError = .missingName
 
         
-        viewModel.saveButtonPressed()
+        await viewModel.saveButtonPressed()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
         XCTAssertFalse(viewModel.alertMessage.isEmpty)

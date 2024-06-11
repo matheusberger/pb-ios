@@ -130,7 +130,7 @@ extension Song.ListViewModel: Song.EditDelegate {
         try validateSong(song)
         
         self.allSongs.append(song)
-        navigationModel?.isPresentingSheet = false
+        navigationModel?.dismissSheet()
     }
     
     func updateSong(for updatedSong: Song) throws {

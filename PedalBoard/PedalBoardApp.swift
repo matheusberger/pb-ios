@@ -30,7 +30,7 @@ struct PedalBoardApp: App {
                 
                 Song.ListView(viewModel: viewModel)
                     .sheet(isPresented: $navigationModel.isPresentingSheet) {
-                        navigationModel.songEditView
+                        navigationModel.presentedSheets.last
                     }
                     .navigationDestination(for: NavigationModel.AppView.self) { view in
                         switch view {

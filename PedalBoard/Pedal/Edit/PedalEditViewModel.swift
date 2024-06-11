@@ -34,7 +34,7 @@ extension Pedal {
             }
         }
         
-        init(delegate: Pedal.EditDelegate? = nil, editPedal: Pedal? = nil) {
+        init(_ editPedal: Pedal? = nil, delegate: Pedal.EditDelegate? = nil) {
             self.delegate = delegate
             
             if let pedal = editPedal {

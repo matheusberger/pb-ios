@@ -66,7 +66,6 @@ extension Song {
                 if let songError = error as? EditError {
                     alertMessage = songError.alertDescription
                     isPresentingAlert = true
-                    
                 }
             }
         }

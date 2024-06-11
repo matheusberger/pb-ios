@@ -60,19 +60,19 @@ final class SongEditViewModelTests: XCTestCase {
         
     }
     
-    func testAddSongPressedCallDelegate() {
+    func testAddSongPressedCallDelegate() async {
         delegate.didCallAddSong = false
         
-        viewModel.addSongPressed()
+        await viewModel.addSongPressed()
         
         XCTAssertTrue(delegate.didCallAddSong)
     }
     
-    func testWhenDelegateTrowsErrorAlertIsPresented() {
+    func testWhenDelegateTrowsErrorAlertIsPresented() async {
         
         delegate.shouldThrowAddSongError = Song.EditError.missingArtist
         
-        viewModel.addSongPressed()
+        await viewModel.addSongPressed()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
         XCTAssertEqual(viewModel.alertMessage, Song.EditError.missingArtist.alertDescription)
