@@ -13,7 +13,6 @@ extension Song {
         
         @ObservedObject var viewModel: EditViewModel
         
-        
         init(viewModel: EditViewModel) {
             self.viewModel = viewModel
         }
@@ -65,12 +64,14 @@ extension Song {
                 }
                 
                 Section("Save") {
-                    Button("Add Song") {
-                        viewModel.addSongPressed()
+                    Button("SAVE SONG") {
+                        Task {
+                            await viewModel.addSongPressed()
+                        }
                     }
                 }
             }
-            .navigationTitle("Add new song")
+            .navigationTitle("NEW SONG")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $viewModel.isPresentingSheet) {
                 NavigationView {

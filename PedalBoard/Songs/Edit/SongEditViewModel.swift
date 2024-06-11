@@ -57,10 +57,10 @@ extension Song {
 
         }
         
-        public func addSongPressed() {
+        public func addSongPressed() async {
             do {
                 let song = Song(name: songName, artist: bandName, pedals: pedalList)
-                try delegate?.addSong(song)
+                try await delegate?.addSong(song)
                 
             } catch {
                 if let songError = error as? EditError {

@@ -31,15 +31,9 @@ extension Song {
             }
         }
         @Published var isShowingAlert = false
-        @Published var isShowingSheet: Bool = false
         @Published var searchText: String = ""
         
         var alert: Alert?
-        
-        var pedalView: Pedal.ListView {
-            let viewModel = Pedal.ListViewModel(provider: pedalProvider)
-            return Pedal.ListView(viewModel: viewModel)
-        }
         
         var editView: EditView {
             let viewModel = EditViewModel(pedalProvider: pedalProvider, delegate: self)
@@ -53,6 +47,8 @@ extension Song {
         
         private var songProvider: any DataProviderProtocol<Song>
         private var pedalProvider: any DataProviderProtocol<Pedal>
+        
+        private var navigationModel: NavigationModel?
         
         var songs: [Song] {
             if searchText.isEmpty {
@@ -96,8 +92,8 @@ extension Song {
             }
         }
         
-        public func addSongPressed() {
-            isShowingSheet = true
+        public func setNavigationModel(_ navigationModel: NavigationModel) {
+            self.navigationModel = navigationModel
         }
         
         func deleteSong(_ deletedSong: Song) {
@@ -106,12 +102,35 @@ extension Song {
     }
 }
 
+/// Navigation
+extension Song.ListViewModel {
+    func navigateToPedaList() async {
+        guard let navigationModel else {
+            // error, navigation model not set
+            return
+        }
+        
+        await navigationModel.push(.pedalList)
+    }
+    
+    func presentEditSheet() async {
+        guard let navigationModel else {
+            // error, navigation model not set
+            return
+        }
+        
+        await navigationModel.presentSongEditView(delegate: self)
+    }
+}
+
+/// EditDelegate
+@MainActor
 extension Song.ListViewModel: Song.EditDelegate {
-    func addSong(_ song: Song) throws {
+    func addSong(_ song: Song) async throws {
         try validateSong(song)
         
         self.allSongs.append(song)
-        isShowingSheet = false
+        navigationModel?.isPresentingSheet = false
     }
     
     func updateSong(for updatedSong: Song) throws {

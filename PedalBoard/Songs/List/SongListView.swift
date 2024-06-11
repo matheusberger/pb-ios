@@ -11,6 +11,8 @@ import PedalCore
 extension Song {
     public struct ListView: View {
         @Environment(\.colorScheme) var colorScheme
+        @EnvironmentObject private var navigationModel: NavigationModel
+        
         @StateObject var viewModel: ListViewModel
         
         public init(viewModel: ListViewModel) {
@@ -31,14 +33,18 @@ extension Song {
             }
             .navigationTitle("My Songs")
             .toolbar {
-                NavigationLink {
-                    viewModel.pedalView
+                Button {
+                    Task {
+                        await viewModel.navigateToPedaList()
+                    }
                 } label: {
                     Image(systemName: "lanyardcard.fill")
                 }
             }
-            .sheet(isPresented: $viewModel.isShowingSheet) {
-                viewModel.editView
+            .onAppear {
+                Task {
+                    viewModel.setNavigationModel(navigationModel)
+                }
             }
         }
         
@@ -86,9 +92,11 @@ extension Song {
         private var footerButtonsView: some View {
             VStack {
                 Button {
-                    viewModel.addSongPressed()
+                    Task {
+                        await viewModel.presentEditSheet()
+                    }
                 } label: {
-                    Text("Create new Song")
+                    Text("NEW SONG")
                         .fontWeight(.bold)
                         .frame(width: 250,height: 30)
                         .foregroundStyle(colorScheme == .light ? Color.white : Color.black)

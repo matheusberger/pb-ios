@@ -62,9 +62,9 @@ extension Song {
             }
         }
         
-        public func saveButtonPressed() {
+        public func saveButtonPressed() async {
             do {
-                try delegate?.updateSong(for: self.song)
+                try await delegate?.updateSong(for: self.song)
             } catch {
                 if let songError = error as? EditError {
                     alertMessage = songError.alertDescription

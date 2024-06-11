@@ -9,9 +9,9 @@ import Foundation
 
 extension Song {
     protocol EditDelegate: AnyObject {
-        func addSong(_ song: Song) throws
+        func addSong(_ song: Song) async throws
         
-        func updateSong(for updatedSong: Song) throws
+        func updateSong(for updatedSong: Song) async throws
         
     }
 }

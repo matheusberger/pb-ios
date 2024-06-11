@@ -35,7 +35,9 @@ extension Song {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if viewModel.hasChanges {
                         Button {
-                            viewModel.saveButtonPressed()
+                            Task {
+                                await viewModel.saveButtonPressed()
+                            }
                         } label: {
                             Text("Save")
                         }
