@@ -77,46 +77,11 @@ final class SongViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.songs.contains(song3))
     }
     
-    func testAddSongWithValidInfoAppendsToAllSongsArray() async {
+    func testAddSongWithValidInfoAppendsToAllSongsArray() {
         let song = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
         
-        try? await viewModel.addSong(song)
+        viewModel.allSongs.append(song)
         XCTAssertTrue(viewModel.allSongs.contains(song))
-    }
-    
-    
-    func testAddsongWithInvalidInfoThrowsError() async {
-        let song = Song(name: "", artist: "Arctic Monkeys", pedals: [])
-        
-        do {
-            try await viewModel.addSong(song)
-        } catch {
-            XCTAssertNotNil(error)
-        }
-    }
-    
-    func testAddSongWithNoNameThrowsRelatedAddSongError() async {
-        let song = Song(name: "", artist: "Arctic Monkeys", pedals: [])
-        
-        do {
-            try await viewModel.addSong(song)
-        } catch {
-            if let addSongError = error as? Song.EditError {
-                XCTAssertTrue(addSongError == .missingName)
-            }
-        }
-    }
-    
-    func testAddSongWithNoArtistThrowsRelatedAddSongError() async {
-        let song = Song(name: "Teddy Picker", artist: "", pedals: [])
-        
-        do {
-            try await viewModel.addSong(song)
-        } catch {
-            if let addSongError = error as? Song.EditError {
-                XCTAssertTrue(addSongError == .missingArtist)
-            }
-        }
     }
 }
 

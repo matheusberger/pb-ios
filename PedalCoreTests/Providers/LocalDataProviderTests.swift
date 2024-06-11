@@ -33,7 +33,7 @@ final class LocalDataProviderTests: XCTestCase {
             }
         }
         
-        await fulfillment(of: [loadSuccessExpectation])
+        await fulfillment(of: [loadSuccessExpectation], timeout: 10)
     }
     
     func testSavingError() throws {

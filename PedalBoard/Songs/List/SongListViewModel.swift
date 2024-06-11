@@ -95,16 +95,6 @@ extension Song {
             allSongs = allSongs.filter { $0 != deletedSong }
         }
     }
-    
-    private func validateSong(_ song: Song) throws {
-        if song.name.isEmpty {
-            throw Song.EditError.missingName
-        }
-        
-        if song.artist.isEmpty {
-            throw Song.EditError.missingArtist
-        }
-    }
 }
 
 /// Navigation
