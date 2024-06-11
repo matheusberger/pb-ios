@@ -25,14 +25,11 @@ extension Song {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        weak var delegate: EditDelegate?
-        
         private let pedalProvider: any DataProviderProtocol<Pedal>
         
-        init(song: Song, pedalProvider: any DataProviderProtocol<Pedal>, delegate: EditDelegate? = nil) {
+        init(song: Song, pedalProvider: any DataProviderProtocol<Pedal>) {
             self.song = song
             self.pedalProvider = pedalProvider
-            self.delegate = delegate
         }
         
         var isInEditing: Bool {
@@ -64,7 +61,7 @@ extension Song {
         
         public func saveButtonPressed() async {
             do {
-                try await delegate?.updateSong(for: self.song)
+                //try await delegate?.updateSong(for: self.song)
             } catch {
                 if let songError = error as? EditError {
                     alertMessage = songError.alertDescription

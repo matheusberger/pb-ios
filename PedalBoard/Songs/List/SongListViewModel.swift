@@ -35,13 +35,8 @@ extension Song {
         
         var alert: Alert?
         
-        var editView: EditView {
-            let viewModel = EditViewModel(pedalProvider: pedalProvider, delegate: self)
-            return Song.EditView(viewModel: viewModel)
-        }
-        
         func detailView(_ song: Song) -> DetailView {
-            let viewModel = DetailViewModel(song: song, pedalProvider: pedalProvider, delegate: self)
+            let viewModel = DetailViewModel(song: song, pedalProvider: pedalProvider)
             return DetailView(viewModel: viewModel)
         }
         
@@ -100,6 +95,16 @@ extension Song {
             allSongs = allSongs.filter { $0 != deletedSong }
         }
     }
+    
+    private func validateSong(_ song: Song) throws {
+        if song.name.isEmpty {
+            throw Song.EditError.missingName
+        }
+        
+        if song.artist.isEmpty {
+            throw Song.EditError.missingArtist
+        }
+    }
 }
 
 /// Navigation
@@ -119,35 +124,8 @@ extension Song.ListViewModel {
             return
         }
         
-        await navigationModel.presentSongEditView(delegate: self)
-    }
-}
-
-/// EditDelegate
-@MainActor
-extension Song.ListViewModel: Song.EditDelegate {
-    func addSong(_ song: Song) async throws {
-        try validateSong(song)
-        
-        self.allSongs.append(song)
-        navigationModel?.dismissSheet()
-    }
-    
-    func updateSong(for updatedSong: Song) throws {
-        try validateSong(updatedSong)
-        
-        allSongs = allSongs.map({ song in
-            song == updatedSong ? updatedSong : song
-        })
-    }
-    
-    private func validateSong(_ song: Song) throws {
-        if song.name.isEmpty {
-            throw Song.EditError.missingName
-        }
-        
-        if song.artist.isEmpty {
-            throw Song.EditError.missingArtist
+        await navigationModel.presentSongEditView { song in
+            self.allSongs.append(song)
         }
     }
 }

@@ -59,9 +59,12 @@ final class NavigationModel: ObservableObject {
 
 /// Sheet presentation
 extension NavigationModel {
-    func presentSongEditView(delegate: Song.EditDelegate) {
+    func presentSongEditView(_ onSave: @escaping (_ song: Song) -> Void) {
         isPresentingSheet = true
-        let viewModel = Song.EditViewModel(pedalProvider: pedalProvider, delegate: delegate)
+        let viewModel = Song.EditViewModel(availablePedals: pedalProvider.data) { song in
+            onSave(song)
+            self.dismissSheet()
+        }
         let songEditView = Song.EditView(viewModel: viewModel)
         presentedSheets.append(AnyView(songEditView))
     }
