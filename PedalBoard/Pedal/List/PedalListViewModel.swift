@@ -107,48 +107,14 @@ extension Pedal {
     }
 }
 
-extension Pedal.ListViewModel: Pedal.EditDelegate {
-    func addNewPedal(_ pedal: Pedal) throws {
-        
-        try validadePedalInfo(pedal)
-        
+extension Pedal.ListViewModel {
+    func addNewPedal(_ pedal: Pedal) {
         self.allPedals.append(pedal)
-        
         editPedal = nil
-        isShowingSheet = false
     }
     
-    func finishedEditingPedal(_ pedal: Pedal) throws {
-       
-        try validadePedalInfo(pedal)
-        
-        updatePedal(pedal)
-        
+    public func updatePedal(_ updatedPedal: Pedal) {
         editPedal = nil
-        isShowingSheet = false
-    }
-    
-    private func validadePedalInfo(_ pedal: Pedal) throws {
-        if pedal.name.isEmpty {
-            throw Pedal.EditError.missingName
-        }
-        
-        if pedal.brand.isEmpty {
-            throw Pedal.EditError.missingBrand
-        }
-        
-        if pedal.knobs.isEmpty {
-            throw Pedal.EditError.missingKnobs
-        }
-        
-        try pedal.knobs.forEach { knob in
-            if knob.name.isEmpty {
-                throw Pedal.EditError.missingKnobName
-            }
-        }
-    }
-    
-    private func updatePedal(_ updatedPedal: Pedal) {
         allPedals = allPedals.map { pedal in
             pedal == updatedPedal ? updatedPedal : pedal
         }

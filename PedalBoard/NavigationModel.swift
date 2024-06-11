@@ -69,9 +69,12 @@ extension NavigationModel {
         presentedSheets.append(AnyView(songEditView))
     }
     
-    func presentPedalEditView(_ pedal: Pedal, delegate: Pedal.EditDelegate) {
+    func presentPedalEditView(_ pedal: Pedal, _ onSave: @escaping (_ pedal: Pedal) -> Void) {
         isPresentingSheet = true
-        let viewModel = Pedal.EditViewModel(pedal, delegate: delegate)
+        let viewModel = Pedal.EditViewModel(pedal) { pedal in
+            onSave(pedal)
+            self.dismissSheet()
+        }
         let pedalEditView = Pedal.EditView(viewModel: viewModel)
         presentedSheets.append(AnyView(pedalEditView))
     }

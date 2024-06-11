@@ -59,17 +59,6 @@ extension Song {
             }
         }
         
-        public func saveButtonPressed() async {
-            do {
-                //try await delegate?.updateSong(for: self.song)
-            } catch {
-                if let songError = error as? EditError {
-                    alertMessage = songError.alertDescription
-                    isPresentingAlert = true
-                }
-            }
-        }
-        
         public func ChangePedalsButtonPressed() {
             isPresentingSheet.toggle()
         }

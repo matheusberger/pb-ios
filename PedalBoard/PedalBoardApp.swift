@@ -42,10 +42,6 @@ struct PedalBoardApp: App {
                             Pedal.ListView(viewModel: viewModel)
                         }
                     }
-                    .navigationDestination(for: Pedal.self) { pedal in
-                        let viewModel = Pedal.EditViewModel()
-                        Pedal.EditView(viewModel: viewModel)
-                    }
                     .navigationDestination(for: Song.self) { song in
                         let viewModel = Song.DetailViewModel(song: song, pedalProvider: pedalProvider)
                         Song.DetailView(viewModel: viewModel)
