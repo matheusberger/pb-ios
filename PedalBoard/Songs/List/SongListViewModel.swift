@@ -51,19 +51,8 @@ extension Song {
             return DetailView(viewModel: viewModel)
         }
         
-        private var songProvider: LocalDataProvider<Song>
-        private var pedalProvider: LocalDataProvider<Pedal>
-        
-        public init() {
-            let songPersistence = JsonDataService<Song>(fileName: "Song")
-            self.songProvider =  LocalDataProvider<Song>(persistence: songPersistence)
-            self.allSongs = []
-            
-            let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
-            self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
-            
-            load()
-        }
+        private var songProvider: any DataProviderProtocol<Song>
+        private var pedalProvider: any DataProviderProtocol<Pedal>
         
         var songs: [Song] {
             if searchText.isEmpty {
@@ -83,12 +72,10 @@ extension Song {
             }
         }
         
-        init(songProvider: LocalDataProvider<Song>) {
+        init(songProvider: any DataProviderProtocol<Song>, pedalProvider: any DataProviderProtocol<Pedal>) {
             self.allSongs = []
             self.songProvider = songProvider
-            
-            let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
-            self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
+            self.pedalProvider = pedalProvider
             
             load()
         }

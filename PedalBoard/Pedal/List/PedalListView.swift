@@ -118,9 +118,7 @@ extension Pedal {
 
 struct PedalListView_Previews: PreviewProvider {
     static var previews: some View {
-        let persistence = JsonDataService<Pedal>(fileName: "PedalPreview")
-        let provider =  LocalDataProvider<Pedal>(persistence: persistence)
-        let viewModel = Pedal.ListViewModel(provider: provider)
+        let viewModel = Pedal.ListViewModel(provider: PreviewDataProvider())
         NavigationStack {
             Pedal.ListView(viewModel: viewModel)
         }

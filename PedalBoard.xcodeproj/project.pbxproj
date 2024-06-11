@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7DECCF2C17F6CA00112A5A /* SongProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7DECCE2C17F6CA00112A5A /* SongProvider.swift */; };
+		0A7DECD22C17F83000112A5A /* PedalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7DECD12C17F83000112A5A /* PedalProvider.swift */; };
 		0A8557462B32269E0082E968 /* DataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557452B32269E0082E968 /* DataProviderProtocol.swift */; };
-		0A8557482B3227760082E968 /* LocalDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557472B3227760082E968 /* LocalDataProvider.swift */; };
+		0A8557482B3227760082E968 /* PreviewDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557472B3227760082E968 /* PreviewDataProvider.swift */; };
 		0AADE38E2B40EA2A008D86F0 /* PedalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56827F282A95869D0043277A /* PedalCore.framework */; };
 		0AADE3952B40EB6B008D86F0 /* JsonDataServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC928412B2A7A60006A259B /* JsonDataServiceTests.swift */; };
 		0AADE3962B40EB6B008D86F0 /* LocalDataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8557492B3238250082E968 /* LocalDataProviderTests.swift */; };
@@ -105,8 +107,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A7DECCE2C17F6CA00112A5A /* SongProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongProvider.swift; sourceTree = "<group>"; };
+		0A7DECD12C17F83000112A5A /* PedalProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedalProvider.swift; sourceTree = "<group>"; };
 		0A8557452B32269E0082E968 /* DataProviderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderProtocol.swift; sourceTree = "<group>"; };
-		0A8557472B3227760082E968 /* LocalDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataProvider.swift; sourceTree = "<group>"; };
+		0A8557472B3227760082E968 /* PreviewDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewDataProvider.swift; sourceTree = "<group>"; };
 		0A8557492B3238250082E968 /* LocalDataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataProviderTests.swift; sourceTree = "<group>"; };
 		0A85574B2B323DA80082E968 /* MockPersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPersistanceService.swift; sourceTree = "<group>"; };
 		0AC0622F2B2206CA0062451F /* JsonDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonDataService.swift; sourceTree = "<group>"; };
@@ -195,6 +199,15 @@
 		0A7DECCD2C17F4C500112A5A /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				0A7DECCE2C17F6CA00112A5A /* SongProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		0A7DECD02C17F81100112A5A /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				0A7DECD12C17F83000112A5A /* PedalProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -219,7 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				0A8557452B32269E0082E968 /* DataProviderProtocol.swift */,
-				0A8557472B3227760082E968 /* LocalDataProvider.swift */,
+				0A8557472B3227760082E968 /* PreviewDataProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -247,6 +260,7 @@
 				0AEE63852B40D25E003DFD83 /* List */,
 				0AEE63862B40D459003DFD83 /* Edit */,
 				0AEE63802B40D13F003DFD83 /* Models */,
+				0A7DECD02C17F81100112A5A /* Providers */,
 			);
 			path = Pedal;
 			sourceTree = "<group>";
@@ -640,6 +654,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7DECD22C17F83000112A5A /* PedalProvider.swift in Sources */,
 				0AEE639D2B40DE6F003DFD83 /* SongListViewModel.swift in Sources */,
 				0AEE63B42B40DEE0003DFD83 /* KnobView.swift in Sources */,
 				0AEE63B52B40DEE0003DFD83 /* KnobViewStyle.swift in Sources */,
@@ -659,6 +674,7 @@
 				0AEE63AD2B40DE97003DFD83 /* PedalEditDelegate.swift in Sources */,
 				0AEE639C2B40DE6F003DFD83 /* SongDetailView.swift in Sources */,
 				0AEE63B32B40DEE0003DFD83 /* KnobGridView.swift in Sources */,
+				0A7DECCF2C17F6CA00112A5A /* SongProvider.swift in Sources */,
 				0AEE63A02B40DE6F003DFD83 /* SongEditDelegate.swift in Sources */,
 				0AEE639A2B40DE6F003DFD83 /* SelectPedalView.swift in Sources */,
 				0AEE639F2B40DE6F003DFD83 /* Song+Populate.swift in Sources */,
@@ -677,7 +693,7 @@
 				0AC062302B2206CA0062451F /* JsonDataService.swift in Sources */,
 				0AC062332B229B1E0062451F /* PersistenceProtocol.swift in Sources */,
 				0A8557462B32269E0082E968 /* DataProviderProtocol.swift in Sources */,
-				0A8557482B3227760082E968 /* LocalDataProvider.swift in Sources */,
+				0A8557482B3227760082E968 /* PreviewDataProvider.swift in Sources */,
 				56827F2C2A95869D0043277A /* PedalCore.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

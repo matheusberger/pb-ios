@@ -1,20 +1,21 @@
 //
 //  PedalProvider.swift
-//  PedalCore
+//  PedalBoard
 //
-//  Created by Matheus Berger on 10/06/24.
+//  Created by Matheus Berger on 11/06/24.
 //
 
 import Foundation
+import PedalCore
 
-final public class PedalProvider: DataProviderProtocol {
+final class PedalProvider: DataProviderProtocol {
     public typealias T = Pedal
-
+    
     private let persistence: any PersistenceProtocol<Pedal>
     
     private(set) public var data: [Pedal]
     
-    public init(persistence: any PersistenceProtocol<Pedal>) {
+    public init(persistence: any PersistenceProtocol<Pedal> = JsonDataService(fileName: "pedal")) {
         self.persistence = persistence
         self.data = []
     }

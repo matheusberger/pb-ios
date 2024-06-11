@@ -37,7 +37,7 @@ extension Pedal {
         
         var editPedal: Pedal?
         
-        private var provider: LocalDataProvider<Pedal>
+        private var provider: any DataProviderProtocol<Pedal>
         
         var state: State {
             if allPedals.isEmpty {
@@ -57,7 +57,7 @@ extension Pedal {
             }
         }
         
-        init(provider: LocalDataProvider<Pedal>) {
+        init(provider: any DataProviderProtocol<Pedal>) {
             self.provider = provider
             self.allPedals = []
             

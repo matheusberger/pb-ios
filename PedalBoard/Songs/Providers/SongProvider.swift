@@ -1,20 +1,21 @@
 //
 //  SongProvider.swift
-//  PedalCore
+//  PedalBoard
 //
-//  Created by Matheus Berger on 10/06/24.
+//  Created by Matheus Berger on 11/06/24.
 //
 
 import Foundation
+import PedalCore
 
-final public class SongProvider: DataProviderProtocol {
+final class SongProvider: DataProviderProtocol {
     public typealias T = Song
     
     private let persistence: any PersistenceProtocol<Song>
     
     private(set) public var data: [Song]
     
-    public init(persistence: any PersistenceProtocol<Song>) {
+    public init(persistence: any PersistenceProtocol<Song> = JsonDataService(fileName: "song")) {
         self.persistence = persistence
         self.data = []
     }
