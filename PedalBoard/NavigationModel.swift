@@ -31,9 +31,6 @@ final class NavigationModel: ObservableObject {
     
     enum AppView: Hashable, Sendable {
         case songList
-        case songEdit
-        case songDetail
         case pedalList
-        case pedalEdit
     }
 }
