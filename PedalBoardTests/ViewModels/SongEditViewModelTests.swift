@@ -16,7 +16,7 @@ final class SongEditViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         delegate = MockSongEditDelegate()
-        let provider = LocalDataProvider<Pedal.Model>(persistence: JsonDataService(fileName: "Preview"))
+        let provider = LocalDataProvider<Pedal>(persistence: JsonDataService(fileName: "Preview"))
         viewModel = Song.EditViewModel(pedalProvider: provider, delegate: delegate)
     }
     
@@ -31,9 +31,9 @@ final class SongEditViewModelTests: XCTestCase {
     }
     
     func testUpdateSelectedPedalsUpdatedPedalList() {
-        let pedal1 = Pedal.Model(name: "test1", brand: "test1", knobs: [])
-        let pedal2 = Pedal.Model(name: "test2", brand: "test2", knobs: [])
-        let pedal3 = Pedal.Model(name: "test3", brand: "test3", knobs: [])
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
+        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
         let selectedPedal = [pedal2, pedal3]
         viewModel.pedalList = [pedal1]
 
@@ -46,9 +46,9 @@ final class SongEditViewModelTests: XCTestCase {
     }
 
     func testUpdateRemovePedalRemovesItFromPedalList() {
-        let pedal1 = Pedal.Model(name: "test1", brand: "test1", knobs: [])
-        let pedal2 = Pedal.Model(name: "test2", brand: "test2", knobs: [])
-        let pedal3 = Pedal.Model(name: "test3", brand: "test3", knobs: [])
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
+        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
         let pedals = [pedal1, pedal2, pedal3]
         viewModel.pedalList = pedals
 
@@ -88,9 +88,9 @@ final class SongEditViewModelTests: XCTestCase {
     
     func testUpdatePedalListFromSheetSelectedPedals() {
         viewModel.pedalList = []
-        let pedal1 = Pedal.Model(name: "test1", brand: "test1", knobs: [])
-        let pedal2 = Pedal.Model(name: "test2", brand: "test2", knobs: [])
-        let pedal3 = Pedal.Model(name: "test3", brand: "test3", knobs: [])
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
+        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
         let selectedPedals = [pedal1, pedal2, pedal3]
 
         viewModel.updateSelectedPedals(selectedPedals)

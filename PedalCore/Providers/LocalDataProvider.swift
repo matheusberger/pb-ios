@@ -2,12 +2,12 @@
 //  LocalDataProvider.swift
 //  PedalCore
 //
-//  Created by Matheus Berger on 19/12/23.
+//  Created by Matheus Berger on 11/06/24.
 //
 
 import Foundation
 
-public class LocalDataProvider<T: Hashable>: DataProviderProtocol {
+public final class LocalDataProvider<T: Hashable>: DataProviderProtocol {
     public typealias T = T
     
     private let persistence: any PersistenceProtocol<T>

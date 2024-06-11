@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectPedalRow: View {
     
-    let pedal: Pedal.Model
+    let pedal: Pedal
     let isOn: Bool
     
     var body: some View {

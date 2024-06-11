@@ -28,7 +28,7 @@ final class PedalEditViewModelTests: XCTestCase {
     }
     
     func testWhenEditingPedalViewModelHasRelatedStyle() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
+        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.EditViewModel(editPedal: pedal)
         
         XCTAssertTrue(viewModel.style == .editPedal)
@@ -36,7 +36,7 @@ final class PedalEditViewModelTests: XCTestCase {
     }
     
     func testWhenEditingPedalFieldsHasContent() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
+        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.EditViewModel(editPedal: pedal)
         
         
@@ -81,7 +81,7 @@ final class PedalEditViewModelTests: XCTestCase {
     
     
     func testWhenOnEditPedalStyleDoneButtonCallsEdidPedalDone() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
+        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.EditViewModel(delegate: self.delegate, editPedal: pedal)
         
         viewModel.doneButtonPressed()
@@ -99,7 +99,7 @@ final class PedalEditViewModelTests: XCTestCase {
     }
     
     func testEditPedalPresentsAlertWhenErrorOccurs() {
-        let pedal = Pedal.Model(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
+        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.EditViewModel(delegate: self.delegate, editPedal: pedal)
         viewModel.isPresentingAlert = false
         delegate.finishedEditingPedalShouldThrowError = .missingBrand

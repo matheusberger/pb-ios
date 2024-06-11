@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Song {
     struct ListRow: View {
-        let song: Song.Model
+        let song: Song
         
         var body: some SwiftUI.View {
             VStack(alignment: .leading) {

@@ -89,7 +89,7 @@ extension Song {
 
 struct CreateSongView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = Song.EditViewModel(pedalProvider: LocalDataProvider<Pedal.Model>(persistence: JsonDataService(fileName: "Preview")))
+        let viewModel = Song.EditViewModel(pedalProvider: PreviewDataProvider<Pedal>())
         NavigationStack {
             Song.EditView(viewModel: viewModel)
         }

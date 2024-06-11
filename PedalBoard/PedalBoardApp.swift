@@ -12,7 +12,9 @@ import PedalCore
 struct PedalBoardApp: App {
     var body: some Scene {
         WindowGroup {
-            let viewModel = Song.ListViewModel()
+            let songPersistence = JsonDataService<Song>(fileName: "song")
+            let pedalPersistance = JsonDataService<Pedal>(fileName: "pedal")
+            let viewModel = Song.ListViewModel(songProvider: SongProvider(persistence: songPersistence), pedalProvider: PedalProvider(persistence: pedalPersistance))
             NavigationStack {
                 Song.ListView(viewModel: viewModel)
             }

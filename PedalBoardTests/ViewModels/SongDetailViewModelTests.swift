@@ -16,10 +16,10 @@ final class SongDetailViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         
-        let song = Song.Model(name: "Example", artist: "Example", pedals: [Pedal.Model(name: "pedal1", brand: "brand1", knobs: [Pedal.Knob(name: "Leve")])])
+        let song = Song(name: "Example", artist: "Example", pedals: [Pedal(name: "pedal1", brand: "brand1", knobs: [Pedal.Knob(name: "Leve")])])
         
         delegate = MockSongEditDelegate()
-        let provider = LocalDataProvider<Pedal.Model>(persistence: JsonDataService(fileName: "Preview"))
+        let provider = LocalDataProvider<Pedal>(persistence: JsonDataService(fileName: "Preview"))
         viewModel = Song.DetailViewModel(song: song, pedalProvider: provider, delegate: delegate)
         
     }
@@ -110,9 +110,9 @@ final class SongDetailViewModelTests: XCTestCase {
     func testUserDidSelectNewPedalsUpdatesViewModelPedals() {
         
         viewModel.song.pedals = []
-        let pedals: [Pedal.Model] = [
-            Pedal.Model(name: "Pedal1", brand: "Brand1", knobs: []),
-            Pedal.Model(name: "Pedal2", brand: "Brand2", knobs: [])
+        let pedals: [Pedal] = [
+            Pedal(name: "Pedal1", brand: "Brand1", knobs: []),
+            Pedal(name: "Pedal2", brand: "Brand2", knobs: [])
         ]
         
         viewModel.userDidSelectNewPedals(pedals: pedals)
