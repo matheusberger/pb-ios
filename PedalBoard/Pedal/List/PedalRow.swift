@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Pedal {
     struct ListRow: View {
-        var pedal: Pedal.Model
+        var pedal: Pedal
         
         var body: some View {
             VStack(alignment: .leading) {
@@ -35,7 +35,7 @@ extension Pedal {
 
 struct PedalRow_Previews: PreviewProvider {
     static var previews: some View {
-        Pedal.ListRow(pedal: Pedal.Model(name: "Big Muff Pi",
+        Pedal.ListRow(pedal: Pedal(name: "Big Muff Pi",
                               brand: "Eletro Hamonix",
                                           knobs: [    Pedal.Knob(name: "Volume", level: 0.25),
                                                       Pedal.Knob(name: "Tone", level: 0.5),

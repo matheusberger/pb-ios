@@ -13,7 +13,7 @@ class MockSongEditDelegate: Song.EditDelegate {
     var didCallAddSong: Bool = false
     var shouldThrowAddSongError: Song.EditError?
     
-    func addSong(_ song: Song.Model) throws {
+    func addSong(_ song: Song) throws {
         didCallAddSong = true
         
         if let error = shouldThrowAddSongError {
@@ -21,7 +21,7 @@ class MockSongEditDelegate: Song.EditDelegate {
         }
     }
     
-    func updateSong(for updatedSong: Song.Model) throws {
+    func updateSong(for updatedSong: Song) throws {
         didCallAddSong = true
         
         if let error = shouldThrowAddSongError {

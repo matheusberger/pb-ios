@@ -15,7 +15,7 @@ extension Song {
             case presentation, editingSong, editingKnobs
         }
         
-        @Published var song: Song.Model
+        @Published var song: Song
         
         @Published var state: State = .presentation
         
@@ -27,9 +27,9 @@ extension Song {
         
         weak var delegate: EditDelegate?
         
-        private let pedalProvider: any DataProviderProtocol<Pedal.Model>
+        private let pedalProvider: any DataProviderProtocol<Pedal>
         
-        init(song: Song.Model, pedalProvider: any DataProviderProtocol<Pedal.Model>, delegate: EditDelegate? = nil) {
+        init(song: Song, pedalProvider: any DataProviderProtocol<Pedal>, delegate: EditDelegate? = nil) {
             self.song = song
             self.pedalProvider = pedalProvider
             self.delegate = delegate
@@ -52,7 +52,7 @@ extension Song {
             return state == .editingKnobs
         }
         
-        var pedalsUsed: [Pedal.Model]  {
+        var pedalsUsed: [Pedal]  {
             return song.pedals
         }
         
@@ -77,7 +77,7 @@ extension Song {
             isPresentingSheet.toggle()
         }
         
-        public func userDidSelectNewPedals(pedals: [Pedal.Model]) {
+        public func userDidSelectNewPedals(pedals: [Pedal]) {
             song.pedals = pedals
         }
         

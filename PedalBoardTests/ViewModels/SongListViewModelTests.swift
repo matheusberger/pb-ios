@@ -19,8 +19,8 @@ final class SongViewModelTests: XCTestCase {
     }
 
     func testViewModelEmptyStateWhenHasNoSongs() {
-        let persistance = JsonDataService<Song.Model>(fileName: "SongsViewModelTests")
-        let provider = LocalDataProvider<Song.Model>(persistence: persistance)
+        let persistance = JsonDataService<Song>(fileName: "SongsViewModelTests")
+        let provider = LocalDataProvider<Song>(persistence: persistance)
         viewModel = Song.ListViewModel(songProvider: provider)
         
         XCTAssertTrue(viewModel.state == .empty)
@@ -39,9 +39,9 @@ final class SongViewModelTests: XCTestCase {
     }
     
     func testDeleteSongRemovesItFromSongsArray() {
-        let song1 = Song.Model(name: "test1", artist: "test1", pedals: [])
-        let song2 = Song.Model(name: "test2", artist: "test2", pedals: [])
-        let song3 = Song.Model(name: "test3", artist: "test3", pedals: [])
+        let song1 = Song(name: "test1", artist: "test1", pedals: [])
+        let song2 = Song(name: "test2", artist: "test2", pedals: [])
+        let song3 = Song(name: "test3", artist: "test3", pedals: [])
         let songsArray = [song1, song2, song3]
         viewModel = Song.ListViewModel()
         viewModel.allSongs = songsArray
@@ -55,9 +55,9 @@ final class SongViewModelTests: XCTestCase {
     }
 
     func testSearchFilterSelectsSongsBySongName() {
-        let song1 = Song.Model(name: "505", artist: "Arctic Monkeys", pedals: [])
-        let song2 = Song.Model(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
-        let song3 = Song.Model(name: "Reckoner", artist: "Radiohead", pedals: [])
+        let song1 = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
+        let song2 = Song(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
+        let song3 = Song(name: "Reckoner", artist: "Radiohead", pedals: [])
         let songsArray = [song1, song2, song3]
         viewModel = Song.ListViewModel()
         viewModel.allSongs = songsArray
@@ -70,9 +70,9 @@ final class SongViewModelTests: XCTestCase {
     }
     
     func testNoSongsFilterWhenSearchSearachFilterIsEmpty() {
-        let song1 = Song.Model(name: "505", artist: "Arctic Monkeys", pedals: [])
-        let song2 = Song.Model(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
-        let song3 = Song.Model(name: "Reckoner", artist: "Radiohead", pedals: [])
+        let song1 = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
+        let song2 = Song(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
+        let song3 = Song(name: "Reckoner", artist: "Radiohead", pedals: [])
         let songsArray = [song1, song2, song3]
         viewModel = Song.ListViewModel()
         viewModel.allSongs = songsArray
@@ -93,7 +93,7 @@ final class SongViewModelTests: XCTestCase {
     }
     
     func testAddSongWithValidInfoAppendsToAllSongsArray() {
-        let song = Song.Model(name: "505", artist: "Arctic Monkeys", pedals: [])
+        let song = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
         
         try? viewModel.addSong(song)
         
@@ -104,7 +104,7 @@ final class SongViewModelTests: XCTestCase {
     
     func testAddsongWithInvalidInfoThrowsError() {
         
-        let song = Song.Model(name: "", artist: "Arctic Monkeys", pedals: [])
+        let song = Song(name: "", artist: "Arctic Monkeys", pedals: [])
         
         XCTAssertThrowsError(try viewModel.addSong(song))
         
@@ -112,7 +112,7 @@ final class SongViewModelTests: XCTestCase {
     
     func testAddSongWithNoNameThrowsRelatedAddSongError() {
         
-        let song = Song.Model(name: "", artist: "Arctic Monkeys", pedals: [])
+        let song = Song(name: "", artist: "Arctic Monkeys", pedals: [])
         
         do {
             try viewModel.addSong(song)
@@ -126,7 +126,7 @@ final class SongViewModelTests: XCTestCase {
     
     func testAddSongWithNoArtistThrowsRelatedAddSongError() {
         
-        let song = Song.Model(name: "Teddy Picker", artist: "", pedals: [])
+        let song = Song(name: "Teddy Picker", artist: "", pedals: [])
         
         do {
             try viewModel.addSong(song)

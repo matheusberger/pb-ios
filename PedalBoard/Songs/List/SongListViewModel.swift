@@ -15,7 +15,7 @@ extension Song {
             case empty, content
         }
         
-        @Published var allSongs: [Song.Model] {
+        @Published var allSongs: [Song] {
             didSet {
                 do {
                     try songProvider.update(allSongs)
@@ -46,26 +46,26 @@ extension Song {
             return Song.EditView(viewModel: viewModel)
         }
         
-        func detailView(_ song: Song.Model) -> DetailView {
+        func detailView(_ song: Song) -> DetailView {
             let viewModel = DetailViewModel(song: song, pedalProvider: pedalProvider, delegate: self)
             return DetailView(viewModel: viewModel)
         }
         
-        private var songProvider: LocalDataProvider<Song.Model>
-        private var pedalProvider: LocalDataProvider<Pedal.Model>
+        private var songProvider: LocalDataProvider<Song>
+        private var pedalProvider: LocalDataProvider<Pedal>
         
         public init() {
-            let songPersistence = JsonDataService<Song.Model>(fileName: "Song")
-            self.songProvider =  LocalDataProvider<Song.Model>(persistence: songPersistence)
+            let songPersistence = JsonDataService<Song>(fileName: "Song")
+            self.songProvider =  LocalDataProvider<Song>(persistence: songPersistence)
             self.allSongs = []
             
-            let pedalPersistence = JsonDataService<Pedal.Model>(fileName: "Pedal")
-            self.pedalProvider =  LocalDataProvider<Pedal.Model>(persistence: pedalPersistence)
+            let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
+            self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
             
             load()
         }
         
-        var songs: [Song.Model] {
+        var songs: [Song] {
             if searchText.isEmpty {
                 return allSongs
             } else {
@@ -83,12 +83,12 @@ extension Song {
             }
         }
         
-        init(songProvider: LocalDataProvider<Song.Model>) {
+        init(songProvider: LocalDataProvider<Song>) {
             self.allSongs = []
             self.songProvider = songProvider
             
-            let pedalPersistence = JsonDataService<Pedal.Model>(fileName: "Pedal")
-            self.pedalProvider =  LocalDataProvider<Pedal.Model>(persistence: pedalPersistence)
+            let pedalPersistence = JsonDataService<Pedal>(fileName: "Pedal")
+            self.pedalProvider =  LocalDataProvider<Pedal>(persistence: pedalPersistence)
             
             load()
         }
@@ -113,21 +113,21 @@ extension Song {
             isShowingSheet = true
         }
         
-        func deleteSong(_ deletedSong: Song.Model) {
+        func deleteSong(_ deletedSong: Song) {
             allSongs = allSongs.filter { $0 != deletedSong }
         }
     }
 }
 
 extension Song.ListViewModel: Song.EditDelegate {
-    func addSong(_ song: Song.Model) throws {
+    func addSong(_ song: Song) throws {
         try validateSong(song)
         
         self.allSongs.append(song)
         isShowingSheet = false
     }
     
-    func updateSong(for updatedSong: Song.Model) throws {
+    func updateSong(for updatedSong: Song) throws {
         try validateSong(updatedSong)
         
         allSongs = allSongs.map({ song in
@@ -135,7 +135,7 @@ extension Song.ListViewModel: Song.EditDelegate {
         })
     }
     
-    private func validateSong(_ song: Song.Model) throws {
+    private func validateSong(_ song: Song) throws {
         if song.name.isEmpty {
             throw Song.EditError.missingName
         }

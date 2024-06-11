@@ -15,14 +15,14 @@ class PedalCreationDelegateMock: Pedal.EditDelegate {
     var didCallAddNewPedal: Bool = false
     var addNewPedalShouldThrowError: Pedal.EditError? = nil
     
-    func finishedEditingPedal(_ pedal: Pedal.Model) throws {
+    func finishedEditingPedal(_ pedal: Pedal) throws {
         didCallFinishedEditingPedal = true
         if let error = finishedEditingPedalShouldThrowError {
             throw error
         }
     }
     
-    func addNewPedal(_ pedal: Pedal.Model) throws {
+    func addNewPedal(_ pedal: Pedal) throws {
         didCallAddNewPedal = true
         if let error = addNewPedalShouldThrowError {
             throw error

@@ -12,10 +12,10 @@ import XCTest
 final class JsonDataServiceTests: XCTestCase {
     
     private let fileName = "TestFile"
-    private var service: JsonDataService<Song.Model>?
+    private var service: JsonDataService<Song>?
 
     override func setUpWithError() throws {
-        service = JsonDataService<Song.Model>(fileName: fileName)
+        service = JsonDataService<Song>(fileName: fileName)
     }
     
     func testSaveSongsToTestFile() throws {

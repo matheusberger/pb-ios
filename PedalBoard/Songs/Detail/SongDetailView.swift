@@ -210,8 +210,8 @@ extension Song {
 
 struct SongDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let persistence = JsonDataService<Pedal.Model>(fileName: "Preview")
-        let provider =  LocalDataProvider<Pedal.Model>(persistence: persistence)
+        let persistence = JsonDataService<Pedal>(fileName: "Preview")
+        let provider =  LocalDataProvider<Pedal>(persistence: persistence)
         NavigationView {
             Song.DetailView(viewModel: Song.DetailViewModel(song: Song.getSample().first!, pedalProvider: provider))
         }

@@ -15,7 +15,7 @@ extension Pedal {
             case editPedal, createPedal
         }
         
-        var editePedal: Pedal.Model?
+        var editePedal: Pedal?
         
         @Published var pedalName: String
         @Published var brandName: String
@@ -34,7 +34,7 @@ extension Pedal {
             }
         }
         
-        init(delegate: Pedal.EditDelegate? = nil, editPedal: Pedal.Model? = nil) {
+        init(delegate: Pedal.EditDelegate? = nil, editPedal: Pedal? = nil) {
             self.delegate = delegate
             
             if let pedal = editPedal {
@@ -72,7 +72,7 @@ extension Pedal {
         
         func addNewPedal() {
             do {
-                let pedal = Pedal.Model(name: self.pedalName, brand: self.brandName, knobs: self.knobs)
+                let pedal = Pedal(name: self.pedalName, brand: self.brandName, knobs: self.knobs)
                 try delegate?.addNewPedal(pedal)
                 
             } catch {
@@ -84,7 +84,7 @@ extension Pedal {
             do {
                 guard let oldPedal = editePedal else { return }
             
-                let pedal = Pedal.Model(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
+                let pedal = Pedal(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
                 try delegate?.finishedEditingPedal(pedal)
                 
             } catch {

@@ -14,7 +14,7 @@ extension Song {
         
         weak var delegate: EditDelegate?
         
-        var availablePedals: [Pedal.Model] {
+        var availablePedals: [Pedal] {
             return provider.data
         }
         
@@ -26,16 +26,16 @@ extension Song {
         
         @Published public var songName: String = ""
         @Published var bandName: String = ""
-        @Published var pedalList: [Pedal.Model] = []
+        @Published var pedalList: [Pedal] = []
         
         @Published var isPresentingSheet: Bool = false
         
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        private let provider: any DataProviderProtocol<Pedal.Model>
+        private let provider: any DataProviderProtocol<Pedal>
         
-        init(pedalProvider: any DataProviderProtocol<Pedal.Model>, delegate: EditDelegate? = nil) {
+        init(pedalProvider: any DataProviderProtocol<Pedal>, delegate: EditDelegate? = nil) {
             self.provider = pedalProvider
             self.delegate = delegate
         }
@@ -44,11 +44,11 @@ extension Song {
             self.pedalList.remove(atOffsets: index)
         }
         
-        public func removePedal(_ pedal: Pedal.Model) {
+        public func removePedal(_ pedal: Pedal) {
             self.pedalList = pedalList.filter({ $0.id != pedal.id})
         }
         
-        public func updateSelectedPedals(_ pedals: [Pedal.Model]) {
+        public func updateSelectedPedals(_ pedals: [Pedal]) {
             self.pedalList = pedals
         }
         
@@ -59,7 +59,7 @@ extension Song {
         
         public func addSongPressed() {
             do {
-                let song = Song.Model(name: songName, artist: bandName, pedals: pedalList)
+                let song = Song(name: songName, artist: bandName, pedals: pedalList)
                 try delegate?.addSong(song)
                 
             } catch {

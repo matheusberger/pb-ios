@@ -102,8 +102,8 @@ extension Song {
 
 struct SongsView_Previews: PreviewProvider {
     static var previews: some View {
-        let persistence = JsonDataService<Song.Model>(fileName: "SongPreview")
-        let provider =  LocalDataProvider<Song.Model>(persistence: persistence)
+        let persistence = JsonDataService<Song>(fileName: "SongPreview")
+        let provider =  LocalDataProvider<Song>(persistence: persistence)
         let viewModel = Song.ListViewModel(songProvider: provider)
         NavigationStack {
             Song.ListView(viewModel: viewModel)
