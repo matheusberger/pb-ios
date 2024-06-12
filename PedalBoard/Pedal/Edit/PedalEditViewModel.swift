@@ -10,6 +10,8 @@ import PedalCore
 
 extension Pedal {
     class EditViewModel: ObservableObject {
+        // This id is necessary to make it Hashable
+        private var id: UUID = UUID()
         
         enum Style {
             case editPedal, createPedal
@@ -122,5 +124,16 @@ extension Pedal {
             }
 
         }
+    }
+}
+
+/// Hashable extension to enable navigation view NavigationLink(value:)
+extension Pedal.EditViewModel: Hashable {
+    static func == (lhs: Pedal.EditViewModel, rhs: Pedal.EditViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

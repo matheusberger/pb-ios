@@ -80,7 +80,7 @@ extension Song {
     }
 }
 
-/// Hashable extension
+/// Hashable extension to enable navigation view NavigationLink(value:)
 extension Song.EditViewModel: Hashable {
     static func == (lhs: Song.EditViewModel, rhs: Song.EditViewModel) -> Bool {
         return lhs.id == rhs.id

@@ -9,12 +9,14 @@ import Foundation
 import PedalCore
 
 extension Pedal {
+    @MainActor
     class ListViewModel: ObservableObject {
 
         enum State {
             case empty, content
         }
         
+        @Published var searchText: String = ""
         @Published var allPedals: [Pedal] {
             didSet {
                 do {
@@ -31,13 +33,6 @@ extension Pedal {
                 }
             }
         }
-        
-        @Published var isShowingSheet: Bool = false
-        @Published var searchText: String = ""
-        
-        var editPedal: Pedal?
-        
-        private var provider: any DataProviderProtocol<Pedal>
         
         var state: State {
             if allPedals.isEmpty {
@@ -56,6 +51,9 @@ extension Pedal {
                 }
             }
         }
+        
+        private var provider: any DataProviderProtocol<Pedal>
+        private var navigationModel: NavigationModel?
         
         init(provider: any DataProviderProtocol<Pedal>) {
             self.provider = provider
@@ -80,15 +78,6 @@ extension Pedal {
     //            }))
             }
         }
-
-        func addIconPressed() {
-            isShowingSheet = true
-        }
-        
-        // for debugging
-        func populatePedals() {
-            allPedals = Pedal.pedalSample()
-        }
         
         func removePedalPressed(_ removedPedal: Pedal) {
             allPedals = allPedals.filter { pedal in
@@ -96,27 +85,29 @@ extension Pedal {
             }
         }
         
-        func editPedalPressed(_ pedal: Pedal) {
-            editPedal = pedal
-            isShowingSheet = true
-        }
-        
-        func sheetDidDismiss() {
-            self.editPedal = nil
+        func setNavigationModel(_ navigationModel: NavigationModel) {
+            self.navigationModel = navigationModel
         }
     }
 }
 
+/// Navigation
 extension Pedal.ListViewModel {
-    func addNewPedal(_ pedal: Pedal) {
-        self.allPedals.append(pedal)
-        editPedal = nil
+    // EditViewModel for NEW PEDAL
+    var editViewModel: Pedal.EditViewModel {
+        return .init { pedal in
+            self.allPedals.append(pedal)
+            self.navigationModel?.pop()
+        }
     }
     
-    public func updatePedal(_ updatedPedal: Pedal) {
-        editPedal = nil
-        allPedals = allPedals.map { pedal in
-            pedal == updatedPedal ? updatedPedal : pedal
+    // EditViewModel for edit button
+    func editViewModel(_ pedal: Pedal) -> Pedal.EditViewModel {
+        return .init(pedal) { updatedPedal in
+            self.allPedals = self.allPedals.map { pedal in
+                pedal == updatedPedal ? updatedPedal : pedal
+            }
+            self.navigationModel?.pop()
         }
     }
 }

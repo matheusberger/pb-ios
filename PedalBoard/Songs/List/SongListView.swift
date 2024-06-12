@@ -90,15 +90,13 @@ extension Song {
         }
         
         private var footerButtonsView: some View {
-            VStack {
-                NavigationLink(value: viewModel.editViewModel) {
-                    Text("NEW SONG")
-                        .fontWeight(.bold)
-                        .frame(width: 250,height: 30)
-                        .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
-                }
-                .buttonStyle(.borderedProminent)
+            NavigationLink(value: viewModel.editViewModel) {
+                Text("NEW SONG")
+                    .fontWeight(.bold)
+                    .frame(width: 250,height: 30)
+                    .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
             }
+            .buttonStyle(.borderedProminent)
             .padding(.bottom)
         }
     }

@@ -41,6 +41,9 @@ struct PedalBoardApp: App {
                     .navigationDestination(for: Song.EditViewModel.self) { viewModel in
                         Song.EditView(viewModel: viewModel)
                     }
+                    .navigationDestination(for: Pedal.EditViewModel.self) { viewModel in
+                        Pedal.EditView(viewModel: viewModel)
+                    }
             }
             .environmentObject(navigationModel)
         }
