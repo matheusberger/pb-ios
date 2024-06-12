@@ -62,14 +62,14 @@ final class SongEditViewModelTests: XCTestCase {
         
         viewModel.songName = "test"
         viewModel.bandName = "test"
-        await viewModel.addSongPressed()
+        await viewModel.save()
         
         await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
     
     func testPresentsAlertMissingName() async {
         // do nothing since viewModel's song fields are all empty
-        await viewModel.addSongPressed()
+        await viewModel.save()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
         XCTAssertEqual(viewModel.alertMessage, Song.EditError.missingName.alertDescription)
@@ -78,7 +78,7 @@ final class SongEditViewModelTests: XCTestCase {
     func testPresentsAlertMissingBand() async {
         // do nothing since viewModel's song fields are all empty
         viewModel.songName = "test"
-        await viewModel.addSongPressed()
+        await viewModel.save()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
         XCTAssertEqual(viewModel.alertMessage, Song.EditError.missingArtist.alertDescription)

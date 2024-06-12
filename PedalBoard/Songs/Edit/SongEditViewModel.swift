@@ -11,6 +11,8 @@ import PedalCore
 
 extension Song {
     class EditViewModel: ObservableObject {
+        // This id is necessary to make it Hashable
+        private var id: UUID = UUID()
         
         @Published public var songName: String = ""
         @Published var bandName: String = ""
@@ -52,7 +54,7 @@ extension Song {
 
         }
         
-        public func addSongPressed() async {
+        public func save() async {
             do {
                 let song = Song(name: songName, artist: bandName, pedals: pedalList)
                 try validateSong(song)
@@ -75,5 +77,16 @@ extension Song {
                 throw Song.EditError.missingArtist
             }
         }
+    }
+}
+
+/// Hashable extension to enable navigation view NavigationLink(value:)
+extension Song.EditViewModel: Hashable {
+    static func == (lhs: Song.EditViewModel, rhs: Song.EditViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

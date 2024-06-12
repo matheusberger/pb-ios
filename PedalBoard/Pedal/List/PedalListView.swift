@@ -10,8 +10,8 @@ import PedalCore
 
 extension Pedal {
     struct ListView: View {
-        
         @Environment(\.colorScheme) var colorScheme
+        @EnvironmentObject private var navigationModel: NavigationModel
         @StateObject var viewModel: ListViewModel
         
         init(viewModel: ListViewModel) {
@@ -33,21 +33,10 @@ extension Pedal {
                 
                 footerButtonsView
             }
-            .navigationTitle("Pedal List")
-            .padding(.bottom, 20)
-            .sheet(isPresented: $viewModel.isShowingSheet, onDismiss: {
-                viewModel.sheetDidDismiss()
-            }) {
-                if let pedal = viewModel.editPedal {
-                    Pedal.EditView(viewModel: Pedal.EditViewModel(pedal) { updatedPedal in
-                        viewModel.updatePedal(updatedPedal)
-                    })
-                } else {
-                    Pedal.EditView(viewModel: Pedal.EditViewModel() { newPedal in
-                        viewModel.addNewPedal(newPedal)
-                    })
-                }
+            .onAppear {
+                viewModel.setNavigationModel(navigationModel)
             }
+            .navigationTitle("Pedal List")
         }
         
         @ViewBuilder
@@ -70,50 +59,37 @@ extension Pedal {
         @ViewBuilder
         private var contentView: some View {
             List(viewModel.filteredPedals, id: \.signature) { pedal in
-                ListRow(pedal: pedal)
-                
-                    .contextMenu(menuItems: {
-                        Button {
-                            viewModel.editPedalPressed(pedal)
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        
-                        Button(role: .destructive) {
-                            viewModel.removePedalPressed(pedal)
-                        } label: {
-                            Label("Delete", systemImage: "trash.fill")
-                        }
-                    })
-                
-                    .swipeActions(edge: .trailing) {
-                        Button {
-                            viewModel.editPedalPressed(pedal)
-                        } label: {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        .tint(Color("ExtraElementsColor"))
-                        
-                        
-                        Button(role: .destructive) {
-                            viewModel.removePedalPressed(pedal)
-                        } label: {
-                            Label("Delete", systemImage: "trash.fill")
-                        }
+                NavigationLink(value: viewModel.editViewModel(pedal)) {
+                    ListRow(pedal: pedal)
+                }
+                .contextMenu(menuItems: {
+                    Button(role: .destructive) {
+                        viewModel.removePedalPressed(pedal)
+                    } label: {
+                        Label("Delete", systemImage: "trash.fill")
                     }
+                })
+                
+                .swipeActions(edge: .trailing) {
+                    Button(role: .destructive) {
+                        viewModel.removePedalPressed(pedal)
+                    } label: {
+                        Label("Delete", systemImage: "trash.fill")
+                    }
+                }
             }
             .searchable(text: $viewModel.searchText, prompt: "Search a pedal")
         }
         
         private var footerButtonsView: some View {
-            Button {
-                viewModel.addIconPressed()
-            } label: {
+            NavigationLink(value: viewModel.editViewModel) {
                 Text("NEW PEDAL")
                     .fontWeight(.bold)
                     .frame(width: 250,height: 30)
-                
-            }.buttonStyle(.borderedProminent)
+                    .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(.bottom)
         }
     }
 }

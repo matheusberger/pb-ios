@@ -10,12 +10,10 @@ import PedalCore
 
 extension Pedal {
     class EditViewModel: ObservableObject {
+        // This id is necessary to make it Hashable
+        private var id: UUID = UUID()
         
-        enum Style {
-            case editPedal, createPedal
-        }
-        
-        var editPedal: Pedal?
+        var editPedal: Pedal
         
         @Published var pedalName: String
         @Published var brandName: String
@@ -26,25 +24,10 @@ extension Pedal {
         
         private let onSave: (_ pedal: Pedal) -> Void
         
-        public var style: Style {
-            if editPedal != nil {
-                return .editPedal
-            } else {
-                return .createPedal
-            }
-        }
-        
-        init(_ editPedal: Pedal? = nil, _ onSave: @escaping (_ pedal: Pedal) -> Void) {
+        init(_ pedal: Pedal? = nil, _ onSave: @escaping (_ pedal: Pedal) -> Void) {
             self.onSave = onSave
             
-            guard let editPedal else {
-                self.pedalName = ""
-                self.brandName = ""
-                self.knobs = []
-                return
-            }
-            
-            self.editPedal = editPedal
+            self.editPedal = pedal ?? Pedal.emptyPedal()
             self.pedalName = editPedal.name
             self.brandName = editPedal.brand
             self.knobs = editPedal.knobs
@@ -62,31 +45,9 @@ extension Pedal {
             }
         }
         
-        public func doneButtonPressed() {
-            switch style {
-            case .editPedal:
-                editPedalDone()
-            case .createPedal:
-                addNewPedal()
-            }
-        }
-        
-        func addNewPedal() {
+        public func save() async {
             do {
-                let pedal = Pedal(name: self.pedalName, brand: self.brandName, knobs: self.knobs)
-                try validadePedalInfo(pedal)
-                
-                onSave(pedal)
-            } catch {
-                handleError(error: error)
-            }
-        }
-        
-        func editPedalDone() {
-            do {
-                guard let oldPedal = editPedal else { return }
-            
-                let pedal = Pedal(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
+                let pedal = Pedal(id: editPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
                 try validadePedalInfo(pedal)
  
                 onSave(pedal)
@@ -122,5 +83,16 @@ extension Pedal {
             }
 
         }
+    }
+}
+
+/// Hashable extension to enable navigation view NavigationLink(value:)
+extension Pedal.EditViewModel: Hashable {
+    static func == (lhs: Pedal.EditViewModel, rhs: Pedal.EditViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

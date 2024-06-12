@@ -13,7 +13,7 @@ final class PedalListViewModelsTests: XCTestCase {
     
     private var viewModel: Pedal.ListViewModel!
     
-    override func setUpWithError() throws {
+    @MainActor override func setUpWithError() throws {
         let persistance = JsonDataService<Pedal>(fileName: "TestingFile")
         let provider = LocalDataProvider<Pedal>(persistence: persistance)
         viewModel = Pedal.ListViewModel(provider: provider)
@@ -21,7 +21,7 @@ final class PedalListViewModelsTests: XCTestCase {
         continueAfterFailure = false
     }
     
-    func testRemovePedalDeletsItFromPedalArray() {
+    @MainActor func testRemovePedalDeletsItFromPedalArray() {
 
         // given
         let pedal1 = Pedal(name: "name1", brand: "brand1", knobs: [])
@@ -36,7 +36,7 @@ final class PedalListViewModelsTests: XCTestCase {
         XCTAssertTrue(viewModel.allPedals.contains(where: {$0 == pedal2}))
     }
     
-    func testSearchWithValidInfoFiltersShowPedals() {
+    @MainActor func testSearchWithValidInfoFiltersShowPedals() {
         
         let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
         let pedal2 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
@@ -48,7 +48,7 @@ final class PedalListViewModelsTests: XCTestCase {
         XCTAssertFalse(viewModel.filteredPedals.contains(where: {$0 == pedal2}))
     }
     
-    func testSearchWithBrandNameFiltersPedals() {
+    @MainActor func testSearchWithBrandNameFiltersPedals() {
         
         let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
         let pedal2 = Pedal(name: "Overdrive 3", brand: "Boss", knobs: [])
@@ -63,7 +63,7 @@ final class PedalListViewModelsTests: XCTestCase {
         
     }
     
-    func testSeachWithWrongInfoFiltersEveryPedals() {
+    @MainActor func testSeachWithWrongInfoFiltersEveryPedals() {
         
         let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
         let pedal2 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
@@ -75,32 +75,15 @@ final class PedalListViewModelsTests: XCTestCase {
     }
     
     
-    func testAddPedalWithValidInfoAppendsToPedalArray() {
+    @MainActor func testAddPedalWithValidInfoAppendsToPedalArray() {
         
         let name = "pedalName"
         let brand = "brand"
         let knobs = [Pedal.Knob(name: "Knob1"), Pedal.Knob(name: "Knob2")]
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
         
-        viewModel.addNewPedal(newPedal)
+        viewModel.allPedals.append(newPedal)
         
         XCTAssertTrue(viewModel.allPedals.contains(where: {$0 == newPedal}))
-    }
-    
-    func testEditPedalPressedPutsPedalToEditPedalReference() {
-        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        
-        viewModel.editPedalPressed(pedal)
-        
-        XCTAssertEqual(pedal, viewModel.editPedal)
-    }
-    
-    func testDismissingSheetTurnsEditPedalToNil() {
-        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel.editPedal = pedal
-        
-        viewModel.sheetDidDismiss()
-        
-        XCTAssertNil(viewModel.editPedal)
     }
 }

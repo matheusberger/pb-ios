@@ -14,27 +14,26 @@ final class SongViewModelTests: XCTestCase {
     
     var viewModel: Song.ListViewModel!
 
-    override func setUpWithError() throws {
+    @MainActor override func setUpWithError() throws {
         viewModel = Song.ListViewModel(songProvider: PreviewDataProvider(), pedalProvider: PreviewDataProvider())
         
     }
 
-    func testViewModelEmptyStateWhenHasNoSongs() {
+    @MainActor func testViewModelEmptyStateWhenHasNoSongs() {
         XCTAssertTrue(viewModel.state == .empty)
     }
     
-    func testViewModelContentStateWhenHasSongs() {
+    @MainActor func testViewModelContentStateWhenHasSongs() {
         viewModel.allSongs = Song.getSample()
         
         XCTAssertTrue(viewModel.state == .content)
     }
     
-    func testViewModelStartsWithEmptySearchText() {
-        
+    @MainActor func testViewModelStartsWithEmptySearchText() {
         XCTAssertTrue(viewModel.searchText.isEmpty)
     }
     
-    func testDeleteSongRemovesItFromSongsArray() {
+    @MainActor func testDeleteSongRemovesItFromSongsArray() {
         let song1 = Song(name: "test1", artist: "test1", pedals: [])
         let song2 = Song(name: "test2", artist: "test2", pedals: [])
         let song3 = Song(name: "test3", artist: "test3", pedals: [])
@@ -49,7 +48,7 @@ final class SongViewModelTests: XCTestCase {
         
     }
 
-    func testSearchFilterSelectsSongsBySongName() {
+    @MainActor func testSearchFilterSelectsSongsBySongName() {
         let song1 = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
         let song2 = Song(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
         let song3 = Song(name: "Reckoner", artist: "Radiohead", pedals: [])
@@ -63,7 +62,7 @@ final class SongViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.songs.contains(song3))
     }
     
-    func testNoSongsFilterWhenSearchSearachFilterIsEmpty() {
+    @MainActor func testNoSongsFilterWhenSearchSearachFilterIsEmpty() {
         let song1 = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
         let song2 = Song(name: "Arrabela", artist: "Arctic Monkeys", pedals: [])
         let song3 = Song(name: "Reckoner", artist: "Radiohead", pedals: [])
@@ -77,7 +76,7 @@ final class SongViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.songs.contains(song3))
     }
     
-    func testAddSongWithValidInfoAppendsToAllSongsArray() {
+    @MainActor func testAddSongWithValidInfoAppendsToAllSongsArray() {
         let song = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
         
         viewModel.allSongs.append(song)
