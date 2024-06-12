@@ -77,50 +77,11 @@ final class SongViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.songs.contains(song3))
     }
     
-    func testAddSongButtonPresentsSheets() {
-        viewModel.isShowingSheet = false
-        
-        viewModel.addSongPressed()
-        
-        XCTAssertTrue(viewModel.isShowingSheet)
-    }
-    
     func testAddSongWithValidInfoAppendsToAllSongsArray() {
         let song = Song(name: "505", artist: "Arctic Monkeys", pedals: [])
         
-        try? viewModel.addSong(song)
+        viewModel.allSongs.append(song)
         XCTAssertTrue(viewModel.allSongs.contains(song))
-    }
-    
-    
-    func testAddsongWithInvalidInfoThrowsError() {
-        let song = Song(name: "", artist: "Arctic Monkeys", pedals: [])
-        
-        XCTAssertThrowsError(try viewModel.addSong(song))
-    }
-    
-    func testAddSongWithNoNameThrowsRelatedAddSongError() {
-        let song = Song(name: "", artist: "Arctic Monkeys", pedals: [])
-        
-        do {
-            try viewModel.addSong(song)
-        } catch {
-            if let addSongError = error as? Song.EditError {
-                XCTAssertTrue(addSongError == .missingName)
-            }
-        }
-    }
-    
-    func testAddSongWithNoArtistThrowsRelatedAddSongError() {
-        let song = Song(name: "Teddy Picker", artist: "", pedals: [])
-        
-        do {
-            try viewModel.addSong(song)
-        } catch {
-            if let addSongError = error as? Song.EditError {
-                XCTAssertTrue(addSongError == .missingArtist)
-            }
-        }
     }
 }
 

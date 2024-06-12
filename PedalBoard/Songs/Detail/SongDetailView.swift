@@ -31,17 +31,6 @@ extension Song {
                     sheetSelectPedalsView
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    if viewModel.hasChanges {
-                        Button {
-                            viewModel.saveButtonPressed()
-                        } label: {
-                            Text("Save")
-                        }
-                    }
-                }
-            }
             .alert("Failed to save Song", isPresented: $viewModel.isPresentingAlert) {
             } message: {
                 Text(viewModel.alertMessage)

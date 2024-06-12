@@ -25,14 +25,11 @@ extension Song {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        weak var delegate: EditDelegate?
-        
         private let pedalProvider: any DataProviderProtocol<Pedal>
         
-        init(song: Song, pedalProvider: any DataProviderProtocol<Pedal>, delegate: EditDelegate? = nil) {
+        init(song: Song, pedalProvider: any DataProviderProtocol<Pedal>) {
             self.song = song
             self.pedalProvider = pedalProvider
-            self.delegate = delegate
         }
         
         var isInEditing: Bool {
@@ -59,17 +56,6 @@ extension Song {
         var selectPedalView: SelectPedalView {
             SelectPedalView(allPedals: pedalProvider.data, selectedPedals: pedalsUsed) { [self] selectedPedals in
                 userDidSelectNewPedals(pedals: selectedPedals)
-            }
-        }
-        
-        public func saveButtonPressed() {
-            do {
-                try delegate?.updateSong(for: self.song)
-            } catch {
-                if let songError = error as? EditError {
-                    alertMessage = songError.alertDescription
-                    isPresentingAlert = true
-                }
             }
         }
         

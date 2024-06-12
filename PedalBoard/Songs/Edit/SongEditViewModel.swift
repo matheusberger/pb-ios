@@ -12,18 +12,6 @@ import PedalCore
 extension Song {
     class EditViewModel: ObservableObject {
         
-        weak var delegate: EditDelegate?
-        
-        var availablePedals: [Pedal] {
-            return provider.data
-        }
-        
-        var selectPedalView: SelectPedalView {
-            SelectPedalView(allPedals: availablePedals, selectedPedals: pedalList) { [self] selectedPedals in
-                updateSelectedPedals(selectedPedals)
-            }
-        }
-        
         @Published public var songName: String = ""
         @Published var bandName: String = ""
         @Published var pedalList: [Pedal] = []
@@ -33,11 +21,18 @@ extension Song {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        private let provider: any DataProviderProtocol<Pedal>
+        private(set) var availablePedals: [Pedal]
+        var selectPedalView: SelectPedalView {
+            SelectPedalView(allPedals: availablePedals, selectedPedals: pedalList) { [self] selectedPedals in
+                updateSelectedPedals(selectedPedals)
+            }
+        }
         
-        init(pedalProvider: any DataProviderProtocol<Pedal>, delegate: EditDelegate? = nil) {
-            self.provider = pedalProvider
-            self.delegate = delegate
+        private var onSave: (_ song: Song) -> Void
+        
+        init(availablePedals: [Pedal], _ onSave: @escaping (_ song: Song) -> Void) {
+            self.availablePedals = availablePedals
+            self.onSave = onSave
         }
         
         public func removePedal(at index: IndexSet) {
@@ -57,17 +52,27 @@ extension Song {
 
         }
         
-        public func addSongPressed() {
+        public func addSongPressed() async {
             do {
                 let song = Song(name: songName, artist: bandName, pedals: pedalList)
-                try delegate?.addSong(song)
+                try validateSong(song)
                 
+                onSave(song)
             } catch {
                 if let songError = error as? EditError {
                     alertMessage = songError.alertDescription
                     isPresentingAlert = true
-                    
                 }
+            }
+        }
+        
+        private func validateSong(_ song: Song) throws {
+            if song.name.isEmpty {
+                throw Song.EditError.missingName
+            }
+            
+            if song.artist.isEmpty {
+                throw Song.EditError.missingArtist
             }
         }
     }

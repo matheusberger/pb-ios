@@ -10,9 +10,7 @@ import PedalCore
 
 extension Song {
     struct EditView: View {
-        
         @ObservedObject var viewModel: EditViewModel
-        
         
         init(viewModel: EditViewModel) {
             self.viewModel = viewModel
@@ -65,12 +63,14 @@ extension Song {
                 }
                 
                 Section("Save") {
-                    Button("Add Song") {
-                        viewModel.addSongPressed()
+                    Button("SAVE SONG") {
+                        Task {
+                            await viewModel.addSongPressed()
+                        }
                     }
                 }
             }
-            .navigationTitle("Add new song")
+            .navigationTitle("NEW SONG")
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $viewModel.isPresentingSheet) {
                 NavigationView {
@@ -87,9 +87,9 @@ extension Song {
     }
 }
 
-struct CreateSongView_Previews: PreviewProvider {
+struct SongEditView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = Song.EditViewModel(pedalProvider: PreviewDataProvider<Pedal>())
+        let viewModel = Song.EditViewModel(availablePedals: Pedal.pedalSample()) { _ in }
         NavigationStack {
             Song.EditView(viewModel: viewModel)
         }

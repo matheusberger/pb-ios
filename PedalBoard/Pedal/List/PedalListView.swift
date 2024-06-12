@@ -39,9 +39,13 @@ extension Pedal {
                 viewModel.sheetDidDismiss()
             }) {
                 if let pedal = viewModel.editPedal {
-                    Pedal.EditView(viewModel: Pedal.EditViewModel(delegate: self.viewModel, editPedal: pedal))
+                    Pedal.EditView(viewModel: Pedal.EditViewModel(pedal) { updatedPedal in
+                        viewModel.updatePedal(updatedPedal)
+                    })
                 } else {
-                    Pedal.EditView(viewModel: Pedal.EditViewModel(delegate: self.viewModel))
+                    Pedal.EditView(viewModel: Pedal.EditViewModel() { newPedal in
+                        viewModel.addNewPedal(newPedal)
+                    })
                 }
             }
         }
@@ -51,10 +55,10 @@ extension Pedal {
             VStack(alignment: .leading, spacing: 20) {
                 Spacer()
                 
-                Text("None pedals registered yet")
+                Text("No pedals registered yet")
                     .font(.headline)
                 
-                Text("You may add new pedals by tapping in the superior button")
+                Text("You may add new pedals by tapping NEW PEDAL")
                     .font(.subheadline)
                 
                 Spacer()
@@ -102,16 +106,14 @@ extension Pedal {
         }
         
         private var footerButtonsView: some View {
-            VStack {
-                Button {
-                    viewModel.addIconPressed()
-                } label: {
-                    Text("Create new pedal")
-                        .fontWeight(.bold)
-                        .frame(width: 250,height: 30)
-                    
-                }.buttonStyle(.borderedProminent)
-            }
+            Button {
+                viewModel.addIconPressed()
+            } label: {
+                Text("NEW PEDAL")
+                    .fontWeight(.bold)
+                    .frame(width: 250,height: 30)
+                
+            }.buttonStyle(.borderedProminent)
         }
     }
 }

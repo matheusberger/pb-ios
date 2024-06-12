@@ -31,29 +31,20 @@ extension Song {
             }
         }
         @Published var isShowingAlert = false
-        @Published var isShowingSheet: Bool = false
         @Published var searchText: String = ""
         
         var alert: Alert?
         
-        var pedalView: Pedal.ListView {
-            let viewModel = Pedal.ListViewModel(provider: pedalProvider)
-            return Pedal.ListView(viewModel: viewModel)
-        }
-        
-        var editView: EditView {
-            let viewModel = EditViewModel(pedalProvider: pedalProvider, delegate: self)
-            return Song.EditView(viewModel: viewModel)
-        }
-        
         func detailView(_ song: Song) -> DetailView {
-            let viewModel = DetailViewModel(song: song, pedalProvider: pedalProvider, delegate: self)
+            let viewModel = DetailViewModel(song: song, pedalProvider: pedalProvider)
             return DetailView(viewModel: viewModel)
         }
         
         private var songProvider: any DataProviderProtocol<Song>
         private var pedalProvider: any DataProviderProtocol<Pedal>
         
+        private var navigationModel: NavigationModel?
+
         var songs: [Song] {
             if searchText.isEmpty {
                 return allSongs
@@ -96,8 +87,8 @@ extension Song {
             }
         }
         
-        public func addSongPressed() {
-            isShowingSheet = true
+        public func setNavigationModel(_ navigationModel: NavigationModel) {
+            self.navigationModel = navigationModel
         }
         
         func deleteSong(_ deletedSong: Song) {
@@ -106,29 +97,25 @@ extension Song {
     }
 }
 
-extension Song.ListViewModel: Song.EditDelegate {
-    func addSong(_ song: Song) throws {
-        try validateSong(song)
-        
-        self.allSongs.append(song)
-        isShowingSheet = false
-    }
-    
-    func updateSong(for updatedSong: Song) throws {
-        try validateSong(updatedSong)
-        
-        allSongs = allSongs.map({ song in
-            song == updatedSong ? updatedSong : song
-        })
-    }
-    
-    private func validateSong(_ song: Song) throws {
-        if song.name.isEmpty {
-            throw Song.EditError.missingName
+/// Navigation
+extension Song.ListViewModel {
+    func navigateToPedaList() async {
+        guard let navigationModel else {
+            // error, navigation model not set
+            return
         }
         
-        if song.artist.isEmpty {
-            throw Song.EditError.missingArtist
+        await navigationModel.push(.pedalList)
+    }
+    
+    func presentEditSheet() async {
+        guard let navigationModel else {
+            // error, navigation model not set
+            return
+        }
+        
+        await navigationModel.presentSongEditView { song in
+            self.allSongs.append(song)
         }
     }
 }

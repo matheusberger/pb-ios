@@ -12,16 +12,18 @@ import PedalCore
 final class SongEditViewModelTests: XCTestCase {
     
     var viewModel: Song.EditViewModel!
-    var delegate: MockSongEditDelegate!
+    var availablePedals: [Pedal]!
     
     override func setUpWithError() throws {
-        delegate = MockSongEditDelegate()
-        let provider = LocalDataProvider<Pedal>(persistence: JsonDataService(fileName: "Preview"))
-        viewModel = Song.EditViewModel(pedalProvider: provider, delegate: delegate)
+        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
+        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
+        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
+        
+        availablePedals = [pedal1, pedal2, pedal3]
+        viewModel = Song.EditViewModel(availablePedals: availablePedals) { song in }
     }
     
     func testViewModelStartsWithEmptyFields() {
-        
         XCTAssertTrue(viewModel.songName.isEmpty)
         XCTAssertTrue(viewModel.bandName.isEmpty)
         XCTAssertTrue(viewModel.pedalList.isEmpty)
@@ -31,71 +33,62 @@ final class SongEditViewModelTests: XCTestCase {
     }
     
     func testUpdateSelectedPedalsUpdatedPedalList() {
-        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
-        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
-        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
-        let selectedPedal = [pedal2, pedal3]
-        viewModel.pedalList = [pedal1]
+        let selectedPedal = [availablePedals[1], availablePedals[2]]
+        viewModel.pedalList = [availablePedals[0]]
 
         viewModel.updateSelectedPedals(selectedPedal)
                 
-        XCTAssertFalse(viewModel.pedalList.contains(pedal1))
-        XCTAssertTrue(viewModel.pedalList.contains(pedal2))
-        XCTAssertTrue(viewModel.pedalList.contains(pedal3))
-        
+        XCTAssertFalse(viewModel.pedalList.contains(availablePedals[0]))
+        XCTAssertTrue(viewModel.pedalList.contains(selectedPedal))
     }
 
     func testUpdateRemovePedalRemovesItFromPedalList() {
-        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
-        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
-        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
-        let pedals = [pedal1, pedal2, pedal3]
-        viewModel.pedalList = pedals
+        viewModel.pedalList = availablePedals
 
-        viewModel.removePedal(pedal1)
+        viewModel.removePedal(availablePedals[0])
         
-        XCTAssertFalse(viewModel.pedalList.contains(pedal1))
-        XCTAssertTrue(viewModel.pedalList.contains(pedal2))
-        XCTAssertTrue(viewModel.pedalList.contains(pedal3))
+        XCTAssertFalse(viewModel.pedalList.contains(availablePedals[0]))
+        XCTAssertTrue(viewModel.pedalList.contains(availablePedals[1]))
+        XCTAssertTrue(viewModel.pedalList.contains(availablePedals[2]))
         
     }
     
-    func testAddSongPressedCallDelegate() {
-        delegate.didCallAddSong = false
+    func testOnSaveIsCalled() async {
+        var onSaveCalledExpectation = XCTestExpectation(description: "completion handler was called")
         
-        viewModel.addSongPressed()
+        viewModel = Song.EditViewModel(availablePedals: availablePedals) { _ in
+            onSaveCalledExpectation.fulfill()
+        }
         
-        XCTAssertTrue(delegate.didCallAddSong)
+        viewModel.songName = "test"
+        viewModel.bandName = "test"
+        await viewModel.addSongPressed()
+        
+        await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
     
-    func testWhenDelegateTrowsErrorAlertIsPresented() {
+    func testPresentsAlertMissingName() async {
+        // do nothing since viewModel's song fields are all empty
+        await viewModel.addSongPressed()
         
-        delegate.shouldThrowAddSongError = Song.EditError.missingArtist
-        
-        viewModel.addSongPressed()
+        XCTAssertTrue(viewModel.isPresentingAlert)
+        XCTAssertEqual(viewModel.alertMessage, Song.EditError.missingName.alertDescription)
+    }
+    
+    func testPresentsAlertMissingBand() async {
+        // do nothing since viewModel's song fields are all empty
+        viewModel.songName = "test"
+        await viewModel.addSongPressed()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
         XCTAssertEqual(viewModel.alertMessage, Song.EditError.missingArtist.alertDescription)
     }
     
-    func testAttachPedalPresentsPedalSheet() {
-        viewModel.isPresentingSheet = false
-        
-        viewModel.attachPedalPressed()
-        
-        XCTAssertTrue(viewModel.isPresentingSheet)
-    }
-    
     func testUpdatePedalListFromSheetSelectedPedals() {
         viewModel.pedalList = []
-        let pedal1 = Pedal(name: "test1", brand: "test1", knobs: [])
-        let pedal2 = Pedal(name: "test2", brand: "test2", knobs: [])
-        let pedal3 = Pedal(name: "test3", brand: "test3", knobs: [])
-        let selectedPedals = [pedal1, pedal2, pedal3]
-
-        viewModel.updateSelectedPedals(selectedPedals)
+        viewModel.updateSelectedPedals(availablePedals)
         
-        XCTAssertTrue(viewModel.pedalList.contains(where: {selectedPedals.contains($0)}))
+        XCTAssertTrue(viewModel.pedalList.contains(where: {availablePedals.contains($0)}))
     }
 
 }

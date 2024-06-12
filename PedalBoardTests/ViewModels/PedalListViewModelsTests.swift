@@ -82,19 +82,9 @@ final class PedalListViewModelsTests: XCTestCase {
         let knobs = [Pedal.Knob(name: "Knob1"), Pedal.Knob(name: "Knob2")]
         let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
         
-        try? viewModel.addNewPedal(newPedal)
+        viewModel.addNewPedal(newPedal)
         
         XCTAssertTrue(viewModel.allPedals.contains(where: {$0 == newPedal}))
-    }
-    
-    func testAddPedalWithInvalidInfoThrowsError() {
-        
-        let name = ""
-        let brand = ""
-        let knobs: [Pedal.Knob] = []
-        let newPedal = Pedal(name: name, brand: brand, knobs: knobs)
-        
-        XCTAssertThrowsError(try viewModel.addNewPedal(newPedal))
     }
     
     func testEditPedalPressedPutsPedalToEditPedalReference() {

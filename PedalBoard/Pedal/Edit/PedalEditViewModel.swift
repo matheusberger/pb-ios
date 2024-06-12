@@ -15,7 +15,7 @@ extension Pedal {
             case editPedal, createPedal
         }
         
-        var editePedal: Pedal?
+        var editPedal: Pedal?
         
         @Published var pedalName: String
         @Published var brandName: String
@@ -24,29 +24,30 @@ extension Pedal {
         @Published var isPresentingAlert: Bool = false
         @Published var alertMessage: String = ""
         
-        weak var delegate: Pedal.EditDelegate?
+        private let onSave: (_ pedal: Pedal) -> Void
         
         public var style: Style {
-            if editePedal != nil {
+            if editPedal != nil {
                 return .editPedal
             } else {
                 return .createPedal
             }
         }
         
-        init(delegate: Pedal.EditDelegate? = nil, editPedal: Pedal? = nil) {
-            self.delegate = delegate
+        init(_ editPedal: Pedal? = nil, _ onSave: @escaping (_ pedal: Pedal) -> Void) {
+            self.onSave = onSave
             
-            if let pedal = editPedal {
-                self.editePedal = pedal
-                self.pedalName = pedal.name
-                self.brandName = pedal.brand
-                self.knobs = pedal.knobs
-            } else {
+            guard let editPedal else {
                 self.pedalName = ""
                 self.brandName = ""
                 self.knobs = []
+                return
             }
+            
+            self.editPedal = editPedal
+            self.pedalName = editPedal.name
+            self.brandName = editPedal.brand
+            self.knobs = editPedal.knobs
         }
         
         public func addKnobPressed() {
@@ -73,26 +74,48 @@ extension Pedal {
         func addNewPedal() {
             do {
                 let pedal = Pedal(name: self.pedalName, brand: self.brandName, knobs: self.knobs)
-                try delegate?.addNewPedal(pedal)
+                try validadePedalInfo(pedal)
                 
+                onSave(pedal)
             } catch {
-                dealWithErrors(error: error)
+                handleError(error: error)
             }
         }
         
         func editPedalDone() {
             do {
-                guard let oldPedal = editePedal else { return }
+                guard let oldPedal = editPedal else { return }
             
                 let pedal = Pedal(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
-                try delegate?.finishedEditingPedal(pedal)
-                
+                try validadePedalInfo(pedal)
+ 
+                onSave(pedal)
             } catch {
-                dealWithErrors(error: error)
+                handleError(error: error)
             }
         }
         
-        private func dealWithErrors(error: Error) {
+        private func validadePedalInfo(_ pedal: Pedal) throws {
+            if pedal.name.isEmpty {
+                throw Pedal.EditError.missingName
+            }
+            
+            if pedal.brand.isEmpty {
+                throw Pedal.EditError.missingBrand
+            }
+            
+            if pedal.knobs.isEmpty {
+                throw Pedal.EditError.missingKnobs
+            }
+            
+            try pedal.knobs.forEach { knob in
+                if knob.name.isEmpty {
+                    throw Pedal.EditError.missingKnobName
+                }
+            }
+        }
+        
+        private func handleError(error: Error) {
             if let pedalError = error as? Pedal.EditError {
                 isPresentingAlert = true
                 alertMessage = pedalError.description
