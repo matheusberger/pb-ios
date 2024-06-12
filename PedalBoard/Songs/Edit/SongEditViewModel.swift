@@ -54,7 +54,7 @@ extension Song {
 
         }
         
-        public func addSongPressed() async {
+        public func save() async {
             do {
                 let song = Song(name: songName, artist: bandName, pedals: pedalList)
                 try validateSong(song)

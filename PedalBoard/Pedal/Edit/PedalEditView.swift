@@ -37,7 +37,6 @@ extension Pedal {
                                     Button {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                         viewModel.removeKnob(at: IndexSet(integer: index))
-                                        
                                     } label: {
                                         Image(systemName: "xmark.circle")
                                             .imageScale(.medium)
@@ -56,27 +55,23 @@ extension Pedal {
                     } label: {
                         Text("Add knob")
                     }
-                    
                 }
                 
                 Button {
-                    viewModel.doneButtonPressed()
-                    
+                    Task {
+                        await viewModel.save()
+                    }
                 } label: {
-                    Text(viewModel.style == .createPedal ?  "Create pedal" : "Update pedal")
+                    Text("SAVE PEDAL")
                 }
                 
-                
-                if viewModel.style == .editPedal {
-                    Button(role: .destructive) {
-                        navigationModel.pop()
-                    } label: {
-                        Text("Cancel")
-                    }
-                    
+                Button(role: .destructive) {
+                    navigationModel.pop()
+                } label: {
+                    Text("Cancel")
                 }
             }
-            .navigationTitle("NEW PEDAL")
+            .navigationTitle("New Pedal")
             .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
             } message: {
                 Text(viewModel.alertMessage)

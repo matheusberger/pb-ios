@@ -65,12 +65,12 @@ extension Song {
                 Section("Save") {
                     Button("SAVE SONG") {
                         Task {
-                            await viewModel.addSongPressed()
+                            await viewModel.save()
                         }
                     }
                 }
             }
-            .navigationTitle("NEW SONG")
+            .navigationTitle("New Song")
             .sheet(isPresented: $viewModel.isPresentingSheet) {
                 NavigationView {
                     withAnimation {

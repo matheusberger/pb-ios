@@ -84,7 +84,7 @@ extension Pedal {
         
         private var footerButtonsView: some View {
             NavigationLink(value: viewModel.editViewModel) {
-                Text("NEW SONG")
+                Text("NEW PEDAL")
                     .fontWeight(.bold)
                     .frame(width: 250,height: 30)
                     .foregroundStyle(colorScheme == .light ? Color.white : Color.black)

@@ -70,7 +70,7 @@ final class PedalEditViewModelTests: XCTestCase {
         viewModel.pedalName = "test"
         viewModel.brandName = "test"
         viewModel.knobs.append(.init(name: "test"))
-        viewModel.doneButtonPressed()
+        viewModel.save()
         
         await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
@@ -83,7 +83,7 @@ final class PedalEditViewModelTests: XCTestCase {
             onSaveCalledExpectation.fulfill()
         }
         
-        viewModel.doneButtonPressed()
+        viewModel.save()
         
         await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }

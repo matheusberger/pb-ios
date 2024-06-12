@@ -15,11 +15,8 @@ final class NavigationModel: ObservableObject {
     private(set) var songProvider: SongProvider
     private(set) var pedalProvider: PedalProvider
     
-    var presentedSheets: [AnyView]
-    
     init(navigationPath: NavigationPath = .init()) {
         self.navigationPath = navigationPath
-        self.presentedSheets = []
         
         let songPersistence = JsonDataService<Song>(fileName: "Song")
         self.songProvider = SongProvider(persistence: songPersistence)
@@ -43,6 +40,7 @@ final class NavigationModel: ObservableObject {
         guard count < navigationPath.count else {
             return toRoot()
         }
+        navigationPath.removeLast(count)
     }
     
     func toRoot() {
