@@ -10,6 +10,8 @@ import PedalCore
 
 extension Song {
     struct EditView: View {
+        @EnvironmentObject private var navigationModel: NavigationModel
+        @Environment(\.colorScheme) var colorScheme
         @ObservedObject var viewModel: EditViewModel
         
         init(viewModel: EditViewModel) {
@@ -17,58 +19,37 @@ extension Song {
         }
         
         var body: some View {
-            List {
-                Section {
-                    TextField("Song name", text: $viewModel.songName, prompt: Text("Song name"))
-                    TextField("Band name", text: $viewModel.bandName, prompt: Text("Artist name"))
-                } header: {
-                    Text("Song info")
-                } footer: {
-                    Text("You song must have a name and a artist")
-                }
-                
-                Section {
-                    ForEach($viewModel.pedalList) { $pedal in
-                        VStack {
-                            VStack(alignment: .leading) {
-                                Text(pedal.name)
-                                    .font(.headline)
-                                    .foregroundStyle(.primary)
-                                
-                                Pedal.KnobGridView(knobs: $pedal.knobs)
-                                
-                            }
-                        }
-                        .contextMenu(menuItems: {
-                            Button(role: .destructive) {
-                                viewModel.removePedal(pedal)
-                            } label: {
-                                Label("Delete", systemImage: "trash.fill")
-                            }
-                        })
-                    }
-                    .onDelete(perform: { indexSet in
-                        viewModel.removePedal(at: indexSet)
-                    })
-                    
-                    Button {
-                        viewModel.attachPedalPressed()
-                    } label: {
-                        Text("Attach pedal")
-                            .foregroundStyle(Color.accentColor)
+            VStack {
+                List {
+                    Section {
+                        TextField("Song name", text: $viewModel.songName, prompt: Text("Song name"))
+                        TextField("Band name", text: $viewModel.bandName, prompt: Text("Artist name"))
+                    } header: {
+                        Text("Song info")
+                    } footer: {
+                        Text("You song must have a name and a artist")
                     }
                     
-                } header: {
-                    Text("Pedalboard")
-                }
-                
-                Section("Save") {
-                    Button("SAVE SONG") {
-                        Task {
-                            await viewModel.save()
+                    Section {
+                        ForEach($viewModel.pedalList) { $pedal in
+                            knobGrid($pedal)
                         }
+                        .onDelete { indexSet in
+                            viewModel.removePedal(at: indexSet)
+                        }
+                        
+                        Button {
+                            viewModel.attachPedalPressed()
+                        } label: {
+                            Text("Attach pedal")
+                                .foregroundStyle(Color.accentColor)
+                        }
+                    } header: {
+                        Text("Pedalboard")
                     }
                 }
+                
+                footerButtons
             }
             .navigationTitle("New Song")
             .sheet(isPresented: $viewModel.isPresentingSheet) {
@@ -81,6 +62,51 @@ extension Song {
             .alert("Failed to save pedal", isPresented: $viewModel.isPresentingAlert) {
             } message: {
                 Text(viewModel.alertMessage)
+            }
+        }
+        
+        private var footerButtons: some View {
+            VStack {
+                Button {
+                    Task {
+                        await viewModel.save()
+                    }
+                } label: {
+                    Text("SAVE SONG")
+                        .fontWeight(.bold)
+                        .frame(width: 250,height: 30)
+                        .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
+                }
+                .buttonStyle(.borderedProminent)
+                
+                Button(role: .destructive) {
+                    Task {
+                        navigationModel.pop()
+                    }
+                } label: {
+                    Text("cancel")
+                        .frame(width: 250,height: 30)
+                }
+                .buttonStyle(.borderless)
+            }
+            .padding(.top)
+        }
+        
+        @ViewBuilder
+        private func knobGrid(_ pedal: Binding<Pedal>) -> some View {
+            VStack(alignment: .leading) {
+                Text(pedal.name.wrappedValue)
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                
+                Pedal.KnobGridView(knobs: pedal.knobs)
+            }
+            .contextMenu {
+                Button(role: .destructive) {
+                    viewModel.removePedal(pedal.wrappedValue)
+                } label: {
+                    Label("Delete", systemImage: "trash.fill")
+                }
             }
         }
     }
