@@ -65,11 +65,14 @@ final class PedalEditViewModelTests: XCTestCase {
     
     
     func testOnSaveIsCalledWithNewPedal() async {
-        let onSaveCalledExpectation = XCTestExpectation(description: "onSave callback was called")
+        var onSaveCalledExpectation = XCTestExpectation(description: "onSave callback was called")
         
         viewModel = Pedal.EditViewModel() { _ in
             onSaveCalledExpectation.fulfill()
         }
+        viewModel.pedalName = "test"
+        viewModel.brandName = "test"
+        viewModel.knobs.append(.init(name: "test"))
         viewModel.doneButtonPressed()
         
         await fulfillment(of: [onSaveCalledExpectation], timeout: 10)

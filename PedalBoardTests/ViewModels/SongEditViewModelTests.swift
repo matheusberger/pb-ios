@@ -54,18 +54,30 @@ final class SongEditViewModelTests: XCTestCase {
     }
     
     func testOnSaveIsCalled() async {
-        let onSaveCalledExpectation = XCTestExpectation(description: "completion handler was called")
+        var onSaveCalledExpectation = XCTestExpectation(description: "completion handler was called")
         
         viewModel = Song.EditViewModel(availablePedals: availablePedals) { _ in
             onSaveCalledExpectation.fulfill()
         }
+        
+        viewModel.songName = "test"
+        viewModel.bandName = "test"
         await viewModel.addSongPressed()
         
-        await fulfillment(of: [onSaveCalledExpectation])
+        await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
     
-    func testPresentsAlertIfError() async {
+    func testPresentsAlertMissingName() async {
         // do nothing since viewModel's song fields are all empty
+        await viewModel.addSongPressed()
+        
+        XCTAssertTrue(viewModel.isPresentingAlert)
+        XCTAssertEqual(viewModel.alertMessage, Song.EditError.missingName.alertDescription)
+    }
+    
+    func testPresentsAlertMissingBand() async {
+        // do nothing since viewModel's song fields are all empty
+        viewModel.songName = "test"
         await viewModel.addSongPressed()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
