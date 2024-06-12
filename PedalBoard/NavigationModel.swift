@@ -10,7 +10,7 @@ import PedalCore
 
 @MainActor
 final class NavigationModel: ObservableObject {
-    @Published var navigationPath: NavigationPath
+    @MainActor @Published var navigationPath: NavigationPath
     
     private(set) var songProvider: SongProvider
     private(set) var pedalProvider: PedalProvider
