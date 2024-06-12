@@ -54,7 +54,7 @@ final class SongEditViewModelTests: XCTestCase {
     }
     
     func testOnSaveIsCalled() async {
-        var onSaveCalledExpectation = XCTestExpectation(description: "completion handler was called")
+        let onSaveCalledExpectation = XCTestExpectation(description: "completion handler was called")
         
         viewModel = Song.EditViewModel(availablePedals: availablePedals) { _ in
             onSaveCalledExpectation.fulfill()

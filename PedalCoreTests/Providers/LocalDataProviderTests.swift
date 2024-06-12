@@ -24,9 +24,10 @@ final class LocalDataProviderTests: XCTestCase {
     }
     
     func testLoad() async throws {
-        var loadSuccessExpectation = XCTestExpectation(description: "successfully loaded data")
+        let loadSuccessExpectation = XCTestExpectation(description: "successfully loaded data")
         let expectedSongs = Song.getSample()
         try provider?.update(expectedSongs)
+        
         try provider?.load{ songs in
             if songs.count == expectedSongs.count {
                 loadSuccessExpectation.fulfill()
