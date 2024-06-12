@@ -22,7 +22,6 @@ final class PedalListViewModelsTests: XCTestCase {
     }
     
     @MainActor func testRemovePedalDeletsItFromPedalArray() {
-
         // given
         let pedal1 = Pedal(name: "name1", brand: "brand1", knobs: [])
         let pedal2 = Pedal(name: "name2", brand: "brand2", knobs: [])
@@ -37,7 +36,6 @@ final class PedalListViewModelsTests: XCTestCase {
     }
     
     @MainActor func testSearchWithValidInfoFiltersShowPedals() {
-        
         let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
         let pedal2 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
         viewModel.allPedals = [pedal1, pedal2]
@@ -49,7 +47,6 @@ final class PedalListViewModelsTests: XCTestCase {
     }
     
     @MainActor func testSearchWithBrandNameFiltersPedals() {
-        
         let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
         let pedal2 = Pedal(name: "Overdrive 3", brand: "Boss", knobs: [])
         let pedal3 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
@@ -60,11 +57,9 @@ final class PedalListViewModelsTests: XCTestCase {
         XCTAssertTrue(viewModel.filteredPedals.contains(where: {$0 == pedal1}))
         XCTAssertTrue(viewModel.filteredPedals.contains(where: {$0 == pedal2}))
         XCTAssertFalse(viewModel.filteredPedals.contains(where: {$0 == pedal3}))
-        
     }
     
     @MainActor func testSeachWithWrongInfoFiltersEveryPedals() {
-        
         let pedal1 = Pedal(name: "Space Echo", brand: "Boss", knobs: [])
         let pedal2 = Pedal(name: "Tube Screamer", brand: "Ibanez", knobs: [])
         viewModel.allPedals = [pedal1, pedal2]
@@ -76,7 +71,6 @@ final class PedalListViewModelsTests: XCTestCase {
     
     
     @MainActor func testAddPedalWithValidInfoAppendsToPedalArray() {
-        
         let name = "pedalName"
         let brand = "brand"
         let knobs = [Pedal.Knob(name: "Knob1"), Pedal.Knob(name: "Knob2")]

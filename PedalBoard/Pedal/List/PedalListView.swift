@@ -89,7 +89,7 @@ extension Pedal {
                     .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
             }
             .buttonStyle(.borderedProminent)
-            .padding(.bottom)
+            .padding(.top)
         }
     }
 }
