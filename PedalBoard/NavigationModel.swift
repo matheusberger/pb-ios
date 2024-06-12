@@ -59,16 +59,22 @@ final class NavigationModel: ObservableObject {
 
 /// Sheet presentation
 extension NavigationModel {
-    func presentSongEditView(delegate: Song.EditDelegate) {
+    func presentSongEditView(_ onSave: @escaping (_ song: Song) -> Void) {
         isPresentingSheet = true
-        let viewModel = Song.EditViewModel(pedalProvider: pedalProvider, delegate: delegate)
+        let viewModel = Song.EditViewModel(availablePedals: pedalProvider.data) { song in
+            onSave(song)
+            self.dismissSheet()
+        }
         let songEditView = Song.EditView(viewModel: viewModel)
         presentedSheets.append(AnyView(songEditView))
     }
     
-    func presentPedalEditView(_ pedal: Pedal, delegate: Pedal.EditDelegate) {
+    func presentPedalEditView(_ pedal: Pedal, _ onSave: @escaping (_ pedal: Pedal) -> Void) {
         isPresentingSheet = true
-        let viewModel = Pedal.EditViewModel(pedal, delegate: delegate)
+        let viewModel = Pedal.EditViewModel(pedal) { pedal in
+            onSave(pedal)
+            self.dismissSheet()
+        }
         let pedalEditView = Pedal.EditView(viewModel: viewModel)
         presentedSheets.append(AnyView(pedalEditView))
     }
@@ -78,4 +84,3 @@ extension NavigationModel {
         isPresentingSheet = presentedSheets.isEmpty ? false : true
     }
 }
-

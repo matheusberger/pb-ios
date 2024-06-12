@@ -11,14 +11,10 @@ import XCTest
 final class PedalEditViewModelTests: XCTestCase {
     
     private var viewModel: Pedal.EditViewModel!
-    private var delegate: PedalCreationDelegateMock!
     
     override func setUpWithError() throws {
-        delegate = PedalCreationDelegateMock()
-        viewModel = Pedal.EditViewModel(delegate: self.delegate)
-        
+        viewModel = Pedal.EditViewModel() { _ in }
         continueAfterFailure = false
-        
     }
     
     func testPedalInfosStartsEmpty() {
@@ -29,16 +25,14 @@ final class PedalEditViewModelTests: XCTestCase {
     
     func testWhenEditingPedalViewModelHasRelatedStyle() {
         let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.EditViewModel(pedal)
+        viewModel = Pedal.EditViewModel(pedal) { _ in }
         
         XCTAssertTrue(viewModel.style == .editPedal)
-        
     }
     
     func testWhenEditingPedalFieldsHasContent() {
         let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.EditViewModel(pedal)
-        
+        viewModel = Pedal.EditViewModel(pedal) { _ in }
         
         XCTAssertFalse(viewModel.pedalName.isEmpty)
         XCTAssertFalse(viewModel.brandName.isEmpty)
@@ -48,11 +42,8 @@ final class PedalEditViewModelTests: XCTestCase {
     
     func testAddKnobPressedAppendstoKnobNamesArray() {
         viewModel.knobs = []
-        
         viewModel.addKnobPressed()
-        
         XCTAssertFalse(viewModel.knobs.isEmpty)
-        
     }
     
 
@@ -67,46 +58,43 @@ final class PedalEditViewModelTests: XCTestCase {
         viewModel.removeKnob(at: IndexSet(integer: 0))
         
         XCTAssertTrue(viewModel.knobs.count == 2)
-        
         XCTAssertFalse(viewModel.knobs.contains(where: {$0.name == knobs.first!.name}))
     }
     
-    
-    func testWhenOnCreatePedalStyleDoneButtonCallsAddNewPedal() {
+    func testOnSaveIsCalledWithNewPedal() async {
+        var onSaveCalledExpectation = XCTestExpectation(description: "onSave callback was called")
         
+        viewModel = Pedal.EditViewModel() { _ in
+            onSaveCalledExpectation.fulfill()
+        }
+        viewModel.pedalName = "test"
+        viewModel.brandName = "test"
+        viewModel.knobs.append(.init(name: "test"))
         viewModel.doneButtonPressed()
         
-        XCTAssertTrue(delegate.didCallAddNewPedal)
+        await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
     
-    
-    func testWhenOnEditPedalStyleDoneButtonCallsEdidPedalDone() {
+    func testOnSaveIsCalledWithUpdatedPedal() async {
         let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.EditViewModel(pedal, delegate: self.delegate)
+        let onSaveCalledExpectation = XCTestExpectation(description: "onSave callback was called")
+        
+        viewModel = Pedal.EditViewModel(pedal) { _ in
+            onSaveCalledExpectation.fulfill()
+        }
         
         viewModel.doneButtonPressed()
         
-        XCTAssertTrue(delegate.didCallFinishedEditingPedal)
+        await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
     
-    func testAddNewPedalPresentsAlertWhenErrorOccurs() {
+    func testPresentsAlertWhenErrorOccurs() {
         viewModel.isPresentingAlert = false
-        delegate.addNewPedalShouldThrowError = .missingBrand
+        let pedal = Pedal(name: "test", brand: "", knobs: [Pedal.Knob(name: "test")])
         
+        viewModel = Pedal.EditViewModel(pedal) { _ in }
         viewModel.addNewPedal()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
     }
-    
-    func testEditPedalPresentsAlertWhenErrorOccurs() {
-        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.EditViewModel(pedal, delegate: self.delegate)
-        viewModel.isPresentingAlert = false
-        delegate.finishedEditingPedalShouldThrowError = .missingBrand
-        
-        viewModel.editPedalDone()
-        
-        XCTAssertTrue(viewModel.isPresentingAlert)
-    }
-    
 }
