@@ -23,13 +23,6 @@ final class PedalEditViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.knobs.isEmpty)
     }
     
-    func testWhenEditingPedalViewModelHasRelatedStyle() {
-        let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
-        viewModel = Pedal.EditViewModel(pedal) { _ in }
-        
-        XCTAssertTrue(viewModel.style == .editPedal)
-    }
-    
     func testWhenEditingPedalFieldsHasContent() {
         let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])
         viewModel = Pedal.EditViewModel(pedal) { _ in }
@@ -70,7 +63,7 @@ final class PedalEditViewModelTests: XCTestCase {
         viewModel.pedalName = "test"
         viewModel.brandName = "test"
         viewModel.knobs.append(.init(name: "test"))
-        viewModel.save()
+        await viewModel.save()
         
         await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
@@ -83,17 +76,17 @@ final class PedalEditViewModelTests: XCTestCase {
             onSaveCalledExpectation.fulfill()
         }
         
-        viewModel.save()
+        await viewModel.save()
         
         await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
     
-    func testPresentsAlertWhenErrorOccurs() {
+    func testPresentsAlertWhenErrorOccurs() async {
         viewModel.isPresentingAlert = false
         let pedal = Pedal(name: "test", brand: "", knobs: [Pedal.Knob(name: "test")])
         
         viewModel = Pedal.EditViewModel(pedal) { _ in }
-        viewModel.addNewPedal()
+        await viewModel.save()
         
         XCTAssertTrue(viewModel.isPresentingAlert)
     }
