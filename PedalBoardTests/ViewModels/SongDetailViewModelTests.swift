@@ -14,7 +14,6 @@ final class SongDetailViewModelTests: XCTestCase {
     var viewModel: Song.DetailViewModel!
     
     override func setUpWithError() throws {
-        
         let song = Song(name: "Example", artist: "Example", pedals: [Pedal(name: "pedal1", brand: "brand1", knobs: [Pedal.Knob(name: "Leve")])])
         let provider = PreviewDataProvider<Pedal>()
         viewModel = Song.DetailViewModel(song: song, pedalProvider: provider)

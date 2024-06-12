@@ -63,7 +63,6 @@ final class PedalEditViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.knobs.contains(where: {$0.name == knobs.first!.name}))
     }
     
-    
     func testOnSaveIsCalledWithNewPedal() async {
         var onSaveCalledExpectation = XCTestExpectation(description: "onSave callback was called")
         
@@ -77,7 +76,6 @@ final class PedalEditViewModelTests: XCTestCase {
         
         await fulfillment(of: [onSaveCalledExpectation], timeout: 10)
     }
-    
     
     func testOnSaveIsCalledWithUpdatedPedal() async {
         let pedal = Pedal(name: "test", brand: "test", knobs: [Pedal.Knob(name: "test")])

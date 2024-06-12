@@ -84,4 +84,3 @@ extension NavigationModel {
         isPresentingSheet = presentedSheets.isEmpty ? false : true
     }
 }
-

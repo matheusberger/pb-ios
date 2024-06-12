@@ -44,7 +44,7 @@ extension Song {
         private var pedalProvider: any DataProviderProtocol<Pedal>
         
         private var navigationModel: NavigationModel?
-        
+
         var songs: [Song] {
             if searchText.isEmpty {
                 return allSongs

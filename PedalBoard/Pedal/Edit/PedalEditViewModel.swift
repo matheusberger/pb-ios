@@ -88,7 +88,7 @@ extension Pedal {
             
                 let pedal = Pedal(id: oldPedal.id, name: self.pedalName, brand: self.brandName, knobs: self.knobs)
                 try validadePedalInfo(pedal)
-                
+ 
                 onSave(pedal)
             } catch {
                 handleError(error: error)
