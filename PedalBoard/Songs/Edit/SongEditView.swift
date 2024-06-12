@@ -71,7 +71,6 @@ extension Song {
                 }
             }
             .navigationTitle("NEW SONG")
-            .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $viewModel.isPresentingSheet) {
                 NavigationView {
                     withAnimation {

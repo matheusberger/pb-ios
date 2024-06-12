@@ -35,7 +35,7 @@ extension Song {
             .toolbar {
                 Button {
                     Task {
-                        await viewModel.navigateToPedaList()
+                        viewModel.navigateToPedaList()
                     }
                 } label: {
                     Image(systemName: "lanyardcard.fill")
