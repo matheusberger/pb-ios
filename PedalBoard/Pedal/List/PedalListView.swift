@@ -37,7 +37,6 @@ extension Pedal {
                 viewModel.setNavigationModel(navigationModel)
             }
             .navigationTitle("Pedal List")
-            .padding(.bottom, 20)
         }
         
         @ViewBuilder
