@@ -28,9 +28,6 @@ struct PedalBoardApp: App {
             NavigationStack(path: $navigationModel.navigationPath) {
                 let viewModel = Song.ListViewModel(songProvider: songProvider, pedalProvider: pedalProvider)
                 Song.ListView(viewModel: viewModel)
-                    .sheet(isPresented: $navigationModel.isPresentingSheet) {
-                        navigationModel.presentedSheets.last
-                    }
                     .navigationDestination(for: NavigationModel.AppView.self) { view in
                         switch view {
                         case .songList:
@@ -41,9 +38,8 @@ struct PedalBoardApp: App {
                             Pedal.ListView(viewModel: viewModel)
                         }
                     }
-                    .navigationDestination(for: Song.self) { song in
-                        let viewModel = Song.DetailViewModel(song: song, pedalProvider: pedalProvider)
-                        Song.DetailView(viewModel: viewModel)
+                    .navigationDestination(for: Song.EditViewModel.self) { viewModel in
+                        Song.EditView(viewModel: viewModel)
                     }
             }
             .environmentObject(navigationModel)

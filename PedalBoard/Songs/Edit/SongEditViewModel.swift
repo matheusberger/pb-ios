@@ -11,6 +11,8 @@ import PedalCore
 
 extension Song {
     class EditViewModel: ObservableObject {
+        // This id is necessary to make it Hashable
+        private var id: UUID = UUID()
         
         @Published public var songName: String = ""
         @Published var bandName: String = ""
@@ -75,5 +77,16 @@ extension Song {
                 throw Song.EditError.missingArtist
             }
         }
+    }
+}
+
+/// Hashable extension
+extension Song.EditViewModel: Hashable {
+    static func == (lhs: Song.EditViewModel, rhs: Song.EditViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

@@ -11,7 +11,6 @@ import PedalCore
 @MainActor
 final class NavigationModel: ObservableObject {
     @Published var navigationPath: NavigationPath
-    @Published var isPresentingSheet: Bool
     
     private(set) var songProvider: SongProvider
     private(set) var pedalProvider: PedalProvider
@@ -20,7 +19,6 @@ final class NavigationModel: ObservableObject {
     
     init(navigationPath: NavigationPath = .init()) {
         self.navigationPath = navigationPath
-        self.isPresentingSheet = false
         self.presentedSheets = []
         
         let songPersistence = JsonDataService<Song>(fileName: "Song")
@@ -54,33 +52,5 @@ final class NavigationModel: ObservableObject {
     enum AppView: Hashable, Sendable {
         case songList
         case pedalList
-    }
-}
-
-/// Sheet presentation
-extension NavigationModel {
-    func presentSongEditView(_ onSave: @escaping (_ song: Song) -> Void) {
-        isPresentingSheet = true
-        let viewModel = Song.EditViewModel(availablePedals: pedalProvider.data) { song in
-            onSave(song)
-            self.dismissSheet()
-        }
-        let songEditView = Song.EditView(viewModel: viewModel)
-        presentedSheets.append(AnyView(songEditView))
-    }
-    
-    func presentPedalEditView(_ pedal: Pedal, _ onSave: @escaping (_ pedal: Pedal) -> Void) {
-        isPresentingSheet = true
-        let viewModel = Pedal.EditViewModel(pedal) { pedal in
-            onSave(pedal)
-            self.dismissSheet()
-        }
-        let pedalEditView = Pedal.EditView(viewModel: viewModel)
-        presentedSheets.append(AnyView(pedalEditView))
-    }
-    
-    func dismissSheet() {
-        _ = presentedSheets.popLast()
-        isPresentingSheet = presentedSheets.isEmpty ? false : true
     }
 }

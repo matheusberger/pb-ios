@@ -91,17 +91,13 @@ extension Song {
         
         private var footerButtonsView: some View {
             VStack {
-                Button {
-                    Task {
-                        await viewModel.presentEditSheet()
-                    }
-                } label: {
+                NavigationLink(value: viewModel.editViewModel) {
                     Text("NEW SONG")
                         .fontWeight(.bold)
                         .frame(width: 250,height: 30)
                         .foregroundStyle(colorScheme == .light ? Color.white : Color.black)
-                    
-                }.buttonStyle(.borderedProminent)
+                }
+                .buttonStyle(.borderedProminent)
             }
             .padding(.bottom)
         }

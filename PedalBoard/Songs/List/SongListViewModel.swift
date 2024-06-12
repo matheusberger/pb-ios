@@ -9,12 +9,15 @@ import SwiftUI
 import PedalCore
 
 extension Song {
+    @MainActor
     public class ListViewModel: ObservableObject {
         
         enum State {
             case empty, content
         }
         
+        @Published var isShowingAlert = false
+        @Published var searchText: String = ""
         @Published var allSongs: [Song] {
             didSet {
                 do {
@@ -30,8 +33,6 @@ extension Song {
                 }
             }
         }
-        @Published var isShowingAlert = false
-        @Published var searchText: String = ""
         
         var alert: Alert?
         
@@ -67,7 +68,6 @@ extension Song {
             self.allSongs = []
             self.songProvider = songProvider
             self.pedalProvider = pedalProvider
-            
             load()
         }
         
@@ -99,23 +99,15 @@ extension Song {
 
 /// Navigation
 extension Song.ListViewModel {
-    func navigateToPedaList() async {
-        guard let navigationModel else {
-            // error, navigation model not set
-            return
-        }
-        
-        await navigationModel.push(.pedalList)
+    func navigateToPedaList() {
+        navigationModel?.push(.pedalList)
     }
     
-    func presentEditSheet() async {
-        guard let navigationModel else {
-            // error, navigation model not set
-            return
-        }
-        
-        await navigationModel.presentSongEditView { song in
+    // EditViewModel for navigation with the navigationModel
+    var editViewModel: Song.EditViewModel {
+        return Song.EditViewModel(availablePedals: pedalProvider.data) { song in
             self.allSongs.append(song)
+            self.navigationModel?.pop()
         }
     }
 }
